@@ -28,14 +28,14 @@ const string[] names =
 	"Welcome to the Club",
 	"When can we do this Again",
 	"Never get Naked",
-	"blank",
 	"Weeb 2",
 	"Uptown Funk",
 	"Weeb 3",
 	"Party in the USA",
 	"Despacito",
 	"Minuetto",
-	"Spooky Scary Skeleton"
+	"Spooky Scary Skeleton",
+	"blank"
 
 };
 

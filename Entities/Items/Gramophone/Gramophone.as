@@ -29,19 +29,19 @@ const string[] musicNames =
 	"Disc_WelcomeToTheClub.ogg",
 	"Disc_WhenCanWeDoThis.ogg",
 	"Disc_NeverGetNaked.ogg",
-	"Disk_blank.ogg",
 	"Disc_Himiko.ogg",
 	"Disc_UptownFunk.ogg",
 	"Disc_Anaguragura.ogg",
 	"Disc_PartyInTheUSA.ogg",
 	"Disc_Despacito.ogg",
 	"Disc_Minuetto.ogg",
-	"Disc_SpookyScarySkeleton.ogg"
+	"Disc_SpookyScarySkeleton.ogg",
+	"Disk_blank.ogg",
 };
 
 // 255 = no disc
 
-const int DiscNum = 27;
+const int DiscNum = musicNames.length-1;
 
 void onInit(CBlob@ this)
 {
