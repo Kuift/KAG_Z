@@ -24,7 +24,7 @@ void onInit(CBlob@ this)
 
 	// SHOP
 	this.set_Vec2f("shop offset", Vec2f_zero);
-	this.set_Vec2f("shop menu size", Vec2f(4, 4));
+	this.set_Vec2f("shop menu size", Vec2f(5, 4));
 	this.set_string("shop description", "Buy");
 	this.set_u8("shop icon", 25);
 
@@ -80,6 +80,14 @@ void onInit(CBlob@ this)
 	{
 		ShopItem@ s = addShopItem(this, "threestarbuilderuniform", "$threestarbuilderuniform$", "threestarbuilderuniform", "Upgraded builder class", false);
 		AddRequirement(s.requirements, "blob", "twostarbuilderuniform", "twostarbuilderuniform", 2);
+	}
+	{
+		ShopItem@ s = addShopItem(this, "Crate", "$crate$", "crate2", "6x6 inventory space", false);
+		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 100);
+	}
+	{
+		ShopItem@ s = addShopItem(this, "Advanced Drill", "$dirtdrill$", "advanceddrill", "A better version of the drill", false);
+		AddRequirement(s.requirements, "coin", "", "Coins", 500);
 	}
 	// {
 		// ShopItem@ s = addShopItem(this, "Praying Statue", "$statue1$", "statue1", "Praying Statue", false, true);

@@ -17,9 +17,9 @@ const u8 heat_max = 120;
 
 const string last_drill_prop = "drill last active";
 
-const u8 heat_add = 6;
-const u8 heat_add_constructed = 2;
-const u8 heat_add_blob = 8;
+const u8 heat_add = 6/5; //5 times as much as normal
+const u8 heat_add_constructed = 2/5;
+const u8 heat_add_blob = 8/5;
 const u8 heat_cool_amount = 2;
 
 const u8 heat_cooldown_time = 6;
@@ -68,9 +68,9 @@ void onInit(CBlob@ this)
 
 	this.set_u8(heat_prop, 0);
 	this.set_u16("showHeatTo", 0);
-	this.set_u16("harvestWoodDoorCap", 4);
-	this.set_u16("harvestStoneDoorCap",4);
-	this.set_u16("harvestPlatformCap", 2);
+	this.set_u16("harvestWoodDoorCap", 6);
+	this.set_u16("harvestStoneDoorCap",6);
+	this.set_u16("harvestPlatformCap", 6);
 
 	AddIconToken("$opaque_heatbar$", "Entities/Industry/Drill/HeatBar.png", Vec2f(24, 6), 0);
 	AddIconToken("$transparent_heatbar$", "Entities/Industry/Drill/HeatBar.png", Vec2f(24, 6), 1);
@@ -230,9 +230,9 @@ void onTick(CBlob@ this)
 				heat++;
 			}
 
-			u8 delay_amount = 8;
-			if (this.get_bool("just hit dirt")) delay_amount = 10;
-			if (inwater) delay_amount = 20;
+			u8 delay_amount = 4;
+			if (this.get_bool("just hit dirt")) delay_amount = 5;
+			if (inwater) delay_amount = 10;
 			
 			bool skip = (gametime < this.get_u32(last_drill_prop) + delay_amount);
 
@@ -256,7 +256,7 @@ void onTick(CBlob@ this)
 				const f32 attack_distance = 6.0f;
 				Vec2f attackVel = direction * attack_distance;
 
-				const f32 distance = 20.0f;
+				const f32 distance = 30.0f;
 
 				bool hitsomething = false;
 				bool hitblob = false;
@@ -270,7 +270,7 @@ void onTick(CBlob@ this)
 						bool hit_ground = false;
 						for (uint i = 0; i < hitInfos.length; i++)
 						{
-							f32 attack_dam = 1.0f;
+							f32 attack_dam = 1.5f; //1.0f
 							HitInfo@ hi = hitInfos[i];
 							bool hit_constructed = false;
 							CBlob@ b = hi.blob;
@@ -304,6 +304,16 @@ void onTick(CBlob@ this)
 									if (int(heat) > heat_max * 0.7f) // are we at high heat? more damamge!
 									{
 										attack_dam += 0.5f;
+									}
+
+									if (b.getName() == "ZombiePortal")
+									{
+										attack_dam *= 0.1f;
+									}
+									
+									if (b.hasTag("flesh"))
+									{
+										attack_dam *= 0.45f;
 									}
 
 									if (b.hasTag("shielded") && blockAttack(b, attackVel, 0.0f)) // are they shielding? reduce damage!
@@ -342,7 +352,7 @@ void onTick(CBlob@ this)
 										}
 										else
 										{
-											Material::fromTile(holder, tile, 0.75f);
+											Material::fromTile(holder, tile, 1.0f); //0.75f
 										}
 										
 										if (map.isTileGround(tile) || map.isTileStone(tile) || map.isTileThickStone(tile)) 

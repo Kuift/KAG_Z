@@ -10,7 +10,7 @@ void onDie(CBlob@ this)
 	{
 		if (this.hasTag("has grain"))
 		{
-			server_DropCoins(this.getPosition(), XORRandom(20) + 4);
+			server_DropCoins(this.getPosition(), 25); //XORRandom(20) + 4);
 			server_MakeSeed(this.getPosition(), "grain_plant", 300, 1, 4);
 		}
 	}
