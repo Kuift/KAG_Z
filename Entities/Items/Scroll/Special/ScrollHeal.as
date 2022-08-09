@@ -30,7 +30,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 				for (uint i = 0; i < blobsInRadius.length; i++)
 				{
 					CBlob @b = blobsInRadius[i];
-					if ((b.getHealth() < b.getInitialHealth()) && b.getTeamNum() == team && b.hasTag("flesh") && !b.hasTag("zombie"))
+					if ((b.getHealth() < b.getInitialHealth()) && b.getTeamNum() == team && b.hasTag("flesh") && (!b.hasTag("zombie") || !b.hasTag("portal_zombie")))
 					{
 					CBlob@ food = server_CreateBlob("food", -1, b.getPosition());
 					}

@@ -58,11 +58,12 @@ void onTick( CBlob@ this)
 		this.SetLightRadius( 64.0f );		
 	}
 	if (!getNet().isServer()) return;
-	int num_zombies = getRules().get_s32("num_zombies");
+	int num_portal_zombies = getRules().get_s32("num_portal_zombies");
+	int max_portal_zombies = getRules().get_s32("max_portal_zombies");
 	//int num_zombies = 40;
 	if (this.get_bool("portalbreach"))
 	{
-		if ((getGameTime() % spawnRate == 0) && num_zombies < 100)
+		if ((getGameTime() % spawnRate == 0) && num_portal_zombies < max_portal_zombies)
 		{
 		CBlob@[] blobs;
 		getMap().getBlobsInRadius( this.getPosition(), 250, @blobs );
@@ -73,39 +74,63 @@ void onTick( CBlob@ this)
 			int r;
 			r = XORRandom(10);
 			int rr = XORRandom(8);
-			if (r==9 && rr<2) 
-			server_CreateBlob( "ukkon", -1, sp);
+			if (r==9 && rr<2) {
+				CBlob@ spawned_zombie = server_CreateBlob( "ukkon", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			else
-			if (r==8 && rr<8)
-			server_CreateBlob( "Wraith", -1, sp);
+			if (r==8 && rr<8) {
+				CBlob@ spawned_zombie = server_CreateBlob( "Wraith", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			else										
-			if (r==7 && rr<22)
-			server_CreateBlob( "Greg", -1, sp);
+			if (r==7 && rr<22) {
+				CBlob@ spawned_zombie = server_CreateBlob( "Greg", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			else					
-			if (r==6)
-			server_CreateBlob( "hellknight", -1, sp);
+			if (r==6) {
+				CBlob@ spawned_zombie = server_CreateBlob( "hellknight", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			else					
-			if (r==5)
-			server_CreateBlob( "ZombieKnight", -1, sp);
+			if (r==5) {
+				CBlob@ spawned_zombie = server_CreateBlob( "ZombieKnight", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			else					
-			if (r==4)
-			server_CreateBlob( "crawler", -1, sp);
+			if (r==4) {
+				CBlob@ spawned_zombie = server_CreateBlob( "crawler", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			else
-			if (r>=3)
-			server_CreateBlob( "Zombie", -1, sp);
-			else
-			server_CreateBlob( "Skeleton", -1, sp);
+			if (r>=3) {
+				CBlob@ spawned_zombie = server_CreateBlob( "Zombie", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
+			else {
+				CBlob@ spawned_zombie = server_CreateBlob( "Skeleton", -1, sp);
+				spawned_zombie.Untag("zombie");
+				spawned_zombie.Tag("portal_zombie");
+			}
 			if ((r==7 && rr<12) || (r==8 && rr<8) || (r<7) || r==9 && rr<4)
 			{
-				num_zombies++;
-				getRules().set_s32("num_zombies",num_zombies);
+				num_portal_zombies++;
+				getRules().set_s32("num_portal_zombies",num_portal_zombies);
 				
 			}
 		}
 	}
 	else
 	{
-		if (getGameTime() % 600 == 0)
+		if (getGameTime() % 180 == 0) //changed to be lower to activate from players faster
 		{
 			Vec2f sp = this.getPosition();
 			
@@ -138,10 +163,6 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 		case Hitters::bomb_arrow:
 			damage *= 0.25f; //quarter damage from these
 		break;
-	}
-	if (hitterBlob.getName() == "chainsaw")
-	{
-		damage *= 0.25f; //a lot less damage from chainsaws as only one of them could break a portal
 	}
 	return damage;
 }

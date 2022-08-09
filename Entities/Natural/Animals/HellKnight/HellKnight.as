@@ -452,8 +452,8 @@ bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {
 	if (blob.hasTag("dead"))
 		return false;
-	if (!blob.hasTag("zombie") && blob.hasTag("flesh") && this.getTeamNum() == blob.getTeamNum()) return false;
-	if (blob.hasTag("zombie") && blob.getHealth()<0.0) return false;
+	if ((!blob.hasTag("zombie") || !blob.hasTag("portal_zombie")) && blob.hasTag("flesh") && this.getTeamNum() == blob.getTeamNum()) return false;
+	if ((blob.hasTag("zombie") || blob.hasTag("portal_zombie")) && blob.getHealth()<0.0) return false;
 	return true;
 }
 
@@ -465,7 +465,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 	const u16 friendId = this.get_netid(friend_property);
 	CBlob@ friend = getBlobByNetworkID(friendId);
-	if (blob.getTeamNum() != this.getTeamNum() && blob.hasTag("flesh") && (!blob.hasTag("dead") || blob.hasTag("zombie")))
+	if (blob.getTeamNum() != this.getTeamNum() && blob.hasTag("flesh") && (!blob.hasTag("dead") || (blob.hasTag("zombie") || blob.hasTag("portal_zombie"))))
 	{
 		MadAt( this, blob );
 	}

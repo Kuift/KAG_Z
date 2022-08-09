@@ -288,7 +288,7 @@ void onTick(CBlob@ this)
 									}
 									if (hi.blob.getName() == "ZombiePortal") //This wasn't working on ZombiePortal.as for customhitters. So, it's here.
 									{
-									attack_dam *= 0.35f;
+										attack_dam *= 0.25f; //0.35f;
 									}
 
 									this.server_Hit(hi.blob, hi.hitpos, attackVel, attack_dam, Hitters::drill);

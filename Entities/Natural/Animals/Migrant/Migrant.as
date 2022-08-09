@@ -88,7 +88,7 @@ void onInit(CBrain@ this)
 void onInit(CBlob@ this)
 {
 	//for EatOthers
-	string[] tags = {"zombie"};
+	string[] tags = {"zombie", "portal_zombie"};
 	this.set("tags to eat", tags);
 	
 	//brain
