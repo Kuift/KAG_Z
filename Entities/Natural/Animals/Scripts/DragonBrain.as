@@ -134,7 +134,7 @@ void onTick( CBrain@ this )
 								//TODO: flags for these...
 								if (blob.getName() == "BossRedDragon") 
 								{
-									bool otherzombies =  (XORRandom(4) == 0) || !other.hasTag("zombie");
+									bool otherzombies =  (XORRandom(4) == 0) || (!other.hasTag("zombie") || !other.hasTag("portal_zombie"));
 									if (other.getName() != name && //dont eat same type of blob
 										other.hasTag("flesh") && otherzombies && !other.hasTag("dead")) //attack flesh blobs
 									{
@@ -265,7 +265,7 @@ void onTick( CBrain@ this )
 									//TODO: flags for these...
 								if (blob.getName() == "BossRedDragon") 
 								{
-									bool otherzombies =  (XORRandom(4) == 0) || !other.hasTag("zombie");
+									bool otherzombies =  (XORRandom(4) == 0) || (!other.hasTag("zombie") || !other.hasTag("portal_zombie"));
 									if (other.getName() != name && //dont eat same type of blob
 										other.hasTag("flesh") && otherzombies && !other.hasTag("dead")) //attack flesh blobs
 									{

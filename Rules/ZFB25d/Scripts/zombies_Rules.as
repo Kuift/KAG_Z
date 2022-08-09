@@ -42,8 +42,24 @@ void Config(ZombiesCore@ this)
 	getRules().set_bool("gold_structures", gold_structures);
 	
 	s32 max_zombies = cfg.read_s32("game_time",125);
-	if (max_zombies<100) max_zombies=100;
+
+    CMap@ map = getMap();
+    max_zombies = (map.tilemapwidth + map.tilemapwidth) / 3.5; //base the amount of zombies on the map
+    max_zombies = Maths::Floor(max_zombies);
+
+    if(max_zombies > 200)
+    {
+        max_zombies = 200;  //hard capped here at 200
+    }
+
+    s32 max_portal_zombies = Maths::Ceil(max_zombies*0.25f);
+    max_zombies = Maths::Floor(max_zombies*0.75f);
+	print("" + max_portal_zombies);
+	print("" + max_zombies);
+
+	// if (max_zombies<100) max_zombies=100;
 	getRules().set_s32("max_zombies", max_zombies);
+	getRules().set_s32("max_portal_zombies", max_portal_zombies);
 	getRules().set_bool("scrolls_spawn", scrolls_spawn);
 	getRules().set_bool("techstuff_spawn", techstuff_spawn);
 
@@ -354,7 +370,9 @@ shared class ZombiesCore : RulesCore
 		int day_cycle = getRules().daycycle_speed * 60;
 		int transition = rules.get_s32("transition");
 		int max_zombies = rules.get_s32("max_zombies");
+		int max_portal_zombies = rules.get_s32("max_portal_zombies");
 		int num_zombies = rules.get_s32("num_zombies");
+		int num_portal_zombies = rules.get_s32("num_portal_zombies");
 		int gamestart = rules.get_s32("gamestart");
 		int timeElapsed = getGameTime()-gamestart;
 		int num_zombiePortals = rules.get_s32("num_zombiePortals");
@@ -375,7 +393,7 @@ shared class ZombiesCore : RulesCore
 		int spawnRate = getTicksASecond() * (6-(difficulty/2.0));
 		int extra_zombies = 0;
 		if (dayNumber > 10) extra_zombies=(dayNumber-10)*5;
-		if (extra_zombies>max_zombies-100) extra_zombies=max_zombies-100;
+		if (extra_zombies>max_zombies-100) extra_zombies=max_zombies-100; //this line may need to be fixed but, we'll wait to see if it becomes a problem
 		if (spawnRate<8) spawnRate=8;
 		int wraiteRate = 2 + (intdif/4);
 		if (getGameTime() % 300 == 0)
@@ -386,7 +404,13 @@ shared class ZombiesCore : RulesCore
 			getBlobsByTag("zombie", @zombie_blobs );
 			num_zombies = zombie_blobs.length;
 			rules.set_s32("num_zombies",num_zombies);
-			printf("Zombies: "+num_zombies+" Extra: "+extra_zombies);			
+			printf("Zombies: "+num_zombies+" Extra: "+extra_zombies);
+
+			CBlob@[] zombie_blobs2;
+			getBlobsByTag("portal_zombie", @zombie_blobs2);
+			num_portal_zombies = zombie_blobs2.length;
+			rules.set_s32("num_portal_zombies", num_portal_zombies);
+			printf("Portal Zombies: "+num_portal_zombies+" Extra: "+extra_zombies);
 		}
 			
 	    if (getGameTime() % (spawnRate) == 0 && num_zombies<100+extra_zombies)
@@ -401,7 +425,7 @@ shared class ZombiesCore : RulesCore
 				//rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Left" + zombiePlaces.length);			
 				//rules.SetGlobalMessage( "Day "+ dayNumber + "Zombie Portals:" + ZombiePortalV);	
 				
-				rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Left: " + num_zombiePortals );
+				rules.SetGlobalMessage( "Day "+ dayNumber + "\nZombie Portals Left: " + num_zombiePortals + "\nZombies: " + num_zombies + "\nPortal Zombies: " + num_portal_zombies);
 				//rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Destroyed" + dzp );					
 				if (zombiePlaces.length<=0)
 				{
@@ -491,20 +515,21 @@ shared class ZombiesCore : RulesCore
 						Vec2f sp = zombiePlaces[XORRandom(zombiePlaces.length)];
 						server_CreateBlob( "BossZombieKnight", -1, sp);
 						if (dayNumber > 5){
-							server_CreateBlob("kaarn",-1,sp);
-							server_CreateBlob("kaarn",-1,sp);
+							for(int i = 0; i < 2; ++i) {
+								server_CreateBlob("kaarn",-1,sp);
+							}
 						}
 						if (dayNumber > 10){
-							server_CreateBlob("kaarn",-1,sp);
-							server_CreateBlob("kaarn",-1,sp);
-							server_CreateBlob("ukkon",-1,sp);
-							server_CreateBlob("ukkon",-1,sp);
+							for(int i = 0; i < 2; ++i) {
+								server_CreateBlob("kaarn",-1,sp);
+								server_CreateBlob("ukkon",-1,sp);
+							}
 						}
 						if (dayNumber > 15){
-							server_CreateBlob("ukkon",-1,sp);
-							server_CreateBlob("ukkon",-1,sp);
-							server_CreateBlob("vroon",-1,sp);
-							server_CreateBlob("vroon",-1,sp);
+							for(int i = 0; i < 2; ++i){
+								server_CreateBlob("ukkon",-1,sp);
+								server_CreateBlob("vroon",-1,sp);
+							}
 						}
 						if (dayNumber > 15 && dayNumber % 8 == 0){
 							server_CreateBlob("magnar",-1,sp);
@@ -515,57 +540,48 @@ shared class ZombiesCore : RulesCore
 						if(dayNumber >= 5 && dayNumber < 10)
 						{
 							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
+							for(int i = 0; i < 3; ++i) {
+								server_CreateBlob( "Wraith", -1, sp);
+							}
 						}
 						if(dayNumber >= 10 && dayNumber < 20 )
 						{
 							server_CreateBlob( "BossZombieKnight", -1, sp);
 							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
+							for(int i = 0; i < 4; ++i) {
+								server_CreateBlob( "Wraith", -1, sp);
+							}
 						}
 						if(dayNumber >= 20 && dayNumber < 30 )
 						{
-							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "BossZombieKnight", -1, sp);
+							for(int i = 0; i < 2; ++i) {
+								server_CreateBlob( "BossZombieKnight", -1, sp);
+							}
 							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
+							for(int i = 0; i < 5; ++i) {
+								server_CreateBlob( "Wraith", -1, sp);
+							}
 						}
 						if(dayNumber >= 30 && dayNumber < 40 )
 						{
-							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
+							for(int i = 0; i < 2; ++i) {
+								server_CreateBlob( "BossZombieKnight", -1, sp);
+								server_CreateBlob( "abomination", -1, sp);
+							}
+							for(int i = 0; i < 6; ++i) {
+								server_CreateBlob( "Wraith", -1, sp);
+							}
 						}
 						if(dayNumber >= 40 )
 						{
-							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "BossZombieKnight", -1, sp);
+							for(int i = 0; i < 2; ++i) {
+								server_CreateBlob( "BossZombieKnight", -1, sp);
+								server_CreateBlob( "abomination", -1, sp);
+							}
 							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
-							server_CreateBlob( "Wraith", -1, sp);
+							for(int i = 0; i < 7; ++i) {
+								server_CreateBlob( "Wraith", -1, sp);
+							}
 						}
 					}
 				}
