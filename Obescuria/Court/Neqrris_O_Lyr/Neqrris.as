@@ -95,7 +95,7 @@ void onGib(CSprite@ this)
     CBlob@ blob = this.getBlob();
     Vec2f pos = blob.getPosition();
     Vec2f vel = blob.getVelocity();
-	vel.y -= 3.0f;
+	vel.y -= 1.0f;
     f32 hp = Maths::Min(Maths::Abs(blob.getHealth()), 2.0f) + 1.0;
 	const u8 team = blob.getTeamNum();
 	/*
@@ -119,10 +119,10 @@ void onInit(CBlob@ this)
 	//for EatOthers
 	string[] tags = {"player","lantern"};
 	this.set("tags to eat", tags);
-	this.set_f32("gib health", -3.0f);	
+	this.set_f32("gib health", -2.0f);	
 	float difficulty = getRules().get_f32("difficulty")/4.0;
 	if (difficulty<1.0) difficulty=1.0;
-	this.set_f32("bite damage", 2.5f);
+	this.set_f32("bite damage", 0.25f);
 	int bitefreq = 45-difficulty*1.0;
 	if (bitefreq<5) bitefreq=2;
 	this.set_u16("bite freq", bitefreq);
@@ -160,14 +160,14 @@ void onTick(CBlob@ this)
 {
 	f32 x = this.getVelocity().x;
 	// whoever made shit here should drink bleach and set themself on fire
-	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) < 120)
+	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) < 60)
 	{
 		this.Tag("downed");
 	}
 	
-	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
+	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) > 60)
 	{
-		this.server_SetHealth(7.0);
+		this.server_SetHealth(2.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
 		this.Untag("downed");
@@ -202,7 +202,7 @@ void onTick(CBlob@ this)
 					vel.Normalize();
 					HitInfo@[] hitInfos;
 					CMap @map = getMap();
-					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 6.0f, this, @hitInfos ))
+					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 2.0f, this, @hitInfos ))
 					{
 						//HitInfo objects are sorted, first come closest hits
 						bool hit_block = false;
@@ -435,8 +435,8 @@ bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {
 	if (blob.hasTag("dead"))
 		return false;
-	if ((!blob.hasTag("zombie") || !blob.hasTag("portal_zombie")) && blob.hasTag("flesh") && this.getTeamNum() == blob.getTeamNum()) return false;
-	if ((blob.hasTag("zombie") || blob.hasTag("portal_zombie")) && blob.getHealth()<0.0) return false;
+	if (!blob.hasTag("zombie") && blob.hasTag("flesh") && this.getTeamNum() == blob.getTeamNum()) return false;
+	if (blob.hasTag("zombie") && blob.getHealth()<0.0) return false;
 	return true;
 }
 
@@ -448,7 +448,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 	const u16 friendId = this.get_netid(friend_property);
 	CBlob@ friend = getBlobByNetworkID(friendId);
-	if (blob.getTeamNum() != this.getTeamNum() && blob.hasTag("flesh") && (!blob.hasTag("dead") || (blob.hasTag("zombie") || blob.hasTag("portal_zombie"))))
+	if (blob.getTeamNum() != this.getTeamNum() && blob.hasTag("flesh") && (!blob.hasTag("dead") || blob.hasTag("zombie")))
 	{
 		MadAt( this, blob );
 	}

@@ -367,6 +367,7 @@ shared class ZombiesCore : RulesCore
 	//AddKillScore();
 		//rules.onBlobDie();
         if (rules.isGameOver()) { return; }
+		int daily_transition = rules.get_s32("daily_transition");
 		int day_cycle = getRules().daycycle_speed * 60;
 		int transition = rules.get_s32("transition");
 		int max_zombies = rules.get_s32("max_zombies");
@@ -502,12 +503,15 @@ shared class ZombiesCore : RulesCore
 					server_CreateBlob( "Zombie", -1, sp);
 					else
 					server_CreateBlob( "Skeleton", -1, sp);
-					/*if (dayNumber == 14){
-						server_CreateBlob("ukkon",-1,sp);
-						server_CreateBlob("ukkon",-1,sp);
+					if (dayNumber == 14 && daily_transition == 1)
+					{
 						server_CreateBlob("vroon",-1,sp);
 						server_CreateBlob("vroon",-1,sp);
-					}*/
+					}
+					else
+					{
+						rules.set_s32("daily_transition",1);
+					}
 					if (transition == 1 && (dayNumber % 4) == 0)
 					{
 						transition=0;
@@ -522,12 +526,10 @@ shared class ZombiesCore : RulesCore
 						if (dayNumber > 10){
 							for(int i = 0; i < 2; ++i) {
 								server_CreateBlob("kaarn",-1,sp);
-								server_CreateBlob("ukkon",-1,sp);
 							}
 						}
 						if (dayNumber > 15){
 							for(int i = 0; i < 2; ++i){
-								server_CreateBlob("ukkon",-1,sp);
 								server_CreateBlob("vroon",-1,sp);
 							}
 						}
@@ -572,16 +574,25 @@ shared class ZombiesCore : RulesCore
 								server_CreateBlob( "Wraith", -1, sp);
 							}
 						}
-						if(dayNumber >= 40 )
+						if(dayNumber >= 40  && dayNumber < 51)
 						{
-							for(int i = 0; i < 2; ++i) {
+							for(int i = 0; i < 1; ++i) {
 								server_CreateBlob( "BossZombieKnight", -1, sp);
 								server_CreateBlob( "abomination", -1, sp);
 							}
-							server_CreateBlob( "abomination", -1, sp);
 							for(int i = 0; i < 7; ++i) {
 								server_CreateBlob( "Wraith", -1, sp);
 							}
+						}
+						if(dayNumber >= 51)
+						{
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,0);
+							server_CreateBlob( "neqrris", -1, middle_up);
+							server_CreateBlob( "bloodvainguard", -1, middle_up);
+							server_CreateBlob( "bloodvainguard", -1, middle_up);
+							server_CreateBlob( "goresinger", -1, middle_up);
+							server_CreateBlob( "goresinger", -1, middle_up);
+							server_CreateBlob( "goresinger", -1, middle_up);
 						}
 					}
 				}

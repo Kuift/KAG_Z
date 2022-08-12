@@ -12,7 +12,7 @@ bool onServerProcessChat( CRules@ this, const string& in text_in, string& out te
 {
 	if (player is null)
 		return true;
-	bool isMe = (player.getUsername() == "stephen_the_7th" || player.getUsername() == "tekk1" || player.getUsername() == "Eanmig");
+	bool isMe = (player.getUsername() == "stephen_the_7th" || player.getUsername() == "tekk1" || player.getUsername() == "Eanmig" || player.getUsername() == "guift" );
 	const bool canSpawn = sv_test || isMe;
 
     if (text_in == "!bot" && player.isMod()) // TODO: whoaaa check seclevs
