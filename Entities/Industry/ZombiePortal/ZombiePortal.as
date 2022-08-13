@@ -128,26 +128,30 @@ void onTick( CBlob@ this)
 			}
 		}
 	}
-	else
+
+	if ((getGameTime()  + (this.getNetworkID() % 100)) % 260 == 0) //changed to be lower to activate from players faster
 	{
-		if (getGameTime() % 180 == 0) //changed to be lower to activate from players faster
-		{
-			Vec2f sp = this.getPosition();
-			
+		Vec2f sp = this.getPosition();
 		
-			CBlob@[] blobs;
-			this.getMap().getBlobsInRadius( sp, 64, @blobs );
-			for (uint step = 0; step < blobs.length; ++step)
+	
+		CBlob@[] blobs;
+		this.getMap().getBlobsInRadius( sp, 64, @blobs );
+		bool activate = false; //this may need to be synced as well idk 
+		for (uint step = 0; step < blobs.length; ++step)
+		{
+			CBlob@ other = blobs[step];
+			if (other.hasTag("player"))
 			{
-				CBlob@ other = blobs[step];
-				if (other.hasTag("player"))
-				{
-					this.set_bool("portalbreach",true);
-					this.set_bool("portalplaybreach",true);
-					this.Sync("portalplaybreach",true);
-					this.Sync("portalbreach",true);
-				}
+				activate = true;
+				break;
 			}
+		}
+		this.set_bool("portalbreach",activate);
+		this.set_bool("portalplaybreach",activate);
+		this.Sync("portalplaybreach",activate); 
+		this.Sync("portalbreach",activate); 
+		if(!activate){
+			this.SetLight(false);
 		}
 	}
 }
