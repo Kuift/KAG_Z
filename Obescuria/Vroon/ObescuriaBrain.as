@@ -183,7 +183,7 @@ void onTick( CBrain@ this )
 								Vec2f tpos = other.getPosition();									  
 								f32 dist = (tpos - pos).getLength();
 							
-								if (dist < best_dist && (other.hasTag("zombie") || other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
+								if (dist < best_dist && (other.hasTag("zombie") && other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
 								{
 									mode = MODE_FLEE;
 									best_dist=dist;

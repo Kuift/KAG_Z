@@ -359,7 +359,7 @@ bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {
 	if (blob.hasTag("dead"))
 		return false;
-	if ((blob.hasTag("zombie") || blob.hasTag("portal_zombie")) && blob.getHealth()<0.0) return false;
+	if ((blob.hasTag("zombie") && blob.hasTag("portal_zombie")) && blob.getHealth()<0.0) return false;
 	return true;
 }
 

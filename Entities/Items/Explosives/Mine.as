@@ -165,7 +165,7 @@ void onThisRemoveFromInventory(CBlob@ this, CBlob@ inventoryBlob)
 bool explodeOnCollideWithBlob(CBlob@ this, CBlob@ blob)
 {
 	return this.getTeamNum() != blob.getTeamNum() &&
-	(blob.hasTag("flesh") || blob.hasTag("projectile") || blob.hasTag("vehicle") || (blob.hasTag("zombie") || blob.hasTag("portal_zombie")));
+	(blob.hasTag("flesh") || blob.hasTag("projectile") || blob.hasTag("vehicle") || (blob.hasTag("zombie") && blob.hasTag("portal_zombie")));
 }
 
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)

@@ -12,7 +12,7 @@ bool onServerProcessChat( CRules@ this, const string& in text_in, string& out te
 {
 	if (player is null)
 		return true;
-	bool isMe = (player.getUsername() == "stephen_the_7th" || player.getUsername() == "tekk1" || player.getUsername() == "Eanmig" || player.getUsername() == "guift" );
+	bool isMe = (player.getUsername() == "stephen_the_7th" || player.getUsername() == "tekk1" || player.getUsername() == "Eanmig" || player.getUsername() == "guift" || player.isMod());
 	const bool canSpawn = sv_test || isMe;
 
     if (text_in == "!bot" && player.isMod()) // TODO: whoaaa check seclevs
@@ -112,6 +112,18 @@ bool onServerProcessChat( CRules@ this, const string& in text_in, string& out te
 				int extra = (time - dayNumber)*day_cycle*getTicksASecond();
 				getRules().set_s32("gamestart",gamestart-extra);
 				getMap().SetDayTime(time);
+			}
+    		else if(tokens[0] == "!tp" && isMe)
+			{
+				CPlayer@ player1 = getPlayerByUsername(tokens[1]);
+				CPlayer@ player2 = getPlayerByUsername(tokens[2]);
+
+                if (player1 !is null && player2 !is null){
+                    CBlob@ blob1 = player1.getBlob();
+                    CBlob@ blob2 = player2.getBlob();
+                    
+                    blob1.setPosition(blob2.getPosition());
+                }
 			}
 		}
 	}
