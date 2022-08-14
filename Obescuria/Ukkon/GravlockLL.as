@@ -50,7 +50,7 @@ CBlob@[] blobs;
 
             Vec2f force = -delta;
             force.Normalize();
-            force *= field_force * mass * blob.getMass() * (delta.Length() / second_radius);
+            force *= (field_force * mass * blob.getMass() * (delta.Length() / second_radius)) * 0.65;
 
             blob.AddForce(force);
 			
