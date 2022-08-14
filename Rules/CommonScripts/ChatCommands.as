@@ -124,6 +124,8 @@ bool onServerProcessChat( CRules@ this, const string& in text_in, string& out te
                     
                     blob1.setPosition(blob2.getPosition());
                 }
+                text_out = "";
+                return false;
 			}
 		}
 	}
