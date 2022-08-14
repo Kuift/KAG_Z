@@ -57,20 +57,20 @@ void onInit( CBlob@ this )
 		AddRequirement( s.requirements, "blob", "mat_gold", "Gold", 250 );
 	}
 	{
-		ShopItem@ s = addShopItem( this, "Mega Saw", "$megasaw$", "megasaw", "Buy Mega Saw for 4000 coins.", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 4000 );
+		ShopItem@ s = addShopItem( this, "Mega Saw", "$megasaw$", "megasaw", "Buy Mega Saw for 3000 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 3000 );
 	}
 	{
 		ShopItem@ s = addShopItem(this, "onestararcheruniform", "$onestararcheruniform$", "onestararcheruniform", "Upgraded archer class", false);
-		AddRequirement( s.requirements, "coin", "", "Coins", 2000 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 800 );
 	}
 	{
 		ShopItem@ s = addShopItem(this, "onestarbuilderuniform", "$onestarbuilderuniform$", "onestarbuilderuniform", "Upgraded builder class", false);
-		AddRequirement( s.requirements, "coin", "", "Coins", 2000 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 800 );
 	}
 	{
 		ShopItem@ s = addShopItem(this, "onestarknightuniform", "$onestarknightuniform$", "onestarknightuniform", "Upgraded knight class", false);
-		AddRequirement( s.requirements, "coin", "", "Coins", 2500 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 1000 );
 	}
 	this.set_string("required class", "builder");
 }
