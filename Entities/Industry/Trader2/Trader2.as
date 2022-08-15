@@ -72,7 +72,7 @@ void onInit( CBlob@ this )
 		ShopItem@ s = addShopItem(this, "onestarknightuniform", "$onestarknightuniform$", "onestarknightuniform", "Upgraded knight class", false);
 		AddRequirement( s.requirements, "coin", "", "Coins", 1000 );
 	}
-	this.set_string("required class", "builder");
+	// this.set_string("required class", "builder");
 }
 
 void GetButtonsFor( CBlob@ this, CBlob@ caller )
