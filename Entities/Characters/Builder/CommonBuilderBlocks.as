@@ -74,19 +74,24 @@ void addCommonBuilderBlocks(BuildBlock[][]@ blocks)
 	}
 	{
 		AddIconToken( "$GoldBrick$", "GoldBrick.png", Vec2f(8,8), 0);
-		BuildBlock b(0, "GoldBrick", "$GoldBrick$", "GoldBrick\nRich Building Block");
+		BuildBlock b(0, "GoldBrick", "$GoldBrick$", "Gold Brick\nRich Building Block");
 		AddRequirement(b.reqs, "blob", "mat_gold", "Gold", 25);
 		blocks[0].push_back(b);
 	}
 	{
 		AddIconToken( "$gold_door$", "1x1GoldDoorIcon.png", Vec2f(10,8), 0);
-		BuildBlock b(0, "gold_door", "$gold_door$", "gold_door\nRich Building Block");
+		BuildBlock b(0, "gold_door", "$gold_door$", "Gold Door\nRich Building Block");
 		AddRequirement(b.reqs, "blob", "mat_gold", "Gold", 60);
 		blocks[0].push_back(b);
 	}
 	{
 		BuildBlock b(0, "trap_block", "$trap_block$", "Trap Block\nOnly enemies can pass");
 		AddRequirement(b.reqs, "blob", "mat_stone", "Stone", 25);
+		blocks[0].push_back(b);
+	}
+	{
+		BuildBlock b(0, "bridge", "$bridge$", "Trap Bridge\nOnly your team can stand on it");
+		AddRequirement(b.reqs, "blob", "mat_wood", "Wood", 25);
 		blocks[0].push_back(b);
 	}
 	// {   // trap
