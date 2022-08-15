@@ -56,12 +56,12 @@ AddIconToken( "$pa$", "PA.png", Vec2f(32,16), 0 );
 		AddRequirement( s.requirements, "blob", "mat_stone", "Stone", 500 );
 		AddRequirement( s.requirements, "no more", "boulderfactory", "Boulder Factory", 12 );
 	}
-	{
+	/*{
 		ShopItem@ s = addShopItem( this, "Saw Factory", "$sawfactory$", "sawfactory", "Now we know how to produce saw in a factory!" );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 500 );
 		AddRequirement( s.requirements, "blob", "mat_stone", "Stone", 250 );
 		AddRequirement( s.requirements, "no more", "sawfactory", "Saw Factory", 12 );
-	}
+	}*/
 	{
 		ShopItem@ s = addShopItem( this, "Lantern Factory", "$lanternfactory$", "lanternfactory", "Factory for gas lanterns, best quality!" );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 300 );
