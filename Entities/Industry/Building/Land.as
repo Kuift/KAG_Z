@@ -42,20 +42,19 @@ void onInit( CBlob@ this )
 	{
 		ShopItem@ s = addShopItem( this, "Knight Shop", "$knightshop$", "knightshop", "Knight supplies" );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", COST_WOOD_FACTORY );
-		
-		
-	}	
+	}
+	{
+		ShopItem@ s = addShopItem(this, "Polearm Shop", "$polearmshop$", "polearmshop", "polearm shop");
+		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", COST_WOOD_FACTORY);
+	}
 	{
 		ShopItem@ s = addShopItem( this, "Archer Shop", "$archershop$", "archershop", "Archer supplies" );
-		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", COST_WOOD_FACTORY );
-	
-		
+		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", COST_WOOD_FACTORY );		
 	}
 	{
 		ShopItem@ s = addShopItem( this, "Vehicle Shop", "$vehicleshop$", "vehicleshop", "Vehicle supplies" );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 100 );
-		AddRequirement( s.requirements, "blob", "mat_gold", "Gold", 50 );
-		
+		AddRequirement( s.requirements, "blob", "mat_gold", "Gold", 50 );		
 	}
 	{
 		ShopItem@ s = addShopItem( this, "Bison Nursery", "$bisonnursery$", "bisonnursery", "Raise bison" );
