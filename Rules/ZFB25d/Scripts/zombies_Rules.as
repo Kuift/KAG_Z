@@ -44,7 +44,7 @@ void Config(ZombiesCore@ this)
 	s32 max_zombies = cfg.read_s32("game_time",125);
 
     CMap@ map = getMap();
-    max_zombies = (map.tilemapwidth + map.tilemapwidth) / 5; //base the amount of zombies on the map
+    max_zombies = (map.tilemapwidth + map.tilemapheight) / 5; //base the amount of zombies on the map
     max_zombies = Maths::Floor(max_zombies);
 
     if(max_zombies > 125)
