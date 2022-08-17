@@ -17,7 +17,7 @@ const u8 heat_max = 120;
 
 const string last_drill_prop = "drill last active";
 
-const u8 heat_add = 6/5; //5 times as much as normal
+const u8 heat_add = 6/5; //5 times less than normal
 const u8 heat_add_constructed = 2/5;
 const u8 heat_add_blob = 8/5;
 const u8 heat_cool_amount = 2;
@@ -308,12 +308,12 @@ void onTick(CBlob@ this)
 
 									if (b.getName() == "ZombiePortal")
 									{
-										attack_dam *= 0.1f;
+										attack_dam *= 0.12f;
 									}
 									
 									if (b.hasTag("flesh"))
 									{
-										attack_dam *= 0.45f;
+										attack_dam *= 0.65f;
 									}
 
 									if (b.hasTag("shielded") && blockAttack(b, attackVel, 0.0f)) // are they shielding? reduce damage!

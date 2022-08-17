@@ -17,7 +17,7 @@ void onInit( CBlob@ this )
 	// SHOP
 
 	this.set_Vec2f("shop offset", Vec2f(0, 0));
-	this.set_Vec2f("shop menu size", Vec2f(12,1));	
+	this.set_Vec2f("shop menu size", Vec2f(5,3));	
 	this.set_string("shop description", "Buy");
 	this.set_u8("shop icon", 25);
 
@@ -57,22 +57,26 @@ void onInit( CBlob@ this )
 		AddRequirement( s.requirements, "blob", "mat_gold", "Gold", 250 );
 	}
 	{
-		ShopItem@ s = addShopItem( this, "Mega Saw", "$megasaw$", "megasaw", "Buy Mega Saw for 4000 coins.", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 4000 );
+		ShopItem@ s = addShopItem( this, "Mega Saw", "$megasaw$", "megasaw", "Buy Mega Saw for 3000 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 3000 );
 	}
 	{
 		ShopItem@ s = addShopItem(this, "onestararcheruniform", "$onestararcheruniform$", "onestararcheruniform", "Upgraded archer class", false);
-		AddRequirement( s.requirements, "coin", "", "Coins", 2000 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 800 );
 	}
 	{
 		ShopItem@ s = addShopItem(this, "onestarbuilderuniform", "$onestarbuilderuniform$", "onestarbuilderuniform", "Upgraded builder class", false);
-		AddRequirement( s.requirements, "coin", "", "Coins", 2000 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 800 );
 	}
 	{
 		ShopItem@ s = addShopItem(this, "onestarknightuniform", "$onestarknightuniform$", "onestarknightuniform", "Upgraded knight class", false);
-		AddRequirement( s.requirements, "coin", "", "Coins", 2500 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 1000 );
 	}
-	this.set_string("required class", "builder");
+	{
+		ShopItem@ s = addShopItem(this, "onestarpolearmuniform", "$onestarpolearmuniform$", "onestarpolearmuniform", "Upgraded Polearm class", false);
+		AddRequirement( s.requirements, "coin", "", "Coins", 1000 );
+	}
+	// this.set_string("required class", "builder");
 }
 
 void GetButtonsFor( CBlob@ this, CBlob@ caller )

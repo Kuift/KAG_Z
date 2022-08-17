@@ -44,12 +44,12 @@ void Config(ZombiesCore@ this)
 	s32 max_zombies = cfg.read_s32("game_time",125);
 
     CMap@ map = getMap();
-    max_zombies = (map.tilemapwidth + map.tilemapwidth) / 3.5; //base the amount of zombies on the map
+    max_zombies = (map.tilemapwidth + map.tilemapheight) / 5; //base the amount of zombies on the map
     max_zombies = Maths::Floor(max_zombies);
 
-    if(max_zombies > 200)
+    if(max_zombies > 125)
     {
-        max_zombies = 200;  //hard capped here at 200
+        max_zombies = 125;  //hard capped here
     }
 
     s32 max_portal_zombies = Maths::Ceil(max_zombies*0.25f);

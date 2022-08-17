@@ -195,7 +195,7 @@ void onTick( CBrain@ this )
 								Vec2f tpos = other.getPosition();									  
 								f32 dist = (tpos - pos).getLength();
 							
-								if (dist < best_dist && (other.hasTag("zombie") || other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
+								if (dist < best_dist && (other.hasTag("zombie") && other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
 								{
 									mode = MODE_FLEE;
 									best_dist=dist;
@@ -230,7 +230,7 @@ void onTick( CBrain@ this )
 							Vec2f tpos = other.getPosition();									  
 							f32 dist = (tpos - pos).getLength();
 						
-							if (dist < best_dist && (other.hasTag("zombie") || other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
+							if (dist < best_dist && (other.hasTag("zombie") && other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
 							{
 								mode = MODE_FLEE;
 								best_dist=dist;
@@ -244,7 +244,7 @@ void onTick( CBrain@ this )
 									//TODO: flags for these...
 								if (blob.getName() == "Greg") 
 								{
-									bool otherzombies =  (XORRandom(4) == 0) || (!other.hasTag("zombie") || !other.hasTag("portal_zombie"));
+									bool otherzombies =  (XORRandom(4) == 0) || (!other.hasTag("zombie") && !other.hasTag("portal_zombie"));
 									if (other.getName() != name && //dont eat same type of blob
 										other.hasTag("flesh") && otherzombies && !other.hasTag("dead")) //attack flesh blobs
 									{
