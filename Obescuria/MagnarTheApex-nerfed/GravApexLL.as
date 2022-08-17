@@ -52,7 +52,7 @@ CBlob@[] blobs;
             force.Normalize();
             force *= field_force * mass * blob.getMass() * (delta.Length() / second_radius);
 
-            blob.AddForce(force);
+            blob.AddForce(force/2);
 			
         }
         }
