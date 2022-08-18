@@ -17,12 +17,12 @@ const u8 heat_max = 120;
 
 const string last_drill_prop = "drill last active";
 
-const u8 heat_add = 6/5; //5 times less than normal
-const u8 heat_add_constructed = 2/5;
-const u8 heat_add_blob = 8/5;
+const u8 heat_add = 6/4;
+const u8 heat_add_constructed = 2/4;
+const u8 heat_add_blob = 8/4;
 const u8 heat_cool_amount = 2;
 
-const u8 heat_cooldown_time = 6;
+const u8 heat_cooldown_time = 6*2;
 const u8 heat_cooldown_time_water = u8(heat_cooldown_time / 3);
 
 const f32 max_heatbar_view_range = 65;
