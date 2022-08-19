@@ -63,17 +63,13 @@ void onTick( CBlob@ this)
 	//int num_zombies = 40;
 	if (this.get_bool("portalbreach"))
 	{
-		Vec2f sp = this.getPosition();
 		if ((getGameTime() % spawnRate == 0) && num_portal_zombies < max_portal_zombies)
 		{
-			CBlob@[] blobs;
-			getMap().getBlobsInRadius( this.getPosition(), 250, @blobs );
-			for(int i = 0; i < blobs.size(); i++){
-				if (blobs[i].hasTag("player") && blobs[i] !is null){
-					sp = blobs[i].getPosition();
-					break;
-				}
-			}
+		CBlob@[] blobs;
+		getMap().getBlobsInRadius( this.getPosition(), 250, @blobs );
+		if (blobs.length == 0) return;
+
+			Vec2f sp = this.getPosition();
 			
 			int r;
 			r = XORRandom(10);
