@@ -167,7 +167,7 @@ void onTick(CBlob@ this)
 	
 	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
 	{
-		this.server_SetHealth(7.0);
+		this.server_SetHealth(4.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
 		this.Untag("downed");

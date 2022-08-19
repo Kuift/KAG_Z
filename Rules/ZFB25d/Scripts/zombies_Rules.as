@@ -503,10 +503,13 @@ shared class ZombiesCore : RulesCore
 					server_CreateBlob( "Zombie", -1, sp);
 					else
 					server_CreateBlob( "Skeleton", -1, sp);
-					if (dayNumber == 14 && daily_transition == 1)
+					if (dayNumber == 14)
 					{
-						server_CreateBlob("vroon",-1,sp);
-						server_CreateBlob("vroon",-1,sp);
+						if(daily_transition == 1){
+							server_CreateBlob("vroon",-1,sp);
+							server_CreateBlob("vroon",-1,sp);
+							rules.set_s32("daily_transition",0);
+						}
 					}
 					else
 					{
