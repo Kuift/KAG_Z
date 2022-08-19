@@ -65,7 +65,7 @@ void onTick( CBlob@ this)
 	{
 		if ((getGameTime() % spawnRate == 0) && num_portal_zombies < max_portal_zombies)
 		{
-		CBlob@[] blobs;
+		CBlob@[] blobs; //hello
 		getMap().getBlobsInRadius( this.getPosition(), 250, @blobs );
 		if (blobs.length == 0) return;
 
