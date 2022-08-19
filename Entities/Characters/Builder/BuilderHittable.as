@@ -21,6 +21,7 @@ const string[] builder_alwayshit =
    "trap_block3",
    "GoldBrick",
    "musicdisc",
+   "bridge",
 	
 	"pa",
 	"gunfactory",
