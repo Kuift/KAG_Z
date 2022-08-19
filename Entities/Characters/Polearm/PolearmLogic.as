@@ -84,6 +84,8 @@ this.push("names to activate", "bomb_satchel");
 	SetHelp(this, "help self action", "knight", "$Jab$Jab        $LMB$", "", 4);
 	SetHelp(this, "help self action2", "knight", "$Shield$Shield    $KEY_HOLD$$RMB$", "", 4);
 
+	this.push("names to activate", "keg");
+
 	this.getCurrentScript().runFlags |= Script::tick_not_attached;
 	this.getCurrentScript().removeIfTag = "dead";
 }
@@ -246,7 +248,7 @@ void onTick(CBlob@ this)
 								this.getSprite().PlayRandomSound("/Scrape");
 							}
 
-							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime));
+							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime)) *1.1;
 							moveVars.walkFactor *= factor;
 
 							//  printf("knight.slideTime = " + knight.slideTime  );
@@ -639,7 +641,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 			{
 				if (getNet().isServer())
 				{
-					CBlob @blob = server_CreateBlob("contactbomb", this.getTeamNum(), this.getPosition());
+					CBlob @blob = server_CreateBlob("bomb", this.getTeamNum(), this.getPosition());
 					if (blob !is null)
 					{
 						TakeItem(this, bombTypeName);
@@ -652,11 +654,19 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 			{
 				if (getNet().isServer())
 				{
-					CBlob @blob = server_CreateBlob("molotov", this.getTeamNum(), this.getPosition());
+					CBlob @blob = server_CreateBlob("waterbomb", this.getTeamNum(), this.getPosition());
 					if (blob !is null)
 					{
 						TakeItem(this, bombTypeName);
 						this.server_Pickup(blob);
+						blob.set_f32("map_damage_ratio", 0.0f);
+						blob.set_f32("explosive_damage", 0.0f);
+						blob.set_f32("explosive_radius", 92.0f);
+						blob.set_bool("map_damage_raycast", false);
+						blob.set_string("custom_explosion_sound", "/GlassBreak");
+						blob.set_u8("custom_hitter", Hitters::water);
+                        blob.Tag("splash ray cast");
+
 					}
 				}
 			}

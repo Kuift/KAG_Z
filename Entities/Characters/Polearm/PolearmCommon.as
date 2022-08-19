@@ -51,24 +51,22 @@ namespace BombType
 {
 	enum type
 	{
-		contact = 0,
-		molotov,
+		bomb = 0,
+		water,
 		count
 	};
 }
 
-const string[] bombNames = { "Contact Bomb",
-							"Molotov Cocktail"
+const string[] bombNames = { "Bomb",
+                             "Water Bomb"
                            };
 
-const string[] bombIcons = { "$ContactBomb$",
-							"$Molotov$"
-							
+const string[] bombIcons = { "$Bomb$",
+                             "$WaterBomb$"
                            };
 
-const string[] bombTypeNames = { "mat_contactbomb",
-								"mat_molotov"
-
+const string[] bombTypeNames = { "mat_bombs",
+                                 "mat_waterbombs"
                                };
 
 
