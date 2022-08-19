@@ -88,7 +88,7 @@ void onRespawnCommand(CBlob@ this, u8 cmd, CBitStream @params)
 				if (caller !is null && canChangeClass(this, caller))
 				
 				{
-				if (caller.getName() == "onestarpolearm" && caller.getTeamNum() == 0)
+				/*if (caller.getName() == "onestarpolearm" && caller.getTeamNum() == 0)
 				{
 					CBlob@ onestarpolearmuniform = server_CreateBlob("onestarpolearmuniform", -1, this.getPosition());
 				}
@@ -279,7 +279,7 @@ void onRespawnCommand(CBlob@ this, u8 cmd, CBitStream @params)
 				else if (caller.getName() == "threestarbuilder2" && caller.getTeamNum() == 0)
 				{
 				CBlob@ onestarpolearmuniform = server_CreateBlob("threestarbuilderuniform", -1, this.getPosition());
-				}
+				}*/
 					string classconfig = params.read_string();
 					CBlob @newBlob = server_CreateBlob(classconfig, caller.getTeamNum(), this.getRespawnPosition());
 

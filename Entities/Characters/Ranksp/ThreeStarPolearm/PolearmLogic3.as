@@ -45,7 +45,7 @@ void knight_clear_actor_limits(CBlob@ this)
 void onInit(CBlob@ this)
 {
 AddIconToken( "$Molotov$", "KnightIcons.png", Vec2f(16,32), 3 );
-this.push("names to activate", "bomb_satchel");
+this.push("names to activate", "keg");
 
 	PolearmInfo knight;
 
