@@ -25,7 +25,7 @@ void dropHeart(CBlob@ this)
 				Vec2f vel(XORRandom(2) == 0 ? -2.0 : 2.0f, -5.0f);
 				heart.setVelocity(vel);
 			}
-			if (this.getName() == "onestarbuilder")
+			/*if (this.getName() == "onestarbuilder")
 			{
 			CBlob@ osb = server_CreateBlob("onestarbuilderuniform", -1, this.getPosition()); 
 			}
@@ -60,7 +60,7 @@ void dropHeart(CBlob@ this)
 			else if (this.getName() == "threestarknight")
 			{
 			CBlob@ thsk = server_CreateBlob("threestarknightuniform", -1, this.getPosition()); 
-			}
+			}*/
 		}
 	}
 }
