@@ -113,20 +113,6 @@ bool onServerProcessChat( CRules@ this, const string& in text_in, string& out te
 				getRules().set_s32("gamestart",gamestart-extra);
 				getMap().SetDayTime(time);
 			}
-    		else if(tokens[0] == "!tp" && isMe)
-			{
-				CPlayer@ player1 = getPlayerByUsername(tokens[1]);
-				CPlayer@ player2 = getPlayerByUsername(tokens[2]);
-
-                if (player1 !is null && player2 !is null){
-                    CBlob@ blob1 = player1.getBlob();
-                    CBlob@ blob2 = player2.getBlob();
-                    
-                    blob1.setPosition(blob2.getPosition());
-                }
-                text_out = "";
-                return false;
-			}
 		}
 	}
 	

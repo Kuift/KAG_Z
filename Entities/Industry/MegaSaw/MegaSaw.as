@@ -41,7 +41,7 @@ void onTick( CBlob@ this )
 		AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");	   		
         CBlob@ holder = point.getOccupied();												   
         if (holder is null) { return; }
-		if (!point.isKeyPressed(key_action1) || blade_del<30)
+		if (!point.isKeyPressed(key_action1) || blade_del<20) //30
 		{
 			return;
 		}
