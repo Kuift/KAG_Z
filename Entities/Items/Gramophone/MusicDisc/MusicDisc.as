@@ -11,11 +11,9 @@ const string[] names =
 	"Baby Crush",
 	"Can't Touch This",
 	"Sassy Girl",
-	"Your Gallant Char",
 	"FELIZ JUEVES",
 	"Gas Gas Gas",
 	"WataOp",
-	"Sensation",
 	"The Sweet Escape",
 	"Ghost Busters",
 	"Gone To Me",
@@ -27,14 +25,13 @@ const string[] names =
 	"Viva La Remix",
 	"Welcome to the Club",
 	"When can we do this Again",
-	"Never get Naked",
 	"Weeb 2",
 	"Uptown Funk",
-	"Weeb 3",
 	"Party in the USA",
 	"Despacito",
 	"Minuetto",
 	"Spooky Scary Skeleton",
+	"Ukrainian landscapes",
 	"blank"
 
 };
