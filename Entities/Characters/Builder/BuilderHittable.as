@@ -22,6 +22,7 @@ const string[] builder_alwayshit =
    "GoldBrick",
    "musicdisc",
    "bridge",
+	"bank",
 	
 	"pa",
 	"gunfactory",
