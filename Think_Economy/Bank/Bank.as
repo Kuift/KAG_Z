@@ -25,10 +25,6 @@ void onInit(CBlob@ this)
 	this.set_string("shop description", "Buy");
 	this.set_u8("shop icon", 25);
 
-	// CLASS
-	this.set_Vec2f("class offset", Vec2f(-6, 0));
-	this.set_string("required class", "builder");
-
 	int team_num = this.getTeamNum();
 
 //	{
@@ -102,14 +98,6 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller)
 {
 	if (!canSeeButtons(this, caller)) return;
 
-	if (caller.getConfig() == this.get_string("required class"))
-	{
-		this.set_Vec2f("shop offset", Vec2f_zero);
-	}
-	else
-	{
-		this.set_Vec2f("shop offset", Vec2f(6, 0));
-	}
 	this.set_bool("shop available", this.isOverlapping(caller));
 }
 
