@@ -89,11 +89,11 @@ void addCommonBuilderBlocks(BuildBlock[][]@ blocks)
 		AddRequirement(b.reqs, "blob", "mat_stone", "Stone", 25);
 		blocks[0].push_back(b);
 	}
-	{
+	/*{
 		BuildBlock b(0, "bridge", "$bridge$", "Trap Bridge\nOnly your team can stand on it");
 		AddRequirement(b.reqs, "blob", "mat_wood", "Wood", 25);
 		blocks[0].push_back(b);
-	}
+	}*/
 	// {   // trap
 	    // AddIconToken( "$trap_block2$", "trap_block2.png", Vec2f(8,8), 0);
 		// BuildBlock b( 0, "trap_block2", "$trap_block2$", "Stone Trap Block" );
