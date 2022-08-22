@@ -46,7 +46,7 @@ void onInit(CBlob@ this)
 {
 AddIconToken( "$Molotov$", "KnightIcons.png", Vec2f(16,32), 3 );
 AddIconToken( "$ContactBomb$", "KnightIcons.png", Vec2f(16,32), 5 );
-this.push("names to activate", "bomb_satchel");
+// this.push("names to activate", "bomb_satchel");
 
 	PolearmInfo knight;
 
@@ -119,6 +119,9 @@ void onTick(CBlob@ this)
 	{
 		return;
 	}
+
+	moveVars.walkFactor *= 1.1f;
+	moveVars.jumpFactor *= 1.1f;
 
 	Vec2f pos = this.getPosition();
 	Vec2f vel = this.getVelocity();
@@ -400,7 +403,7 @@ void onTick(CBlob@ this)
 					attackarc *= 0.6f;
 				}
 
-				DoAttack(this, 1.0f, attackAngle, attackarc, Hitters::sword, delta, knight);
+				DoAttack(this, 1.5f, attackAngle, attackarc, Hitters::sword, delta, knight);
 			}
 			else if (delta >= 9)
 			{
@@ -426,7 +429,7 @@ void onTick(CBlob@ this)
 			}
 			else if (delta > DELTA_BEGIN_ATTACK && delta < 10)
 			{
-				DoAttack(this, 1.5f, -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
+				DoAttack(this, 3.0f, -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
 			}
 			else if (delta >= KnightVars::slash_time ||
 			         (knight.doubleslash && delta >= KnightVars::double_slash_time))

@@ -117,6 +117,9 @@ void onTick(CBlob@ this)
 		return;
 	}
 
+	moveVars.walkFactor *= 1.4f;
+	moveVars.jumpFactor *= 1.4f;
+
 	Vec2f pos = this.getPosition();
 	Vec2f vel = this.getVelocity();
 	Vec2f aimpos = this.getAimPos();
@@ -245,7 +248,7 @@ void onTick(CBlob@ this)
 								this.getSprite().PlayRandomSound("/Scrape");
 							}
 
-							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime));
+							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime)) *1.25;
 							moveVars.walkFactor *= factor;
 
 							//  printf("knight.slideTime = " + knight.slideTime  );
@@ -397,7 +400,7 @@ void onTick(CBlob@ this)
 					attackarc *= 0.6f;
 				}
 
-				DoAttack(this, 2.5f, attackAngle, attackarc, Hitters::sword, delta, knight);
+				DoAttack(this, 3.5f, attackAngle, attackarc, Hitters::sword, delta, knight);
 			}
 			else if (delta >= 9)
 			{
@@ -423,7 +426,7 @@ void onTick(CBlob@ this)
 			}
 			else if (delta > DELTA_BEGIN_ATTACK && delta < 10)
 			{
-				DoAttack(this, 2.75f, -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
+				DoAttack(this, 7.0f, -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
 			}
 			else if (delta >= KnightVars::slash_time ||
 			         (knight.doubleslash && delta >= KnightVars::double_slash_time))
@@ -453,7 +456,7 @@ void onTick(CBlob@ this)
 			if (Maths::Abs(vel.x) < KnightVars::slash_move_max_speed &&
 			        vel.y > -KnightVars::slash_move_max_speed)
 			{
-				Vec2f slash_vel =  knight.slash_direction * this.getMass() * 0.5f;
+				Vec2f slash_vel =  knight.slash_direction * this.getMass() * 1.45f;
 				this.AddForce(slash_vel);
 			}
 		}
