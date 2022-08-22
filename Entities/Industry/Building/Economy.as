@@ -71,6 +71,12 @@ void onInit( CBlob@ this )
 		ShopItem@ s = addShopItem( this, "Trader", "$trader2$", "trader2", "I ran, *cough* came from far away land full with riches! Take a look what I have to offer."  );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 150 );
 	}
+	
+		{
+		ShopItem@ s = addShopItem(this, "Bank", "$bank$", "bank", "Use this to transfer money between players");
+		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 50);
+	}
+	
 	{
 		ShopItem@ s = addShopItem( this, "Back", "$building$", "building", "Go Back" );
 		//		s.customButton = true;
