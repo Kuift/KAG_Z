@@ -73,7 +73,7 @@ void onInit( CBlob@ this )
 	}
 	
 		{
-		ShopItem@ s = addShopItem(this, "Bank", getTeamIcon("bank", "Bank.png", team_num, Vec2f(40, 24)), "bank", "Use this to transfer money between players");
+		ShopItem@ s = addShopItem(this, "Bank", "$bank$", "bank", "Use this to transfer money between players");
 		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 50);
 	}
 	
