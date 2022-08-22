@@ -21,7 +21,7 @@ void onInit(CBlob@ this)
 
 	// SHOP
 	this.set_Vec2f("shop offset", Vec2f_zero);
-	this.set_Vec2f("shop menu size", Vec2f(7, 2));
+	this.set_Vec2f("shop menu size", Vec2f(5, 2));
 	this.set_string("shop description", "Buy");
 	this.set_u8("shop icon", 25);
 
@@ -31,15 +31,15 @@ void onInit(CBlob@ this)
 
 	int team_num = this.getTeamNum();
 
-	{
-		ShopItem@ s = addShopItem(this, "5 Coin Bundle", "$bundle5$", "bundle5", "Put 5 coins into a portable bundle", true);
-		AddRequirement(s.requirements, "coin", "", "Coins", 5);
-	}
+//	{
+//		ShopItem@ s = addShopItem(this, "5 Coin Bundle", "$bundle5$", "bundle5", "Put 5 coins into a portable bundle", true);
+//		AddRequirement(s.requirements, "coin", "", "Coins", 5);
+//	}
 
-	{
-		ShopItem@ s = addShopItem(this, "10 Coin Bundle", "$bundle10$", "bundle10", "Put 10 coins into a portable bundle", true);
-		AddRequirement(s.requirements, "coin", "", "Coins", 10);
-	}
+//	{
+//		ShopItem@ s = addShopItem(this, "10 Coin Bundle", "$bundle10$", "bundle10", "Put 10 coins into a portable bundle", true);
+//		AddRequirement(s.requirements, "coin", "", "Coins", 10);
+//	}
 
 	{
 		ShopItem@ s = addShopItem(this, "50 Coin Bundle", "$bundle50$", "bundle50", "Put 50 coins into a portable bundle", true);
@@ -66,15 +66,15 @@ void onInit(CBlob@ this)
 		AddRequirement(s.requirements, "coin", "", "Coins", 5000);
 	}
 
-	{
-		ShopItem@ s = addShopItem(this, "5 into 10", "$bundle10$", "bundle10", "Turn 5 coin bundles into 10 coin one", true);
-		AddRequirement(s.requirements, "blob", "bundle5", "5 Coin Bundle", 2);
-	}
+//	{
+//		ShopItem@ s = addShopItem(this, "5 into 10", "$bundle10$", "bundle10", "Turn 5 coin bundles into 10 coin one", true);
+//		AddRequirement(s.requirements, "blob", "bundle5", "5 Coin Bundle", 2);
+//	}
 
-	{
-		ShopItem@ s = addShopItem(this, "10 into 50", "$bundle50$", "bundle50", "Turn 10 coin bundles into 50 coin one", true);
-		AddRequirement(s.requirements, "blob", "bundle10", "10 Coin Bundle", 5);
-	}
+//	{
+//		ShopItem@ s = addShopItem(this, "10 into 50", "$bundle50$", "bundle50", "Turn 10 coin bundles into 50 coin one", true);
+//		AddRequirement(s.requirements, "blob", "bundle10", "10 Coin Bundle", 5);
+//	}
 
 	{
 		ShopItem@ s = addShopItem(this, "50 into 100", "$bundle100$", "bundle100", "Turn 50 coin bundles into 100 coin one", true);
