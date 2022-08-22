@@ -397,6 +397,9 @@ shared class ZombiesCore : RulesCore
 		if (extra_zombies>max_zombies-100) extra_zombies=max_zombies-100; //this line may need to be fixed but, we'll wait to see if it becomes a problem
 		if (spawnRate<8) spawnRate=8;
 		int wraiteRate = 2 + (intdif/4);
+		if(dayNumber == 52 || dayNumber == 56 || dayNumber == 60 || dayNumber == 64 || dayNumber == 68){
+			spawnRate = 1000;
+		}
 		if (getGameTime() % 300 == 0)
 		{
 			
@@ -426,7 +429,7 @@ shared class ZombiesCore : RulesCore
 				//rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Left" + zombiePlaces.length);			
 				//rules.SetGlobalMessage( "Day "+ dayNumber + "Zombie Portals:" + ZombiePortalV);	
 				
-				rules.SetGlobalMessage( "Day "+ dayNumber + "\nZombie Portals Left: " + num_zombiePortals + "\nZombies: " + num_zombies + "\nPortal Zombies: " + num_portal_zombies);
+				rules.SetGlobalMessage( "Day "+ dayNumber + "\nPortals Left: " + num_zombiePortals + "\nZombies: " + num_zombies + "\nPortal Zombies: " + num_portal_zombies);
 				//rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Destroyed" + dzp );					
 				if (zombiePlaces.length<=0)
 				{
@@ -552,7 +555,6 @@ shared class ZombiesCore : RulesCore
 						if(dayNumber >= 10 && dayNumber < 20 )
 						{
 							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
 							for(int i = 0; i < 4; ++i) {
 								server_CreateBlob( "Wraith", -1, sp);
 							}
@@ -570,32 +572,47 @@ shared class ZombiesCore : RulesCore
 						if(dayNumber >= 30 && dayNumber < 40 )
 						{
 							for(int i = 0; i < 2; ++i) {
-								server_CreateBlob( "BossZombieKnight", -1, sp);
 								server_CreateBlob( "abomination", -1, sp);
 							}
 							for(int i = 0; i < 6; ++i) {
 								server_CreateBlob( "Wraith", -1, sp);
 							}
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+							server_CreateBlob( "goresinger", -1, middle_up);
 						}
 						if(dayNumber >= 40  && dayNumber < 51)
 						{
-							for(int i = 0; i < 1; ++i) {
-								server_CreateBlob( "BossZombieKnight", -1, sp);
-								server_CreateBlob( "abomination", -1, sp);
-							}
-							for(int i = 0; i < 7; ++i) {
+							for(int i = 0; i < 10; ++i) {
 								server_CreateBlob( "Wraith", -1, sp);
 							}
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+							server_CreateBlob( "goresinger", -1, middle_up);
+							server_CreateBlob( "goresinger", -1, middle_up);
+							
 						}
-						if(dayNumber >= 51)
+						if(dayNumber >= 51 && dayNumber < 54)
 						{
-							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,0);
-							server_CreateBlob( "neqrris", -1, middle_up);
-							server_CreateBlob( "bloodvainguard", -1, middle_up);
-							server_CreateBlob( "bloodvainguard", -1, middle_up);
-							server_CreateBlob( "goresinger", -1, middle_up);
-							server_CreateBlob( "goresinger", -1, middle_up);
-							server_CreateBlob( "goresinger", -1, middle_up);
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+							server_CreateBlob("tsuyani", -1, middle_up);
+							// server_CreateBlob( "neqrris", -1, middle_up);
+							// server_CreateBlob( "bloodvainguard", -1, middle_up);
+							// server_CreateBlob( "bloodvainguard", -1, middle_up);
+							// server_CreateBlob( "goresinger", -1, middle_up);
+							// server_CreateBlob( "goresinger", -1, middle_up);
+							// server_CreateBlob( "goresinger", -1, middle_up);
+						}
+						if(dayNumber >= 54 && dayNumber < 58)
+						{
+							Vec2f left_up = Vec2f(25,25);
+							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,25);
+							server_CreateBlob("tsuyani", -1, left_up);
+						}
+						if (dayNumber >= 58 && dayNumber < 68)
+						{
+							Vec2f left_up = Vec2f(25,25);
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,25);
+							server_CreateBlob("tsuyani", -1, right_up);
 						}
 					}
 				}
@@ -732,7 +749,7 @@ shared class ZombiesCore : RulesCore
 			int gamestart = rules.get_s32("gamestart");			
 			int day_cycle = getRules().daycycle_speed*60;			
 			int dayNumber = ((getGameTime()-gamestart)/getTicksASecond()/day_cycle)+1;
-            rules.SetGlobalMessage( "Hurray! You survived the apocalypse and destroyed all zombie portals in "+ dayNumber+" days!" );
+            rules.SetGlobalMessage( "Hurray! You survived the apocalypse and destroyed all portals in "+ dayNumber+" days!" );
 			Sound::Play("/FanfareWin.ogg");			
 			getRules().set_bool("everyones_dead",false); 
 		}
