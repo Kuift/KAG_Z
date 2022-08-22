@@ -515,7 +515,7 @@ void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob
 void onDie( CBlob@ this )
 {
 	if (!getNet().isServer()) return;
-					int r = XORRandom(6);
+					int r = XORRandom(7);
 					if (r == 0)
 					{
 						server_CreateBlob("scarnage",this.getTeamNum(), this.getPosition());
@@ -545,6 +545,10 @@ void onDie( CBlob@ this )
 					{
 						server_CreateBlob("onestarknightuniform",this.getTeamNum(), this.getPosition());
 						server_DropCoins(this.getPosition() + Vec2f(0,-3.0f), 150);
+					}
+					else if (rs == 6)
+					{
+						server_CreateBlob("onestarpolearmuniform",this.getTeamNum(), this.getPosition());
 					}
 
 this.getCurrentScript().runFlags |= Script::remove_after_this;

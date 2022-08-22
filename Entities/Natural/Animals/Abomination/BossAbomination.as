@@ -530,7 +530,7 @@ void onDie( CBlob@ this )
 						server_CreateBlob("chest",this.getTeamNum(), this.getPosition());
 					}
 					
-					int rs = XORRandom(3);
+					int rs = XORRandom(4);
 					if (rs == 0)
 					{
 						server_CreateBlob("onestararcheruniform",this.getTeamNum(), this.getPosition());
@@ -542,6 +542,10 @@ void onDie( CBlob@ this )
 					else if (rs == 2)
 					{
 						server_CreateBlob("onestarknightuniform",this.getTeamNum(), this.getPosition());
+					}
+					else if (rs == 3)
+					{
+						server_CreateBlob("onestarpolearmuniform",this.getTeamNum(), this.getPosition());
 					}
 
 
