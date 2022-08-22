@@ -11,6 +11,9 @@ void onInit( CBlob@ this )
 	//this.set_TileType("background tile", CMap::tile_wood_back);
 	//this.getSprite().getConsts().accurateLighting = true;
 	
+	this.SetMinimapVars("PortalIcon.png", 1, Vec2f(4, 4));
+	this.SetMinimapRenderAlways(true);
+
 	this.Tag("ZombiePortalz"); //HOPEFULLY YOU STOPPED DISAPPEARING - Tsilliev
 	this.getSprite().SetZ(-50); //background
 	CSpriteLayer@ portal = this.getSprite().addSpriteLayer( "portal", "ZombiePortal.png" , 64, 64, -1, -1 );

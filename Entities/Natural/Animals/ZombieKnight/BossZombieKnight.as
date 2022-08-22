@@ -546,7 +546,7 @@ void onDie( CBlob@ this )
 						server_CreateBlob("onestarknightuniform",this.getTeamNum(), this.getPosition());
 						server_DropCoins(this.getPosition() + Vec2f(0,-3.0f), 150);
 					}
-					else if (rs == 6)
+					else if (r == 6)
 					{
 						server_CreateBlob("onestarpolearmuniform",this.getTeamNum(), this.getPosition());
 					}
