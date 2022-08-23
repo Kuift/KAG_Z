@@ -42,10 +42,10 @@ void onDie( CBlob@ this)
 void onTick( CBlob@ this)
 {
 	int spawnRate = 46 + (this.getHealth());
-	if (spawnRate <= 0)
+	/*if (spawnRate <= 0)
 	{
 	this.server_Die();
-	}
+	}*/
 	if (getGameTime() % spawnRate == 0 && this.get_bool("portalbreach"))
 	{
 		this.getSprite().PlaySound("Thunder");
