@@ -164,7 +164,7 @@ void onTick(CBlob@ this)
 			heat--;
 		}
 
-		if (inwater && heat >= heat_add && gametime % (Maths::Max(heat_cooldown_time_water, 1)) == 0)
+		if (inwater && heat*5.0f >= heat_add*25.0f && gametime % (Maths::Max(heat_cooldown_time_water, 1)) == 0)
 		{
 			u8 lim = u8(heat_max * 0.7f);
 			if (heat > lim)
@@ -436,6 +436,7 @@ void onTick(CBlob@ this)
 			this.getCurrentScript().runFlags |= Script::tick_not_sleeping;
 		}
 	}
+	print(""+heat);
 }
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
