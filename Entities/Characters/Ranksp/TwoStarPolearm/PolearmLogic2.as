@@ -117,8 +117,8 @@ void onTick(CBlob@ this)
 		return;
 	}
 
-	moveVars.walkFactor *= 1.3f;
-	moveVars.jumpFactor *= 1.3f;
+	moveVars.walkFactor *= 1.15f;
+	moveVars.jumpFactor *= 1.15f;
 
 	Vec2f pos = this.getPosition();
 	Vec2f vel = this.getVelocity();
@@ -248,7 +248,7 @@ void onTick(CBlob@ this)
 								this.getSprite().PlayRandomSound("/Scrape");
 							}
 
-							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime)) *1.2;
+							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime)) *0.85f;
 							moveVars.walkFactor *= factor;
 
 							//  printf("knight.slideTime = " + knight.slideTime  );
@@ -456,7 +456,7 @@ void onTick(CBlob@ this)
 			if (Maths::Abs(vel.x) < KnightVars::slash_move_max_speed &&
 			        vel.y > -KnightVars::slash_move_max_speed)
 			{
-				Vec2f slash_vel =  knight.slash_direction * this.getMass() * 1.30f;
+				Vec2f slash_vel =  knight.slash_direction * this.getMass() * 1.15f;
 				this.AddForce(slash_vel);
 			}
 		}
