@@ -82,12 +82,17 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 	//else 
 	if (cmd == this.getCommandID("shop made item"))
 	{
-		CBlob@ caller = getBlobByNetworkID( params.read_netid() );
-		CBlob@ item = getBlobByNetworkID( params.read_netid() );
+		this.Tag("shop disabled"); //no double-builds
+	
+		CBlob@ caller = getBlobByNetworkID(params.read_netid());
+		CBlob@ item = getBlobByNetworkID(params.read_netid());
 		if (item !is null && caller !is null)
 		{				
 			this.getSprite().PlaySound("/select.ogg" ); 
 			this.getSprite().getVars().gibbed = true;
+
+			this.server_Die();
+			caller.ClearMenus();
 			
 		
 			// open factory upgrade menu immediately
@@ -111,7 +116,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 			}
 		}
 		
-		this.server_Die();
+		// this.server_Die();
 	}
 }
    
