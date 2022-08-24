@@ -64,7 +64,7 @@ void onInit(CBlob@ this)
 	}
 
 	{
-		ShopItem@ s = addShopItem(this, "Advanced Drill", "$dirtdrill$", "advanceddrill", "Advanced machinery that provides better drilling at the cost of it's weight and size", false);
+		ShopItem@ s = addShopItem(this, "Advanced Drill", "$advanceddrill$", "advanceddrill", "Advanced machinery that provides better drilling at the cost of it's weight and size", false);
 		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 750);
 		AddRequirement(s.requirements, "blob", "mat_stone", "stone", 500);
 		AddRequirement(s.requirements, "coin", "", "Coins", 500);
