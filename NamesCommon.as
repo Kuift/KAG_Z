@@ -1,0 +1,2 @@
+string[] uniforms = {"onestarknight", "twostarknight", "threestarknight", "onestararcher", "twostararcher", "threestararcher", "onestarbuilder", "twostarbuilder", "threestarbuilder", "onestarpolearm", "twostarpolearm", "threestarpolearm"};
+string[] starter_classes = {"builder", "knight", "archer", "Polearm"};
