@@ -62,6 +62,13 @@ void onInit(CBlob@ this)
 		AddRequirement(s.requirements, "blob", "mat_stone", "Stone", COST_STONE_DRILL);
 		AddRequirement(s.requirements, "coin", "", "Coins", 25);
 	}
+
+	{
+		ShopItem@ s = addShopItem(this, "Advanced Drill", "$advanceddrill$", "advanceddrill", "Advanced machinery that provides better drilling at the cost of it's weight and size", false);
+		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 750);
+		AddRequirement(s.requirements, "blob", "mat_stone", "stone", 500);
+		AddRequirement(s.requirements, "coin", "", "Coins", 500);
+	}
 	//{
 		//ShopItem@ s = addShopItem(this, "Dirt Drill", "$dirtdrill$", "dirtdrill", "Drills longer and cools faster, but drills only dirt.", false);
 		//AddRequirement(s.requirements, "blob", "mat_stone", "Stone", 50);
@@ -85,12 +92,7 @@ void onInit(CBlob@ this)
 		ShopItem@ s = addShopItem(this, "Crate", "$crate$", "crate2", "6x6 inventory space", false);
 		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 100);
 	}
-	{
-		ShopItem@ s = addShopItem(this, "Advanced Drill", "$dirtdrill$", "advanceddrill", "A better version of the drill", false);
-		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 750);
-		AddRequirement(s.requirements, "blob", "mat_stone", "stone", 500);
-		AddRequirement(s.requirements, "coin", "", "Coins", 500);
-	}
+
 	// {
 		// ShopItem@ s = addShopItem(this, "Praying Statue", "$statue1$", "statue1", "Praying Statue", false, true);
 		// AddRequirement(s.requirements, "blob", "mat_stone", "Stone", 50);
