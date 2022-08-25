@@ -66,13 +66,31 @@ void onTick( CBlob@ this)
 	//int num_zombies = 40;
 	if (this.get_bool("portalbreach"))
 	{
+		Vec2f sp = this.getPosition();
+		int random_nb = XORRandom(4);
+		switch (random_nb) // make the spawnpoint alternate between up down left or right part of the portal
+		{
+			case 0:
+				sp += Vec2f(8.0f*5,0.0f);
+				break;
+			case 1:
+				sp += Vec2f(-8.0f*5,0.0f);
+				break;
+			case 2:
+				sp += Vec2f(0.0f,8.0f*3);
+				break;
+			case 3:
+				sp += Vec2f(0.0f,-8.0f*3);	
+				break;
+			default:
+				break;
+		}
 		if ((getGameTime() % spawnRate == 0) && num_portal_zombies < max_portal_zombies)
 		{
-		CBlob@[] blobs; //hello
-		getMap().getBlobsInRadius( this.getPosition(), 250, @blobs );
-		if (blobs.length == 0) return;
+		//	CBlob@[] blobs;
+		// getMap().getBlobsInRadius( this.getPosition(), 40, @blobs ); //wait, might be related to the deactive, reactive thing, lemme see where that is
+		// if (blobs.length == 0) return; //wait, maybe it was already "deactivating" before, we just didn't notice it because the range was fucking 250
 
-			Vec2f sp = this.getPosition();
 			
 			int r;
 			r = XORRandom(10);
@@ -127,8 +145,24 @@ void onTick( CBlob@ this)
 			{
 				num_portal_zombies++;
 				getRules().set_s32("num_portal_zombies",num_portal_zombies);
-				
 			}
+		}
+		else if (!isClient() && (getGameTime() % spawnRate == 0) && num_portal_zombies >= max_portal_zombies)
+		{ //if the maximum of portal zombie are on the map, we just take an existing portal zombie and tp it to the portal.
+			CBlob@[] portal_zombie_list;
+			getBlobsByTag("portal_zombie", portal_zombie_list);
+			float currentDistance = -1;
+			int furthest_zombie_index = 0;
+			for(int i = 0; i < portal_zombie_list.size(); ++i)
+			{
+				float distance = (sp - portal_zombie_list[i].getPosition()).getLength();
+				if (currentDistance < distance)
+				{
+					currentDistance = distance;
+					furthest_zombie_index = i;
+				}
+			}
+			portal_zombie_list[furthest_zombie_index].setPosition(sp);
 		}
 	}
 
@@ -176,3 +210,11 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 	}
 	return damage;
 }
+
+/*array<@CBlob> getPlayers()
+{
+	array<@CBlob> muharray;
+	CBlob@ playerpos;
+	getBlobsByTag("player", muharray); //getblobsbytag take a list as a argument and modify said list
+	return muharray;
+}*/

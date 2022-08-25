@@ -51,8 +51,8 @@ void Config(ZombiesCore@ this)
     {
         max_zombies = 125;  //hard capped here
     }
-	if (max_zombies < 70){
-		max_zombies = 70;
+	if (max_zombies < 105){
+		max_zombies = 105;
 	}
 
     s32 max_portal_zombies = Maths::Ceil(max_zombies*0.25f);
