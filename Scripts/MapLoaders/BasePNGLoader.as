@@ -257,6 +257,7 @@ class PNGLoader
 
 			// Workshops
 			case map_colors::zombie_portal:   autotile(offset); spawnBlob(map, "ZombiePortal",  offset); break;
+			case map_colors::zombie_spawn:    autotile(offset); spawnBlob(map, "zombiespawn",  offset); break;
 			case map_colors::knight_shop:     autotile(offset); spawnBlob(map, "knightshop",  offset); break;
 			case map_colors::builder_shop:    autotile(offset); spawnBlob(map, "buildershop", offset); break;
 			case map_colors::archer_shop:     autotile(offset); spawnBlob(map, "archershop",  offset); break;
