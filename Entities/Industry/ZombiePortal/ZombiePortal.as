@@ -171,5 +171,8 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 			damage *= 0.25f; //quarter damage from these
 		break;
 	}
+	if(hitterBlob.hasTag("megasaw blade")){
+		damage *= 0.25f; //quarter damage from megasaw
+	}
 	return damage;
 }

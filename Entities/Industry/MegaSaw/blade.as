@@ -43,6 +43,7 @@ void onInit( CBlob@ this )
 		sprite.SetAnimation(anim);
 	}
 	this.set_f32("spin angle",0);
+	this.Tag("megasaw blade");
 	
 }
 
