@@ -44,6 +44,10 @@ void onInit( CBlob@ this )
 	}
 	this.set_f32("spin angle",0);
 	this.Tag("megasaw blade");
+
+	float health = XORRandom(Maths::Min(15.0f,40.0f)); //random health for random pierce
+	// health = 25.0f; //for testing
+	this.server_SetHealth(health);
 	
 }
 
@@ -119,7 +123,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 		if (vellen < 0.1f)
 			return;
 		
-		f32 dmg = blob.getTeamNum() == this.getTeamNum() ? 0.0f : getArrowDamage( this, vellen );
+		f32 dmg = blob.getTeamNum() == this.getTeamNum() ? 0.0f : getArrowDamage( this, blob );
 		if ( blob.getName() != "log" ) 
 		{
 			// this isnt synced cause we want instant collision for arrow even if it was wrong
@@ -131,8 +135,18 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 			}
 		}
 
-		if (blob.getName() != "log"  && blob.getName() != "tree_bushy" && blob.getName() != "tree_pine") { // dont stick bomb arrows
-			this.Tag("collided");
+		if (blob.getName() == "ZombiePortal"){
+			this.Tag("collided"); //no multi hits on portals
+		}
+
+		if (blob.getName() != "log" && blob.getName() != "tree_bushy" && blob.getName() != "tree_pine") { // dont stick bomb arrows
+			// this.Tag("collided");
+			if(this.getHealth() <= 0.0f){ //are we going to die?
+				this.Tag("collided");
+			}
+			else{ //pierce the blob
+				this.server_SetHealth(this.getHealth() - 5.0f);  // - 5.0f is the damage the saw deals in the function at the very bottom
+			}
 		}
 		
 		if ( blob.getName() == "log") 
@@ -266,6 +280,8 @@ f32 ArrowHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBl
 			if (arrowType != ArrowType::normal)
 				damage = 0.0f;
 		}*/
+		print(""+this.getHealth());
+		if(hitBlob.getHealth() <= 0) //die if we have no health left
         {
 			this.getShape().SetStatic(true); // for client
             this.getSprite().SetVisible(false);
@@ -445,26 +461,23 @@ void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob
 }
 
 
-f32 getArrowDamage( CBlob@ this, f32 vellen = -1.0f )
+f32 getArrowDamage( CBlob@ this, CBlob@ hitterblob )
 {
 	return 5.0;
-	if(vellen < 0) //grab it - otherwise use cached
-	{
-		CShape@ shape = this.getShape();
-		if(shape is null)
-			vellen = this.getOldVelocity().Length();
-		else
-			vellen = this.getShape().getVars().oldvel.Length();
+	//this is the saw & hitterblob is the blob you are going to hit
+	/*if(this.getHealth() - hitterblob.getHealth() > 0.0f){ // can we survive this hit?
+		print("hello3");
+		return Maths::Max(5.0f, hitterblob.getHealth() - this.getHealth());
 	}
-	
-    if (vellen >= arrowFastSpeed) {
-        return 1.0f;
-    }
-    else if (vellen >= arrowMediumSpeed) {
-        return 1.0f;
-    }
-
-    return 0.5f;
+	else if(this.getHealth() - hitterblob.getHealth() < 5.0f)
+	{
+		print("hello2");
+		return this.getHealth() - hitterblob.getHealth();
+	}
+	else{
+		print("hello");
+		return 5.0f;
+	}*/
 }
 
 void SplashArrow( CBlob@ this )
