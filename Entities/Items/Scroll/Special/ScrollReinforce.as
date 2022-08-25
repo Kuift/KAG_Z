@@ -27,7 +27,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 		this.set_u32("reinforce_called", getGameTime());
 		
 		bool acted = false;
-		const int radius = 10;
+		const int radius = 20; //10
 		
 		CMap@ map = this.getMap();
 		
