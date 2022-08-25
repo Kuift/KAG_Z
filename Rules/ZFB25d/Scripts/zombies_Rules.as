@@ -619,7 +619,7 @@ shared class ZombiesCore : RulesCore
 							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,76);
 							server_CreateBlob("tsuyani", -1, right_up);
 						}
-						if (daynumber >= 68)
+						if (dayNumber >= 68)
 						{
 							server_CreateBlob( "abomination", -1, sp);
 							server_CreateBlob( "abomination", -1, sp);
