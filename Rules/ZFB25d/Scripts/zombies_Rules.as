@@ -565,7 +565,7 @@ shared class ZombiesCore : RulesCore
 						if(dayNumber >= 20 && dayNumber < 30 )
 						{
 							for(int i = 0; i < 2; ++i) {
-								server_CreateBlob( "BossZombieKnight", -1, sp);
+								server_CreateBlob( "fyllid", -1, sp);
 							}
 							server_CreateBlob( "abomination", -1, sp);
 							for(int i = 0; i < 5; ++i) {
@@ -588,6 +588,8 @@ shared class ZombiesCore : RulesCore
 							for(int i = 0; i < 10; ++i) {
 								server_CreateBlob( "Wraith", -1, sp);
 							}
+							server_CreateBlob( "BossZombieKnight", -1, sp);
+							server_CreateBlob( "abomination", -1, sp);
 							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
 							server_CreateBlob( "goresinger", -1, middle_up);
 							server_CreateBlob( "goresinger", -1, middle_up);
@@ -595,7 +597,7 @@ shared class ZombiesCore : RulesCore
 						}
 						if(dayNumber >= 51 && dayNumber < 54)
 						{
-							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,76);
 							server_CreateBlob("tsuyani", -1, middle_up);
 							// server_CreateBlob( "neqrris", -1, middle_up);
 							// server_CreateBlob( "bloodvainguard", -1, middle_up);
@@ -606,16 +608,23 @@ shared class ZombiesCore : RulesCore
 						}
 						if(dayNumber >= 54 && dayNumber < 58)
 						{
-							Vec2f left_up = Vec2f(25,25);
-							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,25);
+							Vec2f left_up = Vec2f(25,76);
+							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,76);
 							server_CreateBlob("tsuyani", -1, left_up);
 						}
 						if (dayNumber >= 58 && dayNumber < 68)
 						{
-							Vec2f left_up = Vec2f(25,25);
-							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
-							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,25);
+							Vec2f left_up = Vec2f(25,76);
+							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,76);
+							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,76);
 							server_CreateBlob("tsuyani", -1, right_up);
+						}
+						if (daynumber >= 68)
+						{
+							server_CreateBlob( "abomination", -1, sp);
+							server_CreateBlob( "abomination", -1, sp);
+							server_CreateBlob( "fyllid", -1, sp);
+							server_CreateBlob( "BossZombieKnight", -1, sp);
 						}
 					}
 				}
