@@ -1,4 +1,5 @@
 
+#include "NamesCommon.as";
 #include "Hitters.as";
 #include "ShieldCommon.as";
 #include "FireParticle.as"
@@ -137,6 +138,12 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 		if (blob.getName() == "ZombiePortal"){
 			this.Tag("collided"); //no multi hits on portals
+		}
+
+		for(int i = 0; i < boss_zombies.size(); i++){
+			if(blob.getName() == boss_zombies[i]){
+				this.Tag("collided"); //no multi hits on bosses
+			}
 		}
 
 		if (blob.getName() != "log" && blob.getName() != "tree_bushy" && blob.getName() != "tree_pine") { // dont stick bomb arrows

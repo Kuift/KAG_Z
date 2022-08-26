@@ -25,7 +25,7 @@ void onDie(CBlob@ this)
 		{
 			pos = this.getPosition() + (segment.start_pos + segment.end_pos) / 2.0f;
 			pos.y -= 4.0f; // TODO: fix logs spawning in ground
-			for (int i = 0; i < 2; i++){
+			for (int i = 0; i < 1; i++){
 				CBlob@ log = server_CreateBlob("log", this.getTeamNum(), pos);
 				if (log !is null)
 				{
