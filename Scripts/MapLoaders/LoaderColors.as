@@ -158,6 +158,7 @@ namespace map_colors
 		// BUILDINGS
 		zombie_portal		   = 0xff710d71, 
 		zombie_spawn		   = 0xFFBBBA59,
+		player_spawn		   = 0xFF77c277,
 		knight_shop            = 0xFFFFBEBE, // ARGB(255, 255, 190, 190);
 		builder_shop           = 0xFFBEFFBE, // ARGB(255, 190, 255, 190);
 		archer_shop            = 0xFFFFFFBE, // ARGB(255, 255, 255, 190);
