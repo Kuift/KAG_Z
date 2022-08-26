@@ -29,7 +29,7 @@ void onInit(CBlob@ this)
 	vars.r.Reset(seed);
 	vars.growth_time = 100;
 	vars.height = 0;
-	vars.max_height = 3 + vars.r.NextRanged(3);
+	vars.max_height = 1 + vars.r.NextRanged(3); //hello
 	vars.grown_times = 0;
 	vars.max_grow_times = 50;
 	vars.last_grew_time = getGameTime() - 90; //pretend we started a frame ago ;)
