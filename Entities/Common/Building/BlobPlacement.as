@@ -351,7 +351,7 @@ void onTick(CBlob@ this)
 					params.write_Vec2f(getBottomOfCursor(bc.tileAimPos, carryBlob));
 					this.SendCommand(this.getCommandID("placeBlob"), params);
 					u32 delay = 2 * this.get_u32("build delay");
-					SetBuildDelay(this, delay/2.75);
+					SetBuildDelay(this, delay/2.35);
 					bc.blobActive = false;
 				}
 				else if (snap && this.isKeyJustPressed(key_action1))
