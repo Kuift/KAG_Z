@@ -46,7 +46,7 @@ void onInit( CBlob@ this )
 		AddRequirement(s.requirements, "coin", "", "Coins", 50);
 	}
 	{
-		ShopItem@ s = addShopItem(this, "Scroll of Midas", "$scrollmidas$", "sheal", "Once used, it will turn nearby stone into gold.", true);
+		ShopItem@ s = addShopItem(this, "Scroll of Midas", "$scrollmidas$", "smidas", "Once used, it will turn nearby stone into gold.", true);
 		AddRequirement(s.requirements, "coin", "", "Coins", 250);
 	}
 	{
