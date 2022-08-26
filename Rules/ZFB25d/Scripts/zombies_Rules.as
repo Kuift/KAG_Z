@@ -234,12 +234,34 @@ shared class ZombiesSpawns : RespawnSystem
 			CMap@ map = getMap();
 			if(map !is null)
 			{
-				f32 x = XORRandom(2) == 0 ? 32.0f : map.tilemapwidth * map.tilesize - 32.0f;
-				return Vec2f(x, map.getLandYAtX(s32(x/map.tilesize))*map.tilesize - 16.0f);
+				Vec2f[] playerspawns;
+				getMap().getMarkers("player spawn", playerspawns);
+
+				if (playerspawns.size() <= 0)
+				{
+					for (int ps=9; ps<18; ps++)
+					{
+						Vec2f col;
+						getMap().rayCastSolid( Vec2f(ps*8, 0.0f), Vec2f(ps*8, getMap().tilemapheight*8), col );
+						col.y-=16.0;
+						playerspawns.push_back(col);
+						
+						getMap().rayCastSolid( Vec2f((getMap().tilemapwidth-ps)*8, 0.0f), Vec2f((getMap().tilemapwidth-ps)*8, getMap().tilemapheight*8), col );
+						col.y-=16.0;
+						playerspawns.push_back(col);
+					}
+					int wheretospawn = XORRandom(2);
+					return playerspawns[wheretospawn];
+				}
+				else{
+					int wheretospawn = XORRandom(playerspawns.size());
+					return playerspawns[wheretospawn];
+				}
 			}
         }
-
-        return Vec2f(0,0);
+		f32 x = XORRandom(2) == 0 ? 32.0f : getMap().tilemapwidth * getMap().tilesize - 32.0f;
+		return Vec2f(x, getMap().getLandYAtX(s32(x/getMap().tilesize))*getMap().tilesize - 16.0f);
+        // return Vec2f(0,0);
     }
 
     void RemovePlayerFromSpawn(CPlayer@ player)
