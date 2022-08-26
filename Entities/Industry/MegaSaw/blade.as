@@ -287,7 +287,7 @@ f32 ArrowHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBl
 			if (arrowType != ArrowType::normal)
 				damage = 0.0f;
 		}*/
-		print(""+this.getHealth());
+		// print(""+this.getHealth());
 		if(hitBlob.getHealth() <= 0) //die if we have no health left
         {
 			this.getShape().SetStatic(true); // for client
