@@ -36,6 +36,7 @@ void onInit( CBlob@ this )
 	AddIconToken( "$bazookafactory$", "Bazooka.png", Vec2f(32,16), 0 );
 	AddIconToken( "$mgbulletsfactory$", "MGBulletsFactory.png", Vec2f(32,16), 0 );
 	AddIconToken( "$missilefactory$", "MissileFactory.png", Vec2f(32,16), 0 );
+	AddIconToken("$StribakWorkshop$", "StribakWorkshop.png", Vec2f(40,32), 0);
 	
 	this.Tag(SHOP_AUTOCLOSE);
 
@@ -103,6 +104,10 @@ void onInit( CBlob@ this )
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 500 );
 		AddRequirement( s.requirements, "blob", "mat_stone", "Stone", 200 );
         AddRequirement( s.requirements, "no more", "missilefactory", "Missile factory", 6 );
+	}
+	{
+		ShopItem@ s = addShopItem( this, "Stribak Workshop", "$StribakWorkshop$", "stribakworkshop", "Guns are bought here!" );
+		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 200);
 	}
 	{
 		ShopItem@ s = addShopItem( this, "Back", "$building$", "military", "Go Back" );
