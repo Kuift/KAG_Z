@@ -22,19 +22,34 @@ void onInit( CBlob@ this )
 	this.set_u8("shop icon", 25);
 
 
-	/*{
-		ShopItem@ s = addShopItem( this, "Stribak Hand Cannon ", "$stribakcannon$", "stribakcannon", "Buy Stribak Hand Cannon for 125 coins.", true );
+	{
+		ShopItem@ s = addShopItem( this, "Stribak Hand Cannon ", "$stribakcannon$", "stribakcannon", "Buy Stribak Hand Cannon for 75 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 75 );
+	}
+	
+	{
+		ShopItem@ s = addShopItem( this, "Stribak Siege Bow ", "$stribaksiegebow$", "stribaksiegebow", "Buy Stribak Siege Bow for 175 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 175 );
+	}
+	
+	{
+		ShopItem@ s = addShopItem( this, "Stribak Shotgun ", "$stribakshotgun$", "stribakshotgun", "Buy Stribak Shotgun for 125 coins.", true );
 		AddRequirement( s.requirements, "coin", "", "Coins", 125 );
 	}
 	
 	{
-		ShopItem@ s = addShopItem( this, "Stribak Siege Bow ", "$stribaksiegebow$", "stribaksiegebow", "Buy Stribak Siege Bow for 225 coins.", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 225 );
-	}*/
+		ShopItem@ s = addShopItem( this, "Travel Stone ", "$to$", "to", "No matter how far, it will find path to other one.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 250 );
+	}
 	
 	{
-		ShopItem@ s = addShopItem( this, "Stribak Shotgun ", "$stribakshotgun$", "stribakshotgun", "Buy Stribak Shotgun for 140 coins.", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 140 );
+		ShopItem@ s = addShopItem( this, "PG Overdrive ", "$pgo$", "pgo", "...NO SIGNAL FOUND...", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 250 );
+	}
+	
+	{
+		ShopItem@ s = addShopItem( this, "Unmaker ", "$unmaker$", "unmaker", "The heavens will weep for eternity.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 35000 );
 	}
 	
 	// this.set_string("required class", "builder");
