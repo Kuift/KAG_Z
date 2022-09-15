@@ -28,7 +28,7 @@ void onTick(CBlob@ this)
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
-			
+			const bool facingleft = blob.isFacingLeft();
 			
 			
 			
@@ -39,10 +39,16 @@ void onTick(CBlob@ this)
 				{
 				this.set_u32("last teleport", gametime);
 				this.set_bool("teleport ready", false );
-				if(blob.hasTag("player"))
+				if(blob.hasTag("player") && facingleft)
+				
 				{
-				Teleport(this, blob.getOldPosition());
+				Teleport(this, blob.getOldPosition() + Vec2f(-35, -5.0f));
 				}
+				else if (blob.hasTag("player") && !facingleft)
+				{
+				Teleport(this, blob.getOldPosition() + Vec2f(35, -5.0f));
+				}
+				
 			} 	
 
 		}
@@ -56,7 +62,7 @@ void onTick(CBlob@ this)
 		if (diff > 0)
 		{
 			this.set_bool("teleport ready", true );
-			this.getSprite().PlaySound("/sand_fall.ogg"); 
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
 		}
 	}
 			
