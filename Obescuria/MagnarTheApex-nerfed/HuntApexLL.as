@@ -23,7 +23,7 @@ void onTick(CBlob@ this)
 	CBlob@[] blobs;
 
 	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tep") && !this.hasTag("downed"))
+	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tep") && (this.getHealth()>0.5))
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
