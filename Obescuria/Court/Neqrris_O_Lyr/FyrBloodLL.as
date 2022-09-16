@@ -17,7 +17,7 @@ CBlob@[] blobs;
 
     if (getNet().isServer())
     {
-    if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("fyr"))
+    if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("fyr") && (this.getHealth()>0.5))
     {
         for (int i = 0; i < blobs.length; i++)
         {
