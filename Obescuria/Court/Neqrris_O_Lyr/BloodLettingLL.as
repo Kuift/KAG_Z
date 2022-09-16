@@ -23,7 +23,7 @@ void onTick(CBlob@ this)
 	CBlob@[] blobs;
 
 	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("bld"))
+	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("bld") && (this.getHealth()>0.5)) // I would make it slight stronger now
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
