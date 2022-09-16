@@ -2,7 +2,7 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 128.00f;
+const f32 max_range = 240.00f; // range will get a lil buff was :128:
 const int TELEPORT_FREQUENCY = 60; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
