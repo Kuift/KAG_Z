@@ -172,13 +172,13 @@ void onTick(CBlob@ this)
 	
 	f32 x = this.getVelocity().x;
 	
-	if (getNet().isServer() && this.getHealth()<0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 300)
+	if (getNet().isServer() && this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 300)
 	{
 		this.server_SetHealth(0.5);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
 	}
-	if (this.getHealth()<0.0) return;
+	if (this.getHealth()<=0.0) return;
 	
 	float difficulty = getRules().get_f32("difficulty");
 	int break_chance = 30 - 2*(difficulty-1.0);	
