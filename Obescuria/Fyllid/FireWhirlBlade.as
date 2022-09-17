@@ -8,7 +8,7 @@ void onInit(CBlob@ this)
 
 void onTick(CBlob@ this)
 {
-	if (getNet().isServer() && !this.hasTag("downed"))
+	if (getNet().isServer() && (this.getHealth()>0.5))
 	{
 		u32 lastFireTime = this.get_u32("last bolt fire");
 		const u32 gametime = getGameTime();
