@@ -160,13 +160,13 @@ void onTick(CBlob@ this)
 {
 	f32 x = this.getVelocity().x;
 	// ferre you idiot
-	if (this.getHealth()<0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
+	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
 	{
 		this.server_SetHealth(4.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
 	}
-	if (this.getHealth()<0.5) return;
+	if (this.getHealth()<=0.0) return;
 
 	
 	
