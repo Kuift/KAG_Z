@@ -160,19 +160,14 @@ void onInit(CBlob@ this)
 void onTick(CBlob@ this)
 {
 	f32 x = this.getVelocity().x;
-	// whoever made shit here should drink bleach and set themself on fire
-	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) < 60)
+	// ferre you idiot
+	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
 	{
-		this.Tag("downed");
-	}
-	
-	if ((this.getTickSinceCreated() - this.get_u16("death ticks")) > 60)
-	{
-		this.server_SetHealth(2.0);
+		this.server_SetHealth(4.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
-		this.Untag("downed");
 	}
+	if (this.getHealth()<=0.0) return;
 
 	
 	
