@@ -157,7 +157,10 @@ void onTick( CBlob@ this)
 			{
 				float distance = (sp - portal_zombie_list[i].getPosition()).getLength();
 				if (currentDistance < distance)
-				{
+				{ //change below untested, if something breaks its probably from that.
+					if(portal_zombie_list[i].getName() == 'Greg'){ //drop player before teleporting
+						portal_zombie_list[i].server_DetachAll();
+					}
 					currentDistance = distance;
 					furthest_zombie_index = i;
 				}
