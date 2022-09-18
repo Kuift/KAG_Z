@@ -93,7 +93,7 @@ void Teleport( CBlob@ blob, Vec2f pos){
 	}
 	blob.setPosition( pos );
 	blob.setVelocity( Vec2f_zero );	
-	blob.getSprite().PlaySound("/gasp.ogg");
+	blob.getSprite().PlaySound("/Trvl.ogg");
 }
 
 
