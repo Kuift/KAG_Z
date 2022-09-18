@@ -6,6 +6,7 @@
 const u8 DEFAULT_PERSONALITY = AGGRO_BIT;
 const s16 MAD_TIME = 600;
 const string chomp_tag = "chomping";
+int lastpickuptime = 0;
 
 //sprite
 
@@ -161,6 +162,10 @@ void onTick(CBlob@ this)
 			{	
 				this.server_DetachAll();
 			}
+		}
+		//drop the blob held after 10 seconds
+		if(lastpickuptime+(10*30) == getGameTime()){
+			this.server_DetachAll();
 		}
 	}
 	
@@ -350,13 +355,14 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 				//f32 power = Maths::Max( 0.25f, 1.0f*vellen );
 				//this.server_Hit( blob, point1, vel, power, Hitters::bite, false);
 				this.server_AttachTo(blob,"PICKUP");
+				lastpickuptime = getGameTime();
 				//this.getShape().getConsts().collideWhenAttached = true;
 				//blob.getShape().getConsts().collideWhenAttached = true;
 			}
-		}	
-
+		}
 		MadAt( this, blob );
 	}
+
 }
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
