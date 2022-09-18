@@ -214,6 +214,13 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 	return damage;
 }
 
+bool doesCollideWithBlob(CBlob@ this, CBlob@ blob) {
+	//"this" is the portal and blob is collider.
+	if(blob.hasTag("portal_zombie") || blob.hasTag("zombie") || blob.hasTag("player")){
+		return false;
+	}
+	return true;
+}
 /*array<@CBlob> getPlayers()
 {
 	array<@CBlob> muharray;
