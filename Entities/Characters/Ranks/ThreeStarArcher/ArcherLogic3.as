@@ -93,7 +93,7 @@ void ManageGrapple(CBlob@ this, ArcherInfo@ archer)
 			f32 distance = direction.Normalize();
 			if (distance > 1.0f)
 			{
-				archer.grapple_vel = direction * archer_grapple_throw_speed;
+				archer.grapple_vel = (direction * archer_grapple_throw_speed) * 1.25f;
 			}
 			else
 			{
@@ -121,8 +121,8 @@ void ManageGrapple(CBlob@ this, ArcherInfo@ archer)
 		}
 		else
 		{
-			const f32 archer_grapple_range = archer_grapple_length * archer.grapple_ratio;
-			const f32 archer_grapple_force_limit = this.getMass() * archer_grapple_accel_limit;
+			const f32 archer_grapple_range = (archer_grapple_length * archer.grapple_ratio);
+			const f32 archer_grapple_force_limit = (this.getMass() * archer_grapple_accel_limit) * 2.0f;
 
 			CMap@ map = this.getMap();
 
