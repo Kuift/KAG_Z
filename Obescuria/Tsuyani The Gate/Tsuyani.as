@@ -7,7 +7,8 @@ void onInit(CBlob@ this)
 	this.getShape().getVars().waterDragScale = 24.0f;
 	this.getCurrentScript().tickIfTag = "activated";
 	this.getShape().SetGravityScale(0.0f);
-	this.server_SetTimeToDie(24);
+	this.server_SetTimeToDie(27);
+	Sound::Play("/Tsuyanispeaks.ogg", this.getPosition());
 }
 
 
