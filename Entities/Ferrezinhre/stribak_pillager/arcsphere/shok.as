@@ -13,6 +13,8 @@ void onInit(CBlob@ this)
 	this.Tag("shok");
 }
 
+
+
 void onTick(CBlob@ this)
 {
 
@@ -23,13 +25,16 @@ void onTick(CBlob@ this)
 	
 	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("shok"))
 	{
+	
+        
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
 			
 			
 			
-			
+			if (!this.getMap().rayCastSolidNoBlobs(blob.getPosition(), this.getPosition()))
+			{
 				if(ready) {
 				if(this.hasTag("shok")) {
 				Vec2f delta = this.getPosition() - blob.getPosition();
@@ -60,6 +65,7 @@ void onTick(CBlob@ this)
 			
 		}
 	}
+}
 }
 
 
