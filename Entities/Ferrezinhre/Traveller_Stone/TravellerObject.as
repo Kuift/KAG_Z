@@ -2,7 +2,7 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "GenericButtonCommon.as";
-const f32 max_range = 6900.00f;
+const f32 max_range = 55200.00f; // range change due maps size
 const int TELEPORT_FREQUENCY = 30; //4 secs
 const int TELEPORT_DISTANCE = 180;//getMap().tilesize;
 
