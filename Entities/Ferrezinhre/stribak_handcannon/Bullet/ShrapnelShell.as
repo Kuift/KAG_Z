@@ -10,24 +10,22 @@ const f32 ARROW_PUSH_FORCE = 22.0f;
 void onInit(CBlob@ this)
 {
 	this.Tag("exploding");
-	this.set_f32("explosive_radius", 64.0f);
+	this.set_f32("explosive_radius", 32.0f); // reducing exp radious so in is more usable in close range
 	this.set_f32("explosive_damage", 4.5f);
 	this.set_f32("map_damage_radius", 12.0f);
 	this.set_bool("map_damage_raycast", true);
-	this.set_f32("map_damage_ratio", 1.0f); //heck no!
-	this.set_bool("explosive_teamkill", true);
+	this.set_f32("map_damage_ratio", 1.0f);
+	this.set_bool("explosive_teamkill", false); // no teamkilling
 
-	//this.getShape().SetGravityScale(0.8f);
-	//this.getShape().setDrag(0.1f);
+	
 }
 
 void onTick(CBlob@ this)
 {
 	if (this.getCurrentScript().tickFrequency == 1)
 	{
-		//this.server_SetTimeToDie(3);
+		
 		this.set_string("custom_explosion_sound", "OrbExplosion.ogg");
-		//this.getSprite().PlaySound("OrbFireSound.ogg");
 		this.Tag("projectile");
 
 		// done post init
