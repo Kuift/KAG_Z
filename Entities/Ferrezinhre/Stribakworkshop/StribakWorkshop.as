@@ -54,7 +54,7 @@ void onInit( CBlob@ this )
 	
 	{
 		ShopItem@ s = addShopItem( this, "Unmaker ", "$unmaker$", "unmaker", "The heavens will weep for eternity.", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 35000 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 32000 );
 	}
 	
 	// this.set_string("required class", "builder");
