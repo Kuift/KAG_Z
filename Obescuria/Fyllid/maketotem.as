@@ -18,7 +18,7 @@ void onInit(CBlob@ this)
 void onTick(CBlob@ this)
 {
 
-  bool ready = this.get_bool("teleport ready");
+  	/*bool ready = this.get_bool("teleport ready");
 	const u32 gametime = getGameTime();
 	CBlob@[] blobs;
 
@@ -28,40 +28,32 @@ void onTick(CBlob@ this)
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
-			
-			
-			
-			
-				if(ready) {
+			if(ready) {
 				if(this.hasTag("tep")) {
-				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > TELEPORT_DISTANCE )
+						Vec2f delta = this.getPosition() - blob.getPosition();
+						if(delta.Length() > TELEPORT_DISTANCE )
+						{
+							this.set_u32("last teleport", gametime);
+							this.set_bool("teleport ready", false );
+							if(blob.hasTag("player"))
+							{
+							//server_CreateBlob("fyrnigh", -1, this.getPosition() + Vec2f(0, -5.0f)); removed for now because it's adding lots of lags
+							}
+						} 	
+					}
+				}  
+			else {		
+				u32 lastTeleport = this.get_u32("last teleport");
+				int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
+				if (diff > 0)
 				{
-				this.set_u32("last teleport", gametime);
-				this.set_bool("teleport ready", false );
-				if(blob.hasTag("player"))
-				{
-				server_CreateBlob("fyrnigh", -1, this.getPosition() + Vec2f(0, -5.0f));
+					this.set_bool("teleport ready", true );
+					//this.getSprite().PlaySound("/sand_fall.ogg"); 
 				}
-			} 	
-
-		}
-	} 
-	
-		else {		
-		u32 lastTeleport = this.get_u32("last teleport");
-		int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
-		
-
-		if (diff > 0)
-		{
-			this.set_bool("teleport ready", true );
-			//this.getSprite().PlaySound("/sand_fall.ogg"); 
-		}
-	}
+			} 
 			
 		}
-	}
+	} removed because getBlobsInRadius is costly to run */
 }
 
 
