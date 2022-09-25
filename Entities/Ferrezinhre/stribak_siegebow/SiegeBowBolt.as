@@ -225,7 +225,7 @@ void BallistaHitBlob(CBlob@ this, Vec2f hit_position, Vec2f velocity, const f32 
 		else SetStatic(this, angle);
 
 	}
-	else this.setVelocity(velocity * 0.7f);
+	else this.setVelocity(velocity * 1.2f);
 
 }
 

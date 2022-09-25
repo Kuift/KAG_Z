@@ -15,7 +15,10 @@ namespace Hitters
 		fire,   //initial burst (should ignite things)
 		burn,   //burn damage
 		flying,
+				
+		//custom hitters
 		notnormalfire, 
+		arc,
 
 		//common actor
 		stomp,
