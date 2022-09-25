@@ -30,9 +30,9 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		{
 			return;
 		}
-		f32 dmg = blob.getTeamNum() == this.getTeamNum() ? 0.0f : this.get_f32("damage");
+		
 		this.set_u8("custom_hitter", Hitters::arrow);
-		this.server_Hit(blob, point1, normal, dmg, Hitters::arrow);
+		this.server_Hit(blob, point1, normal, 2.0f, Hitters::arrow); // You're my favorite little meat grinder!
 		this.server_Die();
 	}
 }
