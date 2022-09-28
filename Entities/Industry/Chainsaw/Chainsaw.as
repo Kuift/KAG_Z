@@ -489,7 +489,7 @@ void onRender(CSprite@ this)
 	CBlob@ holderBlob = holder.getBlob();
 	if (holderBlob is null){return;}
 
-	if (holderBlob.getName() != required_class && sv_gamemode != "TDM"){return;}
+	// if (holderBlob.getName() != required_class && sv_gamemode != "TDM"){return;}
 
 	Vec2f mousePos = getControls().getMouseWorldPos();
 	Vec2f blobPos = blob.getPosition();
