@@ -13,31 +13,23 @@ string base_name() { return "tent"; }
 
 bool SetMaterials(CBlob@ blob,  const string &in name, const int quantity)
 {
-	CInventory@ inv = blob.getInventory();
+    CInventory@ inv = blob.getInventory();
 
-	//already got them?
-	if (inv.isInInventory(name, quantity))
-		return false;
+    CBlob@ mat = server_CreateBlobNoInit(name);
 
-	//otherwise...
-	inv.server_RemoveItems(name, quantity); //shred any old ones
+    if (mat !is null)
+    {
+        mat.Tag('custom quantity');
+        mat.Init();
 
-	CBlob@ mat = server_CreateBlobNoInit(name);
+        mat.server_SetQuantity(quantity);
 
-	if (mat !is null)
-	{
-		mat.Tag('custom quantity');
-		mat.Init();
-
-		mat.server_SetQuantity(quantity);
-
-		if (not blob.server_PutInInventory(mat))
-		{
-			mat.setPosition(blob.getPosition());
-		}
-	}
-
-	return true;
+        if (not blob.server_PutInInventory(mat))
+        {
+            mat.setPosition(blob.getPosition());
+        }
+    }
+    return true;
 }
 
 bool GiveSpawnResources(CRules@ this, CBlob@ blob, CPlayer@ player, CTFPlayerInfo@ info)
