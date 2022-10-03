@@ -460,7 +460,7 @@ shared class ZombiesCore : RulesCore
 			printf("Portal Zombies: "+num_portal_zombies+" Extra: "+extra_zombies);
 		}
 			
-	    if (getGameTime() % 15*30 == 0)// if (getGameTime() % (spawnRate) == 0 && num_zombies<100+extra_zombies)
+	    if (getGameTime() % (spawnRate) == 0 && num_zombies<100+extra_zombies)
         {
 			
 			CMap@ map = getMap();
