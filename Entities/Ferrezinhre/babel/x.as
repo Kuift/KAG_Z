@@ -72,15 +72,24 @@ void onTick(CBlob@ this)
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
 {
 
-	CBlob@ carrier = blob.getCarriedBlob();
+	if(blob.hasTag("projectile"))
+{
+return false;
+}
 
-	if (carrier !is null)
-		if (carrier.hasTag("player")
-		        && (this.getTeamNum() == carrier.getTeamNum() || blob.hasTag("temp blob")))
-			return false;
+bool check = this.getTeamNum() != blob.getTeamNum();
+if(!check)
+{
+CShape@ shape = blob.getShape();
+check = (shape.isStatic() && !shape.getConsts().platform);
+}
 
-	return (this.getTeamNum() != blob.getTeamNum() || blob.getShape().isStatic())
-	       && blob.isCollidable();
+if (check)
+{
+return true;
+}
+
+return false;
 
 }
 
@@ -93,7 +102,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 			return;
 		}
 		this.set_u8("custom_hitter", Hitters::arrow);
-		this.server_Hit(blob, point1, normal, 1.25f*XORRandom(6)/2, Hitters::arrow);
+		this.server_Hit(blob, point1, normal, 3.0f*XORRandom(5)/2+1.5, Hitters::arrow);
 		this.getSprite().PlaySound("note_dos" + XORRandom(9) + ".ogg");
 	}
 	this.getSprite().PlaySound("note_dos" + XORRandom(9) + ".ogg");
@@ -131,7 +140,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 	if (this !is hitBlob && customData == Hitters::arrow)
 	{
 		// affect players velocity
-		f32 force = (ARROW_PUSH_FORCE * -5.5f) * Maths::Sqrt(hitBlob.getMass()+1);
+		f32 force = (ARROW_PUSH_FORCE * -0.5f) * Maths::Sqrt(hitBlob.getMass()+1);
 		hitBlob.AddForce(velocity * force);
 	}
 }
