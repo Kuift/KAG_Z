@@ -375,7 +375,10 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 		this.set_u16("death ticks",this.getTickSinceCreated());
 		this.Sync("death ticks",true);
 	}
-	if (customData == Hitters::arrow) damage*=2.0;
+	if (customData == Hitters::mine_special) damage*=0.1;
+	if (customData == Hitters::mine) damage*=0.1;
+	if (customData == Hitters::explosion) damage*=0.15;
+	if (customData == Hitters::keg) damage*=0.30;
     this.Damage( damage, hitterBlob );
     // Gib if health below gibHealth
     f32 gibHealth = getGibHealth( this );
