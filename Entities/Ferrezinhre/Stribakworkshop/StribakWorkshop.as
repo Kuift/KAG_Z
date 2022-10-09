@@ -48,14 +48,15 @@ void onInit( CBlob@ this )
 	}
 	
 	{
+		ShopItem@ s = addShopItem( this, "Stribak Anarchy ", "$anarchy$", "anarchy", "Buy Stribak Anarchy for 675 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 675 );
+	}
+	
+	{
 		ShopItem@ s = addShopItem( this, "Travel Stone ", "$to$", "to", "No matter how far, it will find path to other one.", true );
 		AddRequirement( s.requirements, "coin", "", "Coins", 500 );
 	}
 	
-	{
-		ShopItem@ s = addShopItem( this, "PG Overdrive ", "$pgo$", "pgo", "...NO SIGNAL FOUND...", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 500 );
-	}
 	
 	{
 		ShopItem@ s = addShopItem( this, "Unmaker ", "$unmaker$", "unmaker", "The heavens will weep for eternity.", true );
