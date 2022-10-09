@@ -1,3 +1,4 @@
+#include "FireParticle.as"
 void onInit(CBlob@ this)
 {
 	string config_filename = this.get_string("gununmaker_config");
@@ -291,9 +292,8 @@ void TakeBullet(CBlob@ this)
 {
 	if(ReduceU16CounterProperty(this, "gun_ammo"))
 	{
-		this.Tag("dying");
-		this.server_DetachFromAll();
-		this.server_SetTimeToDie(7);
+		this.server_Die();
+		makeFireParticle(this.getPosition());
 	}
 }
 
