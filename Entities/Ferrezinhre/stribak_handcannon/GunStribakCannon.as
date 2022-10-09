@@ -1,3 +1,4 @@
+#include "FireParticle.as"
 void onInit(CBlob@ this)
 {
 	//make sure we've set this ahead of time, or complain loudly
@@ -341,9 +342,8 @@ void TakeBullet(CBlob@ this)
 {
 	if(ReduceU16CounterProperty(this, "gun_ammo"))
 	{
-		this.Tag("dying");
-		this.server_DetachFromAll();
-		this.server_SetTimeToDie(5);
+		this.server_Die();
+		makeFireParticle(this.getPosition());
 	}
 }
 
