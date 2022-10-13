@@ -5,8 +5,8 @@
 #include "LimitedAttacks.as";
 #include "Explosion.as";
 
-const f32 MEDIUM_SPEED = 17.0f;
-const f32 FAST_SPEED = 22.0f;
+const f32 MEDIUM_SPEED = 9.0f;
+const f32 FAST_SPEED = 16.0f;
 // Speed required to pierce Wooden tiles.
 
 void onInit(CBlob@ this)
@@ -158,8 +158,8 @@ void Pierce(CBlob@ this, Vec2f velocity, const f32 angle)
 				if (!doesCollideWithBlob(this, blob) || LimitedAttack_has_hit_actor(this, blob))
 					continue;
 
-				this.server_Hit(blob, hit_position, velocity, 7.0f, Hitters::ballista, true);
-				BallistaHitBlob(this, hit_position, velocity, 7.0f, blob, Hitters::ballista);
+				this.server_Hit(blob, hit_position, velocity, 7.0f+XORRandom(4), Hitters::ballista, true);
+				BallistaHitBlob(this, hit_position, velocity, 7.0f+XORRandom(4), blob, Hitters::ballista);
 				LimitedAttack_add_actor(this, blob);
 
 			}

@@ -28,11 +28,11 @@ void onInit(CBlob@ this)
 	
 
 	// used by Explosion.as
-	this.set_f32("explosive_radius", (16.0f)); 
-	this.set_f32("explosive_damage", (5.5f*XORRandom(4)/2+1)); 
-	this.set_f32("map_damage_radius", (16.0f)); 
-	this.set_f32("map_damage_ratio", (0.0f));
+	this.set_f32("explosive_radius", (64.0f)); 
+	this.set_f32("explosive_damage", (6.0f)); 
+	this.set_f32("map_damage_radius", (12.0f)); 
 	this.set_bool("map_damage_raycast", true);
+	this.set_f32("map_damage_ratio", (1.0f));
 	this.set_bool("explosive_teamkill", false);
 
 	this.set_u8("custom_hitter", Hitters::mine); //custom hitter
