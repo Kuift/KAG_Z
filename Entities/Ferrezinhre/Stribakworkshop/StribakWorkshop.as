@@ -57,6 +57,10 @@ void onInit( CBlob@ this )
 		AddRequirement( s.requirements, "coin", "", "Coins", 500 );
 	}
 	
+	{
+		ShopItem@ s = addShopItem( this, "Stribak Fanatic", "$fanatic$", "fanatic", "Imperative. AURORA APOTHEOSIS.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 1447 );
+	}
 	
 	{
 		ShopItem@ s = addShopItem( this, "Unmaker ", "$unmaker$", "unmaker", "The heavens will weep for eternity.", true );
