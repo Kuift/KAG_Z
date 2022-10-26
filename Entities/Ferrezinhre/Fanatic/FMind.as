@@ -1,4 +1,4 @@
-﻿
+
 
 
 #include "AnimalConsts.as";
@@ -22,10 +22,6 @@ void onInit(CBlob@ this)
 	this.getShape().SetRotationsAllowed(false);
 }
 
-bool canBePickedUp( CBlob@ this, CBlob@ byBlob )
-{
-    return true;
-}
 
 void onTick(CBlob@ this)
 {
@@ -45,4 +41,21 @@ void onTick(CBlob@ this)
 		}
 	}
 	this.getShape().SetGravityScale(0.1);
+}
+
+bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
+{
+	if (blob !is null && blob.getTeamNum() == this.getTeamNum()) return false;
+	
+	return true;
+}
+
+void onAttach(CBlob@ this, CBlob@ attached, AttachmentPoint @attachedPoint)
+{
+	this.getSprite().PlaySound("Fanatic_Noise" + XORRandom(9) + ".ogg");
+}
+
+void onDetach(CBlob@ this, CBlob@ detached, AttachmentPoint @detachedPoint)
+{
+	this.getSprite().PlaySound("Fanatic_Noise" + XORRandom(9) + ".ogg");
 }
