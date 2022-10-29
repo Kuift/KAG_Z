@@ -26,8 +26,8 @@ void onInit(CBlob@ this)
 	vars.walkForce.Set(10.0f,-1.0f);
 	vars.runForce.Set(30.0f,0.0f);
 	vars.slowForce.Set(5.0f,0.0f);
-	vars.jumpForce.Set(0.0f,-37.0f);
-	vars.maxVelocity = 70.0f;
+	vars.jumpForce.Set(0.0f,-140.0f);
+	vars.maxVelocity = 140.0f;
 	this.set( "vars", vars );
 
 
