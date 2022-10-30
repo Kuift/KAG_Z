@@ -126,6 +126,7 @@ void onInit(CBlob@ this)
 	int bitefreq = 45-difficulty*1.0;
 	if (bitefreq<5) bitefreq=2;
 	this.set_u16("bite freq", bitefreq);
+	this.Tag("not_tamable");
 
 	//brain
 	this.set_u8(personality_property, DEFAULT_PERSONALITY);

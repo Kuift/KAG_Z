@@ -21,6 +21,7 @@ void onInit(CBlob@ this)
 
 	this.set_u8("blocks_pierced", 0);
 	this.set_bool("static", false);
+	this.Tag("not_tamable");
 
 	this.server_SetTimeToDie(7);
 

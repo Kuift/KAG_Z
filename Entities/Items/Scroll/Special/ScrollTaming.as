@@ -31,7 +31,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 				for (uint i = 0; i < blobsInRadius.length; i++)
 				{
 					CBlob @b = blobsInRadius[i];
-					if (b.getTeamNum() != team && b.hasTag("flesh") && b.getName() != ("BossZombieKnight") && b.getName() != ("abomination") && b.getName() != ("Greg") && b.getName() != ("Wraith") && b.getName() != ("horror") && b.getName() != ("vroon") && b.getName() != ("azair") && b.getName() != ("stormslave") && b.getName() != ("goresinger") && b.getName() != ("bloodpush") && b.getName() != ("ukkon") && b.getName() != ("bloodvainguard") && b.getName() != ("bloodhold") && b.getName() != ("magnar") && b.getName() != ("bloodrainsigil") && b.getName() != ("neqrris") && b.getName() != ("kaarn"))
+					if (b.getTeamNum() != team && b.hasTag("flesh") && !b.hasTag("not_tamable"))
 					{
 						ParticleZombieLightning( b.getPosition() ); 
 						if (getNet().isServer())

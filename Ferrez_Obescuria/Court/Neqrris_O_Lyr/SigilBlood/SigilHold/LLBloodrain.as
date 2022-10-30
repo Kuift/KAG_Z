@@ -22,6 +22,7 @@ void onInit(CBlob@ this)
 	vars.jumpForce.Set(0.0f, -1000.0f);
 	vars.maxVelocity = 0.5f;
 	this.set("vars", vars);
+	this.Tag("not_tamable");
 
 	// force no team
 	this.server_setTeamNum(-1);

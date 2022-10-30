@@ -13,6 +13,7 @@ void onInit(CBlob@ this)
 	this.set_bool("teleport ready", true );
 	this.getCurrentScript().tickFrequency = 5;
 	this.Tag("tep");
+	this.Tag("not_tamable");
 }
 
 void onTick(CBlob@ this)

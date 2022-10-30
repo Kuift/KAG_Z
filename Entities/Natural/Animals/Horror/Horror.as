@@ -11,6 +11,7 @@ const string chomp_tag = "chomping";
 
 void onInit(CSprite@ this)
 {
+	this.Tag("not_tamable");
 	CBlob@ blob = this.getBlob();
     this.ReloadSprites(blob.getTeamNum(),0); 
 }

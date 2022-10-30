@@ -11,6 +11,7 @@ void onInit(CBlob@ this)
 {
 
 	this.Tag("dont deactivate");
+	this.Tag("not_tamable");
 
 	this.Tag("fire source");
 	this.getCurrentScript().tickFrequency = 1;

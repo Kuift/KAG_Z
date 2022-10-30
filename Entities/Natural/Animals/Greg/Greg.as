@@ -13,6 +13,7 @@ int lastpickuptime = 0;
 void onInit(CSprite@ this)
 {
     this.ReloadSprites(0,0); //always blue
+	this.Tag("not_tamable");
 }
 
 void onTick(CSprite@ this)

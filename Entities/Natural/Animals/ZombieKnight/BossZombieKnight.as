@@ -152,6 +152,7 @@ void onInit(CBlob@ this)
 	
 	this.Tag("flesh");
 	this.Tag("zombie");
+	this.Tag("not_tamable");
 	this.set_s16("mad timer", 0);
 
 	this.getShape().SetOffset(Vec2f(0,0));
