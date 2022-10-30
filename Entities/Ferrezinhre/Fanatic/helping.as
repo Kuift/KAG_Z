@@ -1,7 +1,7 @@
 #include "Hitters.as";
-
+// require more work
 // regen hp back to
-const f32 max_range = 242.00f;
+const f32 max_range = 126.00f;
 const int targets_count = 2; // how many targets can be healed per tick
 const string max_prop = "regen maximum";
 const string rate_prop = "regen rate";
@@ -12,10 +12,10 @@ void onInit(CBlob@ this)
 		this.set_f32(max_prop, this.getInitialHealth());
 
 	if (!this.exists(rate_prop))
-		this.set_f32(rate_prop, 1.5f);
+		this.set_f32(rate_prop, 1.0f);
 
 	this.addCommandID("heal_player");
-	this.getCurrentScript().tickFrequency = 15;
+	this.getCurrentScript().tickFrequency = 45;
 }
 
 void onTick(CBlob@ this)
