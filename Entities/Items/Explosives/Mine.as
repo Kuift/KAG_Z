@@ -21,7 +21,7 @@ void onInit(CBlob@ this)
 	this.getShape().getVars().waterDragScale = 16.0f;
 
 	this.set_f32("explosive_radius", 32.0f);
-	this.set_f32("explosive_damage", 8.0f);
+	this.set_f32("explosive_damage", 16.0f);
 	this.set_f32("map_damage_radius", 10.0f);
 	this.set_f32("map_damage_ratio", 0.15f);
 	this.set_bool("map_damage_raycast", true);
