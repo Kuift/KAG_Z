@@ -800,16 +800,24 @@ shared class ZombiesCore : RulesCore
 		}
 	
 		int zpc = rules.get_s32("num_zombiePortals");
+		u32 tsuyani_score = rules.get_u32("tsuyani_score");
 		if (zpc == 0)
 		{
-		
-            rules.SetCurrentState(GAME_OVER);
-			int gamestart = rules.get_s32("gamestart");			
-			int day_cycle = getRules().daycycle_speed*60;			
-			int dayNumber = ((getGameTime()-gamestart)/getTicksASecond()/day_cycle)+1;
-            rules.SetGlobalMessage( "Hurray! You survived the apocalypse and destroyed all portals in "+ dayNumber+" days!" );
-			Sound::Play("/FanfareWin.ogg");			
-			getRules().set_bool("everyones_dead",false); 
+			if(tsuyani_score >= 15) // if neqriss and bloodguard + 1 goresinger is killed, this will trigger the win condition
+			{
+				rules.SetCurrentState(GAME_OVER);
+				int gamestart = rules.get_s32("gamestart");			
+				int day_cycle = getRules().daycycle_speed*60;			
+				int dayNumber = ((getGameTime()-gamestart)/getTicksASecond()/day_cycle)+1;
+				rules.SetGlobalMessage( "Hurray! You survived the apocalypse and destroyed all portals in "+ dayNumber+" days!" );
+				Sound::Play("/FanfareWin.ogg");			
+				getRules().set_bool("everyones_dead",false); 
+			}
+			else if (rules.get_bool("tsuyani_summoned") == false)
+			{
+				rules.set_bool("tsuyani_summoned",true);
+				server_CreateBlob("tsuyani", -1, middle_up);
+			}
 		}
     }
 
@@ -878,11 +886,15 @@ void spawnRandomScroll(Vec2f pos)
 
 void onInit(CRules@ this)
 {
+	this.set_u32("tsuyani_score", 0);
+	this.set_bool("tsuyani_summoned", false);
 	Reset(this);
 }
 
 void onRestart(CRules@ this)
 {
+	this.set_u32("tsuyani_score", 0);
+	this.set_bool("tsuyani_summoned", false);
 	Reset(this);
 }
 

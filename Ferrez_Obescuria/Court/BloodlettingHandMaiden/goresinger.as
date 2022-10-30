@@ -424,7 +424,13 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
     return 0.0f; //done, we've used all the damage	
 	
 }														
-
+void onDie(CBlob@ this)
+{
+	if(getNet().isServer())
+	{
+		getRules().set_u32("tsuyani_score", getRules().get_u32("tsuyani_score") + 1);
+	}
+}
 #include "Hitters.as";
 
 bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
