@@ -146,7 +146,7 @@ shared class ZombiesSpawns : RespawnSystem
 			
 			if(info.can_spawn_time > 0) {
 				info.can_spawn_time--;
-				spawn_property = u8(Maths::Min(250,(info.can_spawn_time / 30)));
+				spawn_property = u8(Maths::Min(250,(info.can_spawn_time / 22)));
 			}
 			
 			string propname = "Zombies spawn time "+info.username;
