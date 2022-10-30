@@ -815,7 +815,7 @@ shared class ZombiesCore : RulesCore
 			}
 			else if (getRules().get_bool("tsuyani_summoned") == false)
 			{
-				Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+				Vec2f middle_up = Vec2f(getMap().getMapDimensions().x/2,25);
 				getRules().SetGlobalMessage( "Tsuyani has been summoned.");
 				getRules().set_bool("tsuyani_summoned",true);
 				server_CreateBlob("tsuyani", -1, middle_up);
