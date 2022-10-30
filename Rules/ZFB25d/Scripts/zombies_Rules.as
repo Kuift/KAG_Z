@@ -440,7 +440,7 @@ shared class ZombiesCore : RulesCore
 		if (extra_zombies>max_zombies-100) extra_zombies=max_zombies-100; //this line may need to be fixed but, we'll wait to see if it becomes a problem
 		if (spawnRate<8) spawnRate=8;
 		int wraiteRate = 2 + (intdif/4);
-		if(dayNumber == 52 || dayNumber == 56 || dayNumber == 60 || dayNumber == 64 || dayNumber == 68 || this.get_bool("tsuyani_summoned")){
+		if(dayNumber == 52 || dayNumber == 56 || dayNumber == 60 || dayNumber == 64 || dayNumber == 68 || getRules().get_bool("tsuyani_summoned")){
 			spawnRate = 1000;
 		}
 		if (getGameTime() % 300 == 0)
@@ -813,10 +813,11 @@ shared class ZombiesCore : RulesCore
 				Sound::Play("/FanfareWin.ogg");			
 				getRules().set_bool("everyones_dead",false); 
 			}
-			else if (rules.get_bool("tsuyani_summoned") == false)
+			else if (getRules().get_bool("tsuyani_summoned") == false)
 			{
-				rules.SetGlobalMessage( "Tsuyani has been summoned.");
-				rules.set_bool("tsuyani_summoned",true);
+				Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
+				getRules().SetGlobalMessage( "Tsuyani has been summoned.");
+				getRules().set_bool("tsuyani_summoned",true);
 				server_CreateBlob("tsuyani", -1, middle_up);
 			}
 		}
