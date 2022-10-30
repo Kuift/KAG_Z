@@ -602,18 +602,23 @@ shared class ZombiesCore : RulesCore
 								server_CreateBlob( "Wraith", -1, sp);
 							}
 						}
-						if(dayNumber >= 20 && dayNumber < 30 )
+						if(dayNumber >= 20 && dayNumber < 24 )
+						{
+							server_CreateBlob( "abomination", -1, sp);
+							server_CreateBlob( "bukavac", -1, sp);
+						}
+						if(dayNumber >= 24 && dayNumber < 30 )
 						{
 							for(int i = 0; i < 2; ++i) {
 								server_CreateBlob( "fyllid", -1, sp);
 							}
-							server_CreateBlob( "abomination", -1, sp);
 							for(int i = 0; i < 5; ++i) {
 								server_CreateBlob( "Wraith", -1, sp);
 							}
 						}
 						if(dayNumber >= 30 && dayNumber < 40 )
 						{
+							server_CreateBlob( "bukavac", -1, sp);
 							for(int i = 0; i < 2; ++i) {
 								server_CreateBlob( "abomination", -1, sp);
 							}
@@ -661,6 +666,7 @@ shared class ZombiesCore : RulesCore
 						}
 						if (dayNumber >= 68)
 						{
+							server_CreateBlob( "bukavac", -1, sp);
 							server_CreateBlob( "abomination", -1, sp);
 							server_CreateBlob( "abomination", -1, sp);
 							server_CreateBlob( "fyllid", -1, sp);
