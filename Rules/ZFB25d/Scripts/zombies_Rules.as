@@ -800,7 +800,7 @@ shared class ZombiesCore : RulesCore
 		}
 	
 		int zpc = rules.get_s32("num_zombiePortals");
-		u32 tsuyani_score = rules.get_u32("tsuyani_score");
+		u32 tsuyani_score = getRules().get_u32("tsuyani_score");
 		if (zpc == 0)
 		{
 			if(tsuyani_score >= 15) // if neqriss and bloodguard + 1 goresinger is killed, this will trigger the win condition
