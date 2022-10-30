@@ -28,37 +28,37 @@ void onTick(CBlob@ this)
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
-			
-			
-			
-			
-				if(ready) {
+			if(ready) {
+				//
 				if(this.hasTag("tep")) {
-				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > TELEPORT_DISTANCE )
-				{
-				this.set_u32("last teleport", gametime);
-				this.set_bool("teleport ready", false );
-				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-				{
-				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
-				MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
-				}
-			} 	
+					Vec2f delta = this.getPosition() - blob.getPosition();
+					if(delta.Length() > TELEPORT_DISTANCE )
+					{
+						this.set_u32("last teleport", gametime);
+						this.set_bool("teleport ready", false );
+						if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
+						{
+							this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
+							MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
+							if(blob.hasTag("zombie") || blob.hasTag("ZombiePortalz")) {
+								break; // we only want to hit 1 zombie at a time
+							}
+						}
+					} 	
 
-		}
-	} 
+			}
+		} 
 	
 		else {		
-		u32 lastTeleport = this.get_u32("last teleport");
-		int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
+			u32 lastTeleport = this.get_u32("last teleport");
+			int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
 		
 
-		if (diff > 0)
-		{
-			this.set_bool("teleport ready", true );
+			if (diff > 0)
+			{
+				this.set_bool("teleport ready", true );
+			}
 		}
-	}
 			
 		}
 	}
