@@ -11,7 +11,6 @@ const string chomp_tag = "chomping";
 
 void onInit(CSprite@ this)
 {
-	this.Tag("not_tamable");
 	CBlob@ blob = this.getBlob();
     this.ReloadSprites(blob.getTeamNum(),0); 
 }
@@ -127,6 +126,7 @@ void onInit(CBlob@ this)
 	int bitefreq = 45-difficulty*4.0;
 	if (bitefreq<5) bitefreq=5;
 	this.set_u16("bite freq", bitefreq);
+	this.Tag("not_tamable");
 
 	//brain
 	this.set_u8(personality_property, DEFAULT_PERSONALITY);

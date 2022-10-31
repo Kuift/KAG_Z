@@ -12,7 +12,6 @@ const string chomp_tag = "chomping";
 void onInit(CSprite@ this)
 {
     this.ReloadSprites(0,0); //always blue
-	this.Tag("not_tamable");
 }
 
 void onTick(CSprite@ this)
@@ -120,7 +119,7 @@ void onInit(CBlob@ this)
 	
 	//for flesh hit
 	this.set_f32("gib health", -0.0f);
-	
+	this.Tag("not_tamable");
 	this.Tag("flesh");
 	this.Tag("zombie");
 	this.Tag("Greg");

@@ -13,7 +13,6 @@ int lastpickuptime = 0;
 void onInit(CSprite@ this)
 {
     this.ReloadSprites(0,0); //always blue
-	this.Tag("not_tamable");
 }
 
 void onTick(CSprite@ this)
@@ -102,7 +101,7 @@ void onInit(CBlob@ this)
 	this.set("tags to eat", tags);
 	
 	this.set_f32("bite damage", 0.125f);
-	
+	this.Tag("not_tamable");
 	//brain
 	this.set_u8(personality_property, DEFAULT_PERSONALITY);
 	this.set_u8("random move freq",8);
