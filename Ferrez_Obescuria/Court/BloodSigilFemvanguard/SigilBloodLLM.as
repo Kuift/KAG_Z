@@ -2,7 +2,7 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 240.00f; // range will get a lil buff was :128:
+const f32 max_range = 320.00f; // range will get a lil buff was :128:
 const int TELEPORT_FREQUENCY = 60; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
@@ -39,9 +39,9 @@ void onTick(CBlob@ this)
 				{
 				this.set_u32("last teleport", gametime);
 				this.set_bool("teleport ready", false );
-				if(blob.hasTag("player"))
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
 				{
-				server_CreateBlob("bloodpushsigil", -1, blob.getOldPosition() + Vec2f(0, -80.0f));
+				server_CreateBlob("bloodpushsigil", -1, blob.getOldPosition() + Vec2f(0, -30.0f));
 
 				}
 			} 	

@@ -2,8 +2,8 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 320.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCY = 60; //4 secs
+const f32 max_range = 480.00f; // giving her buff in range was :240:, tsuyani nerf is equal to more power
+const int TELEPORT_FREQUENCY = 45; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
 void onInit(CBlob@ this)
@@ -39,7 +39,7 @@ void onTick(CBlob@ this)
 				{
 				this.set_u32("last teleport", gametime);
 				this.set_bool("teleport ready", false );
-				if(blob.hasTag("player"))
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
 				{
 				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
 				}
@@ -56,7 +56,7 @@ void onTick(CBlob@ this)
 		if (diff > 0)
 		{
 			this.set_bool("teleport ready", true );
-			this.getSprite().PlaySound("/sand_fall.ogg"); 
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
 		}
 	}
 			

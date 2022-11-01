@@ -2,7 +2,7 @@
 #include "LimitedAttacks.as";
 
 const f32 RANGE = 2000.0f;
-const f32 DAMAGE = 4.5f;
+const f32 DAMAGE = 2.5f;
 
 const f32 LIFETIME = 1.5f;
 
@@ -39,11 +39,11 @@ void onInit( CBlob @ this )
 	
 	this.server_SetTimeToDie(LIFETIME);
 	this.Tag("exploding");
-	this.set_f32("explosive_radius", 64.0f);
-	this.set_f32("explosive_damage", 8.0f);
+	this.set_f32("explosive_radius", 32.0f);
+	this.set_f32("explosive_damage", 4.0f);
 	this.set_f32("map_damage_radius", 48.0f);
 	this.set_bool("map_damage_raycast", true);
-	this.set_f32("map_damage_ratio", 0.0f); //heck no!
+	this.set_f32("map_damage_ratio", 4.0f); //heck no!
 	this.set_bool("explosive_teamkill", false);
 }
 
