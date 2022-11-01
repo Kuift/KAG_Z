@@ -3,7 +3,7 @@
 #include "Hitters.as";
 #include "FireCommon.as";
 const f32 max_range = 340282350000000000000000000000000000000.00f;
-const int TELEPORT_FREQUENCY = 30; //4 secs
+const int TELEPORT_FREQUENCY = 60; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
 void onInit(CBlob@ this)
@@ -39,7 +39,7 @@ void onTick(CBlob@ this)
 				{
 				this.set_u32("last teleport", gametime);
 				this.set_bool("teleport ready", false );
-				if(blob.hasTag("player"))
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
 				{
 				server_CreateBlob("tsuyaniwill", -1, blob.getPosition() + Vec2f(0 - XORRandom(300), 0.0f - XORRandom(160)));
 				server_CreateBlob("tsuyaniwill", -1, blob.getPosition() + Vec2f(0 + XORRandom(300), 0.0f - XORRandom(160)));
@@ -59,7 +59,7 @@ void onTick(CBlob@ this)
 		if (diff > 0)
 		{
 			this.set_bool("teleport ready", true );
-			this.getSprite().PlaySound("/sand_fall.ogg"); 
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
 		}
 	}
 			

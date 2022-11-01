@@ -39,9 +39,9 @@ void onTick(CBlob@ this)
 				{
 				this.set_u32("last bloodletting", gametime);
 				this.set_bool("bloodletting ready", false );
-				if(blob.hasTag("player"))
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
 				{
-				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.5f, Hitters::fall);
+				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.75f, Hitters::fall);
 				}
 			} 	
 
@@ -56,7 +56,7 @@ void onTick(CBlob@ this)
 		if (diff > 0)
 		{
 			this.set_bool("bloodletting ready", true );
-			this.getSprite().PlaySound("/sand_fall.ogg"); 
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
 		}
 	}
 			
