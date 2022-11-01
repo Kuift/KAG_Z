@@ -2,9 +2,9 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 340.00f;
+const f32 max_range = 460.00f;
 const int TELEPORT_FREQUENCY = 120; //4 secs
-const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
+const int TELEPORT_DISTANCE = 20;//getMap().tilesize;
 
 void onInit(CBlob@ this)
 {
