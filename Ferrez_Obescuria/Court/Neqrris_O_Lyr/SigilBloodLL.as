@@ -57,7 +57,7 @@ void onTick(CBlob@ this)
 		if (diff > 0)
 		{
 			this.set_bool("teleport ready", true );
-			this.getSprite().PlaySound("/sand_fall.ogg"); 
+			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
 		}
 	}
 			
