@@ -79,6 +79,17 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 	}
 }
 
+void server_PutIn(CBlob@ this, CBlob@ picker, CBlob@ pickBlob)
+{
+	CInventory@ inv = this.getInventory();
+	if (pickBlob is null || picker is null || !inv.canPutItem(pickBlob))
+		return;
+	CBitStream params;
+	params.write_netid(picker.getNetworkID());
+	params.write_netid(pickBlob.getNetworkID());
+	this.SendCommand(this.getCommandID("putin"), params);
+}
+
 bool ClickGridMenu(CBlob@ this, int button)
 {
 	CGridMenu @gmenu;
@@ -93,7 +104,7 @@ bool ClickGridMenu(CBlob@ this, int button)
 			{
 				if (pickBlob !is null && gbutton is null)    // carrying something, put it in
 				{
-					this.server_PutInInventory(pickBlob);
+					server_PutIn(this, gmenu.getOwner(), pickBlob);
 				}
 				else // take something
 				{
@@ -241,7 +252,7 @@ void onTick(CBlob@ this)
 				CInventory@ inv = this.getInventory();
 				if (carryBlob !is null && !carryBlob.hasTag("temp blob") && inv.canPutItem(carryBlob))
 				{
-					this.server_PutInInventory(carryBlob);
+					server_PutIn(this, this, carryBlob);
 				}
 				else
 				{
