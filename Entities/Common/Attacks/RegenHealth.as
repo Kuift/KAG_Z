@@ -13,7 +13,7 @@ void onInit( CBlob@ this )
 	if (!this.exists(rate_prop))
 		this.set_f32(rate_prop, 0.25f); //0.5 hearts per second
 
-	this.getCurrentScript().tickFrequency = 90;	
+	this.getCurrentScript().tickFrequency = 30;	
 }
 
 void onTick( CBlob@ this )
