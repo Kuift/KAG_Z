@@ -35,7 +35,7 @@ void onInit(CBlob@ this)
 		string packed = this.get_string("packed");
 
 		// GIANT HACK!!!
-		if (packed == "catapult" || packed == "bomber" || packed == "ballista" || packed == "mounted_bow" || packed == "longboat" || packed == "warboat")	 // HACK:
+		if (packed == "catapult" || packed == "gunship" || packed == "bomber" || packed == "ballista" || packed == "mounted_bow" || packed == "longboat" || packed == "warboat")	 // HACK:
 		{
 			CSpriteLayer@ icon = this.getSprite().addSpriteLayer("icon", "/MiniIcons.png" , 16, 16, this.getTeamNum(), -1);
 			if (icon !is null)
@@ -97,7 +97,7 @@ void onInit(CBlob@ this)
 	this.Tag("activated");
 
 
-	const uint unpackSecs = 3;
+	const uint unpackSecs = 2; //3
 	this.set_u32("unpack secs", unpackSecs);
 	this.set_u32("unpack time", 0);
 
@@ -400,8 +400,8 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 			this.server_PutOutInventory(sneaky_player);
 		}
 		// Attack self to pop out items
-		this.server_Hit(this, this.getPosition(), Vec2f(), 100.0f, Hitters::crush, true);
-		this.server_Die();
+		// this.server_Hit(this, this.getPosition(), Vec2f(), 100.0f, Hitters::crush, true);
+		// this.server_Die();
 	}
 	else if (cmd == this.getCommandID("boobytrap"))
 	{

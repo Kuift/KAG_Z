@@ -159,7 +159,7 @@ void onInit(CBlob@ this)
 		}
 	}
 
-	const uint unpackSecs = 3;
+	const uint unpackSecs = 2; //3
 	this.set_u32("unpack secs", unpackSecs);
 	this.set_u32("unpack time", 0);
 

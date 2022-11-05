@@ -112,6 +112,11 @@ void onTick( CBlob@ this )
 
 void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point1 )
 {
+	if(blob !is null){ //required to be here because grain doesnt collide
+		if(blob.getName() == "grain_plant" || blob.hasTag("has grain")){
+			blob.server_Die();
+		}
+	}
     if (blob !is null && doesCollideWithBlob( this, blob ) && !this.hasTag("collided"))
     {
 		if ((blob.getName() != "tree_bushy") && (blob.getName() != "tree_pine") && (blob.getName() != "log") && !solid && !blob.hasTag("flesh") && (blob.getName() != "mounted_bow" || this.getTeamNum() != blob.getTeamNum()))
