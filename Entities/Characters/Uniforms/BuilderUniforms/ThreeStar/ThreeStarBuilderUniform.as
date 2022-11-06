@@ -17,6 +17,6 @@ void GetButtonsFor( CBlob@ this, CBlob@ caller )
 	if (kek == 0)
 	{	
 		caller.Tag("threestarbuilder");
-		caller.CreateGenericButton( 11, Vec2f_zero, this, this.getCommandID("threestarbuilder"), "Use this to change into a stronger builder.", params );
+		caller.CreateGenericButton( 11, Vec2f_zero, this, this.getCommandID("threestarbuilder"), "Use this to change into a tier 3 builder.", params );
 	}
 }
