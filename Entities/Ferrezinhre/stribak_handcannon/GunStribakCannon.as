@@ -241,7 +241,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
          bullet.setVelocity(velocity * 1); // was multiplied by 25 in the original
 
          bullet.IgnoreCollisionWhileOverlapped(holder);
-         bullet.SetDamageOwnerPlayer(holder.getPlayer());
+         //bullet.SetDamageOwnerPlayer(holder.getPlayer()); temporary fix for no holder damage needs something better
          bullet.server_setTeamNum(holder.getTeamNum());
          bullet.set_f32("damage", this.get_f32("gun_damage"));
          bullet.set_f32("gravity", this.get_f32("gun_bullet_gravity"));
