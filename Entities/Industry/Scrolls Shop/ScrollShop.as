@@ -55,7 +55,7 @@ void onInit( CBlob@ this )
 	}
 	{
 		ShopItem@ s = addShopItem(this, "Scroll of Taming", "$scrolltaming$", "staming", "Once used, it will convert nearby zombies to be friendly.", true);
-		AddRequirement(s.requirements, "coin", "", "Coins", 250);
+		AddRequirement(s.requirements, "coin", "", "Coins", 500);
 	}
 }
 
