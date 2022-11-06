@@ -65,7 +65,8 @@ const string[] builder_alwayshit =
 	"quarters",
 	"storage",
 	"kitchen",
-		"flowers",
+	"flowers",
+	"flagfactory",
 };
 
 //fragments of names, for semi-tolerant matching
