@@ -393,7 +393,7 @@ void onTick( CBrain@ this )
 	{	
 		this.getCurrentScript().tickFrequency = 1;
 
-		const f32 distance = (target.getPosition() - blob.getOldPosition()).getLength();
+		const f32 distance = (target.getPosition() - blob.getPosition()).getLength();
 		f32 visibleDistance;
 		const bool visibleTarget = isVisible( blob, target, visibleDistance);
 
@@ -401,7 +401,7 @@ void onTick( CBrain@ this )
 		{
 			if (!sawYou)
 			{
-				blob.setAimPos( target.getOldPosition() );
+				blob.setAimPos( target.getPosition() );
 				blob.Tag("saw you");
 			}
 
@@ -412,7 +412,7 @@ void onTick( CBrain@ this )
 			{
 				//blob.setKeyPressed( key_action1, true );
 				f32 vellen = target.getShape().vellen;
-				blob.setAimPos( target.getOldPosition() + target.getVelocity()*vellen*vellen );
+				blob.setAimPos( target.getPosition() + target.getVelocity()*vellen*vellen );
 			}
 
 			int x = gametime % 10;

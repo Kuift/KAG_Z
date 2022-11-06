@@ -1,4 +1,4 @@
-const int FIRE_FREQUENCY = 25;
+const int FIRE_FREQUENCY = 13;
 const f32 BOLT_SPEED = 19.0f;
 
 void onInit(CBlob@ this)
