@@ -168,28 +168,32 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 void onAddToInventory(CBlob@ this, CBlob@ blob)
 {
 	updateLayers(this, blob);
-    blob.maxQuantity = blob.getMaxQuantity() * 5.0f;
+    if(blob !is null && getNet().isServer()){blob.maxQuantity = blob.getMaxQuantity() * 5.0f;}
 }
 
 void onRemoveFromInventory(CBlob@ this, CBlob@ blob)
 {
 	updateLayers(this, blob);
-    blob.maxQuantity = blob.getMaxQuantity() * 0.2f;
-	if(blob.getQuantity() > blob.getMaxQuantity()){
-		int amount = blob.getQuantity();
-		Vec2f pos = blob.getPosition();
-		while(amount > 0){
-			if(amount > blob.getMaxQuantity()){
-				CBlob@ blob2 = server_CreateBlob(blob.getName(), blob.getTeamNum(), pos);
-				blob2.server_SetQuantity(blob.getMaxQuantity());
-				blob.server_Die();
-				amount = amount - blob.getMaxQuantity();
-			}
-			else{
-				CBlob@ blob2 = server_CreateBlob(blob.getName(), blob.getTeamNum(), pos);
-				blob2.server_SetQuantity(amount);
-				blob.server_Die();
-				amount = 0;
+	if(blob !is null && getNet().isServer()){
+    	blob.maxQuantity = blob.getMaxQuantity() * 0.2f;
+		if(blob.getQuantity() > blob.getMaxQuantity()){
+			int amount = blob.getQuantity();
+			Vec2f pos = blob.getPosition();
+			while(amount > 0){
+				if(amount > blob.getMaxQuantity()){
+					CBlob@ blob2 = server_CreateBlob(blob.getName(), blob.getTeamNum(), pos);
+					if(blob2 !is null){
+						blob2.server_SetQuantity(blob.getMaxQuantity());
+					}
+					blob.server_Die();
+					amount = amount - blob.getMaxQuantity();
+				}
+				else{
+					CBlob@ blob2 = server_CreateBlob(blob.getName(), blob.getTeamNum(), pos);
+					blob2.server_SetQuantity(amount);
+					blob.server_Die();
+					amount = 0;
+				}
 			}
 		}
 	}
