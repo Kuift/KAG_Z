@@ -9,7 +9,6 @@
 #include "Help.as";
 #include "Requirements.as"
 
-
 //attacks limited to the one time per-actor before reset.
 
 void knight_actorlimit_setup(CBlob@ this)
@@ -743,6 +742,32 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 				this.getSprite().PlaySound("SwordCling");
 			}
 		}
+	}
+	float x_side = 0.0f;
+	float y_side = 0.0f;
+	Vec2f f;
+	switch (customData){
+		case Hitters::bomb:
+			if (velocity.x > 0.7)
+			{
+				x_side = 1.0f;
+			}
+			else if (velocity.x < -0.7)
+			{
+				x_side = -1.0f;
+			}
+			if (velocity.y > 0.5)
+			{
+				y_side = 1.0f;
+			}
+			else
+			{
+				y_side = -1.0f;
+			}
+			f = Vec2f(x_side, y_side);
+			this.AddForce(f*200.0f); //MIMIC PUSH OF BOMBS
+			return 0.0f;
+		break;
 	}
 
 	return damage; //no block, damage goes through
