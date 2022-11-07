@@ -4,6 +4,9 @@
 
 void onInit(CBlob@ this)
 {
+	this.SetLight(true);
+	this.SetLightRadius(372.0f);
+	this.SetLightColor(SColor(255, 255, 201, 250));
 	this.getShape().getVars().waterDragScale = 24.0f;
 	this.getCurrentScript().tickIfTag = "activated";
 	this.getShape().SetGravityScale(0.0f);
