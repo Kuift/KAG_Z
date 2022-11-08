@@ -1,5 +1,7 @@
 //coin bundle script
 
+string used = "bag_used";
+
 void onInit( CBlob@ this )
 {
 	this.addCommandID( "transfer" );
@@ -16,6 +18,8 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 {
 	if (cmd == this.getCommandID("transfer"))
 	{
+		if(this.exists(used)){return;}
+
 		bool hit = false;
 		u16 caller_id = params.read_u16();
 		CBlob@ caller = getBlobByNetworkID( caller_id );
@@ -63,7 +67,8 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 				{
 					Sound::Play( "snes_coin.ogg", this.getPosition(), 8.0, 0.8 );
 					this.server_Die();
-				
+					this.Tag(used);
+					this.Sync(used, true);
 				}
    			}
 		}
