@@ -37,7 +37,7 @@ void onInit( CBlob@ this )
 
 void onDie( CBlob@ this)
 {
-	server_DropCoins(this.getPosition() + Vec2f(0,-32.0f), 500); //1000
+	server_DropCoins(this.getPosition() + Vec2f(0,-32.0f), 1000);
 }
 void onTick( CBlob@ this)
 {

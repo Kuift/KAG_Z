@@ -17,6 +17,6 @@ void GetButtonsFor( CBlob@ this, CBlob@ caller )
 	if (kek == 0)
 	{	
 		caller.Tag("twostarknight");
-		caller.CreateGenericButton( 11, Vec2f_zero, this, this.getCommandID("twostarknight"), "Use this to change into a stronger knight.", params );
+		caller.CreateGenericButton( 11, Vec2f_zero, this, this.getCommandID("twostarknight"), "Use this to change into a tier 2 knight.", params );
 	}
 }

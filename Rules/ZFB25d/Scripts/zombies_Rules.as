@@ -459,7 +459,11 @@ shared class ZombiesCore : RulesCore
 			rules.set_s32("num_portal_zombies", num_portal_zombies);
 			printf("Portal Zombies: "+num_portal_zombies+" Extra: "+extra_zombies);
 		}
-			
+		
+		if(getMap() !is null){
+			rules.SetGlobalMessage( "Day "+ dayNumber + "\nPortals Left: " + num_zombiePortals + "\nZombies: " + num_zombies + "\nPortal Zombies: " + num_portal_zombies);
+		}
+
 	    if (getGameTime() % (spawnRate) == 0 && num_zombies<100+extra_zombies)
         {
 			
@@ -472,7 +476,7 @@ shared class ZombiesCore : RulesCore
 				//rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Left" + zombiePlaces.length);			
 				//rules.SetGlobalMessage( "Day "+ dayNumber + "Zombie Portals:" + ZombiePortalV);	
 				
-				rules.SetGlobalMessage( "Day "+ dayNumber + "\nPortals Left: " + num_zombiePortals + "\nZombies: " + num_zombies + "\nPortal Zombies: " + num_portal_zombies);
+				// rules.SetGlobalMessage( "Day "+ dayNumber + "\nPortals Left: " + num_zombiePortals + "\nZombies: " + num_zombies + "\nPortal Zombies: " + num_portal_zombies);
 				//rules.SetGlobalMessage( "Day "+ dayNumber + ". Zombie Portals Destroyed" + dzp );					
 				if (zombiePlaces.length<=0)
 				{
