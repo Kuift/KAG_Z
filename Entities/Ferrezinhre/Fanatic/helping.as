@@ -20,7 +20,7 @@ void onInit(CBlob@ this)
 
 void onTick(CBlob@ this)
 {
-	if (this.hasTag("MENDING") && isServer())
+	if (this.hasTag("MENDING") && isServer() && !this.isAttached())
 	{
 		CBlob@[] blobs;
 		if (getPrioritisedTargets(this.getPosition(), max_range, blobs))
