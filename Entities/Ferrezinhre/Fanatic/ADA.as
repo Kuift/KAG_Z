@@ -29,7 +29,10 @@ void onTick(CBlob@ this)
 				{
 					for (int i = 0; i < targets.length; i++)
 					{
+					
 						CBlob@ b = targets[i];
+						if (!this.getMap().rayCastSolidNoBlobs(b.getPosition(), this.getPosition()))
+					{
 						if (b !is null && b.getTeamNum() != this.getTeamNum() && b.hasTag("flesh"))
 						{
 							targetID = b.getNetworkID();
@@ -53,7 +56,7 @@ void onTick(CBlob@ this)
 					bolt.set_u16("target", targetID);
 				}
 			}
-			}}}} //fix
+			}}}}} //fix
 		}
 	}
 }
