@@ -17,8 +17,8 @@ void onDie(CBlob@ this)
 			else{
 				server_DropCoins(this.getPosition(), 25); //XORRandom(20) + 4);
 			}
-			server_MakeSeed(this.getPosition(), "grain_plant", 300, 1, 4);
 		}
+		server_MakeSeed(this.getPosition(), "grain_plant", 300, 1, 4);
 	}
 }
 
