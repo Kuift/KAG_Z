@@ -2,9 +2,18 @@
 
 #define SERVER_ONLY
 
+#include "BrainCommon.as"
 #include "PressOldKeys.as";
 #include "AnimalConsts.as";
-
+namespace AttackType
+{
+	enum type
+	{
+	attack_fire = 0,
+	attack_manical,
+	attack_rest
+	};
+};
 void onInit(CBrain@ this)
 {
 	CBlob @blob = this.getBlob();
@@ -245,4 +254,53 @@ void onTick(CBrain@ this)
 	}
 
 	blob.set_u8(delay_property, delay);
+	bool sawYou = blob.hasTag("saw you");
+	SearchTarget( this, sawYou, true );
+
+	CBlob @target = this.getTarget();
+
+	// logic for target
+
+	this.getCurrentScript().tickFrequency = 1;
+	if (target !is null)
+	{	
+		this.getCurrentScript().tickFrequency = 1;
+
+		const f32 distance = (target.getPosition() - blob.getPosition()).getLength();
+		f32 visibleDistance;
+		const bool visibleTarget = isVisible( blob, target, visibleDistance);
+
+		if (distance < 250.0f)
+		{
+			if (!sawYou)
+			{
+				blob.setAimPos( target.getPosition() );
+				blob.Tag("saw you");
+			}
+
+			u8 stage = blob.get_u8("attack stage");
+
+			const u32 gametime = getGameTime();
+			if ((stage == AttackType::attack_fire)) 
+			{
+				//blob.setKeyPressed( key_action1, true );
+				f32 vellen = target.getShape().vellen;
+				blob.setAimPos( target.getPosition() + target.getVelocity()*vellen*vellen );
+			}
+
+			int x = gametime % 10;
+			if (x < 200) {
+				stage = AttackType::attack_fire;
+			}
+			
+			blob.set_u8("attack stage", stage);
+
+		}
+
+		LoseTarget( this, target );
+	}
+	else
+	{
+		RandomTurn( blob );
+	}
 }
