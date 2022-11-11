@@ -45,7 +45,7 @@ void onTick(CBlob@ this)
 
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
 {
-	if (blob !is null && blob.getTeamNum() == this.getTeamNum()) return false;
+	if (blob !is null && blob.getTeamNum() == this.getTeamNum() && blob.getName() != this.getName()) return false;
 	
 	return true;
 }
