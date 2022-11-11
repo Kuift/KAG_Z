@@ -12,7 +12,15 @@ void onDie(CBlob@ this)
 		{
 			CPlayer@ killer = this.getPlayerOfRecentDamage();
 			if(killer !is null){
-				killer.server_setCoins(killer.getCoins()+25);
+				print("Killer: "+ killer.getBlob().getName());
+				if(killer.getBlob().isAttached()){
+					AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");
+					CPlayer@ holder = point.getOccupied().getPlayer();
+					holder.server_setCoins(killer.getCoins()+25);
+				}
+				else{
+					killer.server_setCoins(killer.getCoins()+25);
+				}
 			}
 			else{
 				server_DropCoins(this.getPosition(), 25); //XORRandom(20) + 4);
