@@ -1,7 +1,7 @@
 #include "NamesCommon.as";
 
 void onDie(CBlob@ blob){
-    if(getNet().isServer){
+    if(getNet().isServer()){
         bool create = false;
         /*for(int i = 0; i < starter_classes.length; i++){
             if(blob.getName() == starter_classes[i]) { return; } //prevent default classes from trying to call creating a uniform
