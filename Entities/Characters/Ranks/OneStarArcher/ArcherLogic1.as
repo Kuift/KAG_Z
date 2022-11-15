@@ -318,7 +318,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 	//charged - no else (we want to check the very same tick)
 	if (charge_state == ArcherParams::legolas_ready) // fast arrows
 	{
-		moveVars.walkFactor *= 0.75f;
+		moveVars.walkFactor *= 0.80f;
 
 		archer.legolas_time--;
 		if (!hasarrow || archer.legolas_time == 0)
@@ -362,7 +362,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 	}
 	else if (this.isKeyPressed(key_action1))
 	{
-		moveVars.walkFactor *= 0.75f;
+		moveVars.walkFactor *= 0.80f;
 		moveVars.canVault = false;
 
 		const bool just_action1 = this.isKeyJustPressed(key_action1);
@@ -430,7 +430,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 		}
 		else if (charge_state == ArcherParams::readying)
 		{
-			charge_time++;
+			charge_time += 1.2;
 
 			if (charge_time > ArcherParams::ready_time)
 			{
@@ -440,7 +440,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 		}
 		else if (charge_state == ArcherParams::charging)
 		{
-			charge_time++;
+			charge_time += 1.2; //++;
 
 			if (charge_time >= ArcherParams::legolas_period)
 			{
@@ -462,7 +462,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 		{
 			if (charge_time < ArcherParams::ready_time)
 			{
-				charge_time++;
+				charge_time += 1.2;
 			}
 		}
 	}
@@ -479,7 +479,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 			}
 			else //fired..
 			{
-				charge_time--;
+				charge_time -= 1.2;
 
 				if (charge_time <= 0)
 				{

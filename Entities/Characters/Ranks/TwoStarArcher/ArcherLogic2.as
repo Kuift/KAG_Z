@@ -93,7 +93,7 @@ void ManageGrapple(CBlob@ this, ArcherInfo@ archer)
 			f32 distance = direction.Normalize();
 			if (distance > 1.0f)
 			{
-				archer.grapple_vel = (direction * archer_grapple_throw_speed) * 1.25f;
+				archer.grapple_vel = (direction * archer_grapple_throw_speed) * 1.35f;
 			}
 			else
 			{
@@ -121,8 +121,8 @@ void ManageGrapple(CBlob@ this, ArcherInfo@ archer)
 		}
 		else
 		{
-			const f32 archer_grapple_range = (archer_grapple_length * archer.grapple_ratio);
-			const f32 archer_grapple_force_limit = (this.getMass() * archer_grapple_accel_limit) * 1.5f;
+			const f32 archer_grapple_range = (archer_grapple_length * archer.grapple_ratio) * 1.1f;
+			const f32 archer_grapple_force_limit = (this.getMass() * archer_grapple_accel_limit) * 2.0f;
 
 			CMap@ map = this.getMap();
 
@@ -430,7 +430,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 		}
 		else if (charge_state == ArcherParams::readying)
 		{
-			charge_time++;
+			charge_time += 1.4;
 
 			if (charge_time > ArcherParams::ready_time)
 			{
@@ -440,7 +440,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 		}
 		else if (charge_state == ArcherParams::charging)
 		{
-			charge_time++;
+			charge_time += 1.4;
 
 			if (charge_time >= ArcherParams::legolas_period)
 			{
@@ -462,7 +462,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 		{
 			if (charge_time < ArcherParams::ready_time)
 			{
-				charge_time++;
+				charge_time += 1.4;
 			}
 		}
 	}
@@ -479,7 +479,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 			}
 			else //fired..
 			{
-				charge_time--;
+				charge_time -= 1.4;
 
 				if (charge_time <= 0)
 				{

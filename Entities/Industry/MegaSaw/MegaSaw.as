@@ -22,10 +22,10 @@ void onInit( CBlob@ this )
 	//this.setTeamNum(0);
 	SetSawOn(this, true);
 	
-    this.Tag("place45");
-    this.set_s8("place45 distance", 1);
-	this.Tag("place45 perp");
-	
+    // this.Tag("place45");
+    // this.set_s8("place45 distance", 1);
+	// this.Tag("place45 perp");
+	this.Tag("place norotate");
 }
 
 //toggling on/off
@@ -36,11 +36,13 @@ void onTick( CBlob@ this )
 	blade_del++;
 	this.set_u32("blade delay",blade_del);
     if (this.isAttached())
-    {
+    {	
+
 		this.getCurrentScript().runFlags &= ~(Script::tick_not_sleeping); 					   		
 		AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");	   		
         CBlob@ holder = point.getOccupied();												   
         if (holder is null) { return; }
+		AimAtMouse(this, holder);
 		if (!point.isKeyPressed(key_action1) || blade_del<20) //30
 		{
 			return;
@@ -75,6 +77,21 @@ void onTick( CBlob@ this )
 
 }
  
+void AimAtMouse(CBlob@ this, CBlob@ holder)
+{
+	// code used from BlobPlacement.as, just edited to use mouse pos instead of 45 degree angle
+	Vec2f aimpos = holder.getAimPos();
+	Vec2f pos = this.getPosition();
+	Vec2f aim_vec = (pos - aimpos);
+	aim_vec.Normalize();
+
+	f32 mouseAngle = aim_vec.getAngleDegrees();
+
+	if (!this.isFacingLeft()) mouseAngle += 180;
+
+	this.setAngleDegrees(-mouseAngle); // set aim pos
+}
+
 void SetSawOn(CBlob@ this, const bool on)
 {
 	this.set_bool("saw_on", on);
@@ -206,6 +223,10 @@ bool canSaw(CBlob@ this, CBlob@ blob)
 		name == "wooden_door" ||
 		name == "mat_wood" ||
 		name == "tree_bushy" ||
+		name == "crate" ||
+		name == "scrate" ||
+		name == "gcrate" ||
+		name == "wcrate" ||
 		name == "tree_pine" )
 	{
 		return false;

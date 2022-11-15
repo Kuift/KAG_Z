@@ -4,7 +4,7 @@
 #include "CTF_Structs.as";
 
 const u32 materials_wait = 20; //seconds between free mats
-const u32 materials_wait_warmup = 40; //seconds between free mats
+const u32 materials_wait_warmup = 20; //seconds between free mats
 
 //property
 const string SPAWN_ITEMS_TIMER = "CTF SpawnItems:";
@@ -16,11 +16,11 @@ bool SetMaterials(CBlob@ blob,  const string &in name, const int quantity)
 	CInventory@ inv = blob.getInventory();
 
 	//already got them?
-	if (inv.isInInventory(name, quantity))
-		return false;
+	// if (inv.isInInventory(name, quantity))
+	// 	return false;
 
 	//otherwise...
-	inv.server_RemoveItems(name, quantity); //shred any old ones
+	// inv.server_RemoveItems(name, quantity); //shred any old ones
 
 	CBlob@ mat = server_CreateBlobNoInit(name);
 

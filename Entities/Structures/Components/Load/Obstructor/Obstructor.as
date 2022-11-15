@@ -180,3 +180,25 @@ bool canBePickedUp(CBlob@ this, CBlob@ byBlob)
 {
 	return false;
 }
+
+f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
+{
+	switch (customData){
+		case Hitters::builder:
+			damage *= 5.0f;
+			break;
+		case Hitters::explosion:
+			damage *= 0.1f;
+			break;
+		case Hitters::mine:
+			damage = 0.0f;
+			break;
+		case Hitters::keg:
+			damage = 0.0f;
+			break;
+		case Hitters::mine_special:
+			damage = 0.0f;
+			break;
+	}
+	return damage;
+}

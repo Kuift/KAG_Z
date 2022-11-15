@@ -16,6 +16,7 @@ AddIconToken( "$regenrune3$", "RegenRune3.png", Vec2f(8,8), 0 );
 AddIconToken( "$jumprune2$", "JumpRune2.png", Vec2f(8,8), 0 );
 AddIconToken( "$jumprune3$", "JumpRune3.png", Vec2f(8,8), 0 );
 AddIconToken( "$flyrune$", "FlyRune.png", Vec2f(8,8), 0 );
+AddIconToken( "$fallrune$", "FallRune.png", Vec2f(8,8), 0 );
 
 	this.set_TileType("background tile", CMap::tile_wood_back);
 
@@ -62,6 +63,10 @@ AddIconToken( "$flyrune$", "FlyRune.png", Vec2f(8,8), 0 );
 	{
 		ShopItem@ s = addShopItem(this, "Flying Rune", "$flyrune$", "flyrune", "Harness the power of flying but beware it drains your life's energy!", true);
 		AddRequirement(s.requirements, "coin", "", "Coins", 800 );
+	}
+	{
+		ShopItem@ s = addShopItem(this, "Fall Damage Rune", "$fallrune$", "fallrune", "Negates fall damage when held.", true);
+		AddRequirement(s.requirements, "coin", "", "Coins", 500);
 	}
 	
 	

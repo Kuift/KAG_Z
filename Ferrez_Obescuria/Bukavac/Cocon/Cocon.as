@@ -24,7 +24,7 @@ const u32 gametime = getGameTime();
 	
 	if (getNet().isServer())
 	{
-	if (this.hasTag("pupating") && this.getTickSinceCreated() - 10 > 170)
+	if (this.hasTag("pupating") && this.getTickSinceCreated() - 10 > 170 && getRules().get_s32("max_zombies") > getRules().get_s32("num_zombies"))
 	{
 	
 	
