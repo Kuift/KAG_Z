@@ -1,5 +1,5 @@
 //generic shop menu
-string used = "placed workshop";
+
 // properties:
 //      shop offset - Vec2f - used to offset things bought that spawn into the world, like vehicles
 
@@ -93,11 +93,6 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 		if (this.hasTag("shop disabled"))
 			return;
 
-		if (this.exists(used))
-		{
-			return;
-		}
-
 		u16 callerID;
 		if (!params.saferead_u16(callerID))
 			return;
@@ -183,8 +178,6 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 
 			if (tookReqs)
 			{
-				this.Tag(used);
-				this.Sync(used, true);
 				if (s.spawnNothing)
 				{
 					CBitStream params;
