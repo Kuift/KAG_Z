@@ -11,7 +11,7 @@ void onInit( CBlob@ this )
 
 	
 	{
-		addSeedItem( this, "bazooka", "bazooka", 30, 3 );
+		addSeedItem( this, "bazooka", "bazooka", 30, 2 );
 	}
 	
 

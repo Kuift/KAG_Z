@@ -11,7 +11,7 @@ void onInit( CBlob@ this )
 
 	
 	{
-		addSeedItem( this, "mounted_bow5", "mounted_bow5", 30, 3 );
+		addSeedItem( this, "mounted_bow5", "mounted_bow5", 30, 2 );
 	}
 	
 

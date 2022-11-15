@@ -37,7 +37,7 @@ void onInit( CBlob@ this )
 
 	// 20 seconds of floating around - gets cut down for fire arrow
 	// in ArrowHitMap
-	this.server_SetTimeToDie( 3 );
+	this.server_SetTimeToDie( 5 );
 
 	const u8 arrowType = this.get_u8("arrow type");
 	if (arrowType == ArrowType::bomb)			 // bomb arrow
@@ -557,13 +557,13 @@ f32 getArrowDamage( CBlob@ this, f32 vellen = -1.0f )
 	}
 	//BULLET DAMAGE
     if (vellen >= arrowFastSpeed) { 
-        return 2.0f; //1
+        return 5.0f; //1
     }
     else if (vellen >= arrowMediumSpeed) {
-        return 2.0f; // 1
+        return 4.0f; // 1
     }
 
-    return 1.0f; // 0.5
+    return 2.0f; // 0.5
 }
 
 void SplashArrow( CBlob@ this )

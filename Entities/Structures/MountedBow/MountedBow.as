@@ -17,8 +17,8 @@ void onInit( CBlob@ this )
 		return;
 	}
     Vehicle_AddAmmo( this, v,
-                         25, // fire delay (ticks)
-                         1, // fire bullets amount
+                         20, // fire delay (ticks)
+                         3, // fire bullets amount
 						 1, // fire cost
 						 "mat_arrows", // bullet ammo config name
 						 "Arrows", // name for ammo selection

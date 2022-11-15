@@ -16,7 +16,7 @@ void onInit(CBlob@ this)
 	this.set_u8("blocks_pierced", 0);
 	this.set_bool("static", false);
 
-	this.server_SetTimeToDie(2.5);
+	this.server_SetTimeToDie(3.5);
 
 	this.getShape().getConsts().mapCollisions = false;
 	this.getShape().getConsts().bullet = true;
@@ -107,7 +107,7 @@ void Pierce(CBlob@ this, Vec2f velocity, const f32 angle)
 	CMap@ map = this.getMap();
 
 	const f32 speed = velocity.getLength();
-	const f32 damage = speed > MEDIUM_SPEED ? 4.0f : 3.5f;
+	const f32 damage = speed > MEDIUM_SPEED ? 8.0f : 5.5f;
 
 	Vec2f direction = velocity;
 	direction.Normalize();
