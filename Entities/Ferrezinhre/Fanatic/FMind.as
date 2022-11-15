@@ -14,7 +14,7 @@ void onInit(CBlob@ this)
 	this.set_u8("random move freq",2);
 	this.set_f32(target_searchrad_property, 320.0f);
 	this.set_f32(terr_rad_property, 320.0f);
-	this.set_u8(target_lose_random,44);
+	this.set_u8(target_lose_random,2);
 	
 	this.getBrain().server_SetActive( true );
 	
