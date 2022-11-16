@@ -37,7 +37,7 @@ void onInit(CBrain@ this)
 
 	if (!blob.exists(target_lose_random))
 	{
-		blob.set_u8(target_lose_random, 14);
+		blob.set_u8(target_lose_random, 2);
 	}
 
 	if (!blob.exists("random move freq"))

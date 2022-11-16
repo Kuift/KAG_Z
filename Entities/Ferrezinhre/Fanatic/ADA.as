@@ -44,7 +44,7 @@ void onTick(CBlob@ this)
 			lastFireTime = gametime;
 			this.set_u32("last bolt fire", lastFireTime);
 
-			CBlob@ bolt = server_CreateBlob("tb", this.getTeamNum(), pos + Vec2f(0.0f, -0.5f * this.getRadius()));
+			CBlob@ bolt = server_CreateBlob("tb", this.getTeamNum(), pos + Vec2f(0.0f, 0.0f * this.getRadius()));
 			if (bolt !is null)
 			{
 				Vec2f norm = aim - pos;
