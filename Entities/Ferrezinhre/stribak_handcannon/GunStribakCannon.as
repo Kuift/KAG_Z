@@ -51,6 +51,10 @@ void onInit(CBlob@ this)
 	
 	this.set_bool("gun_disable_if_menu", cfg.read_bool("gun_disable_if_menu", true));
 	//this.Tag("heavy weight");
+	
+	AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");
+	point.SetKeysToTake(key_action1);
+	
 }
 
 void onTick(CBlob@ this)
