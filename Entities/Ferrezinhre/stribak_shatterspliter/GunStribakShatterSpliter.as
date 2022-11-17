@@ -40,6 +40,8 @@ void onInit(CBlob@ this)
 
 	this.Tag("heavy");
 	
+	AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");
+	point.SetKeysToTake(key_action1);
 
 }
 
