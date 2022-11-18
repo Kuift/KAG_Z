@@ -64,37 +64,35 @@ void onTick(CBlob@ this)
 		this.getCurrentScript().runFlags &= ~Script::tick_not_sleeping;
 
 		AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");
+		if(point !is null)
+	{
+		point.SetKeysToTake(key_action1);
+	}
 		CBlob@ holder = point.getOccupied();
 		if (holder is null) { return; }
+		
 
 		CShape@ shape = this.getShape();
 		CSprite@ sprite = this.getSprite();
 		const f32 aimangle = getAimAngle(this,holder);
 
-		// face towards mouse cursor
 		sprite.ResetTransform();
 		sprite.RotateBy(aimangle, holder.isFacingLeft() ? Vec2f(-8,2) : Vec2f(8,2));
-		// reset frame (set by fire event)
-		//sprite.animation.frame = 0;
 
-		//handle reload
+
+
 		UpdateReload(this);
 
-		// fire if appropriate
 		if (holder.isMyPlayer())
 		{
-			//print("gun_fire_delay_timer "+this.get_u16(gun_fire_delay_timer));
-			//print("key_pressed "+this.get_u16(gun_fire_delay_timer));
 
-			//this timer is only relevant on the client who owns the gun
-			//- so we cant check canFire on anyone else's machine, we just trust the client
 			ReduceU16CounterProperty(this, "gun_fire_delay_timer");
 			if (canFire(this))
 			{
-				if (//full auto and held
-					(holder.isKeyPressed(key_action1) && this.get_bool("gun_fullauto")) ||
-					//not full auto and just pulled trigger
-					holder.isKeyJustPressed(key_action1))
+				if (
+					(point.isKeyPressed(key_action1) && this.get_bool("gun_fullauto")) ||
+
+					point.isKeyJustPressed(key_action1))
 				{
 					Shoot(this, aimangle, holder);
 				}
