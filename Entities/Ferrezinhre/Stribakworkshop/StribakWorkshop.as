@@ -38,6 +38,11 @@ void onInit( CBlob@ this )
 	}
 	
 	{
+		ShopItem@ s = addShopItem( this, "Stribak Gauntlet ", "$gauntlet$", "gauntlet", "Buy Stribak Gauntlet for 344 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 344 );
+	}
+	
+	{
 		ShopItem@ s = addShopItem( this, "Stribak Pillager ", "$pillager$", "pillager", "Buy Stribak Pillager for 800 coins.", true );
 		AddRequirement( s.requirements, "coin", "", "Coins", 800 );
 	}
