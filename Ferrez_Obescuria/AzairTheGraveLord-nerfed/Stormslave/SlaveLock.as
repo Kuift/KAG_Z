@@ -16,6 +16,16 @@ void onInit(CSprite@ this)
     this.ReloadSprites(blob.getTeamNum(),0);
 }
 
+void onDie(CBlob@ this)
+{
+	uint16 azairNetId = this.get_u16("azairID");
+	CBlob@ azair = getBlobByNetworkID(azairNetId);
+	if(azair !is null)
+	{
+		azair.set_u32("zombie_summon", azair.get_u32("zombie_summon") - 1);
+	}
+}
+
 void onTick(CSprite@ this)
 {
 	CBlob@ blob = this.getBlob();

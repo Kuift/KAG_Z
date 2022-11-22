@@ -39,8 +39,11 @@ void onTick(CBlob@ this)
 						this.set_bool("teleport ready", false );
 						if(blob.hasTag("player") && this.get_u32("zombie_summon") < MAX_ZOMBIES)
 						{
-							server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(35, -5.0f));
-							server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(-35, -5.0f));
+							CBlob@ storm1 = server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(35, -5.0f));
+							CBlob@ storm2 = server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(-35, -5.0f));
+							uint16 azairID = this.getNetworkID();
+							storm1.set_u16("azairID", azairID);
+							storm2.set_u16("azairID", azairID);
 							//server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(0, -5.0f));
 							this.set_u32("zombie_summon", this.get_u32("zombie_summon") + 2);
 						}
