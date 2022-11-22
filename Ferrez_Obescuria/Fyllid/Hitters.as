@@ -15,10 +15,6 @@ namespace Hitters
 		fire,   //initial burst (should ignite things)
 		burn,   //burn damage
 		flying,
-				
-		//custom hitters
-		notnormalfire, 
-		arc,
 
 		//common actor
 		stomp,
@@ -37,6 +33,12 @@ namespace Hitters
 
 		//archer
 		stab,
+		
+		//custom hitters
+		notnormalfire, 
+		arc,
+		blast,
+		noise,
 
 		//arrows and similar projectiles
 		arrow,
@@ -75,5 +77,5 @@ namespace Hitters
 // not keg - not blockable :)
 bool isExplosionHitter(u8 type)
 {
-	return type == Hitters::bomb || type == Hitters::explosion || type == Hitters::mine || type == Hitters::bomb_arrow;
+	return type == Hitters::bomb || type == Hitters::explosion || type == Hitters::mine || type == Hitters::bomb_arrow || type == Hitters::blast;
 }
