@@ -577,6 +577,7 @@ shared class ZombiesCore : RulesCore
 							}
 						}
 						if (dayNumber > 10){
+							server_CreateBlob("brytir",-1,sp);
 							for(int i = 0; i < 2; ++i) {
 								server_CreateBlob("kaarn",-1,sp);
 							}
