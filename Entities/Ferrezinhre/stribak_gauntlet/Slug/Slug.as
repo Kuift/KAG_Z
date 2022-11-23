@@ -19,23 +19,21 @@ void onInit(CBlob@ this)
 	consts.bullet = true;
 	consts.net_threshold_multiplier = 4.0f;
 	this.Tag("projectile");
-	
+	this.server_SetTimeToDie(5.0f);
 }
 
 void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point1)
 {
 	if (blob !is null && doesCollideWithBlob(this, blob) && !this.hasTag("collided") && !blob.hasTag("dead") )
 	{
-	if (!solid && !blob.hasTag("flesh"))
+		if (!solid && !blob.hasTag("flesh"))
 		{
 			return;
 		}
 		
 		this.set_u8("custom_hitter", Hitters::arrow);
 		this.server_Hit(blob, point1, normal, (4.0f + XORRandom(4)), Hitters::arrow); // You're my another favorite little meat grinder!
-		this.server_Die();
 	}
-	this.server_Die();
 }
 
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
