@@ -44,7 +44,7 @@ void onTick(CBlob@ this)
 				this.set_bool("shok ready", false );
 				if(blob.getTeamNum() != this.getTeamNum())
 				{
-				this.server_Hit(blob, blob.getPosition(), Vec2f(0,0), (1.5f*XORRandom(8)/3)*XORRandom(4), Hitters::fall);
+				this.server_Hit(blob, blob.getPosition(), Vec2f(0,0), (1.5f*XORRandom(8)/3)*XORRandom(4), Hitters::arc);
 				MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
 				}
 			} 	
