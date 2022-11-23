@@ -4,7 +4,7 @@
 const f32 RANGE = 2000.0f;
 const f32 DAMAGE = 2.5f;
 
-const f32 LIFETIME = 1.5f;
+const f32 LIFETIME = 2.0f;
 
 const int MAX_LASER_POSITIONS = 30;
 const int LASER_UPDATE_TIME = 10;
@@ -25,8 +25,8 @@ void onInit( CBlob @ this )
 	
 	CShape@ shape = this.getShape();
 	//shape.SetStatic(true);
-	shape.SetGravityScale( 0.1f );
-	shape.SetRotationsAllowed(true);
+	shape.SetGravityScale( 0.07f );
+	shape.SetRotationsAllowed(false);
 	
 	ShapeConsts@ consts = shape.getConsts();
 	consts.bullet = false;
@@ -40,8 +40,8 @@ void onInit( CBlob @ this )
 	this.server_SetTimeToDie(LIFETIME);
 	this.Tag("exploding");
 	this.set_f32("explosive_radius", 32.0f);
-	this.set_f32("explosive_damage", 4.0f);
-	this.set_f32("map_damage_radius", 48.0f);
+	this.set_f32("explosive_damage", 2.0f);
+	this.set_f32("map_damage_radius", 32.0f);
 	this.set_bool("map_damage_raycast", true);
 	this.set_f32("map_damage_ratio", 4.0f); //heck no!
 	this.set_bool("explosive_teamkill", false);
@@ -164,7 +164,7 @@ void onTick( CBlob@ this)
 	CSprite@ thisSprite = this.getSprite();
 	Vec2f thisPos = this.getPosition();
 	
-	if ( this.get_bool("initialized") == false && this.getTickSinceCreated() > 1 )
+	if ( this.get_bool("initialized") == false && this.getTickSinceCreated() > 15 )
 	{
 		this.SetLight(true);
 		this.SetLightRadius(48.0f);
@@ -322,4 +322,5 @@ void onTick( CBlob@ this)
 		}
 	}
 }
+
 
