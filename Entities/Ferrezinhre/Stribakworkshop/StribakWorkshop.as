@@ -1,4 +1,4 @@
-﻿// Builder Workshop
+// Builder Workshop
 
 #include "Requirements.as"
 #include "ShopCommon.as";
@@ -17,7 +17,7 @@ void onInit( CBlob@ this )
 	// SHOP
 
 	this.set_Vec2f("shop offset", Vec2f(0, 0));
-	this.set_Vec2f("shop menu size", Vec2f(5,3));	
+	this.set_Vec2f("shop menu size", Vec2f(5,4));	
 	this.set_string("shop description", "Buy");
 	this.set_u8("shop icon", 25);
 
@@ -55,6 +55,11 @@ void onInit( CBlob@ this )
 	{
 		ShopItem@ s = addShopItem( this, "Stribak Anarchy ", "$anarchy$", "anarchy", "Buy Stribak Anarchy for 675 coins.", true );
 		AddRequirement( s.requirements, "coin", "", "Coins", 675 );
+	}
+	
+	{
+		ShopItem@ s = addShopItem( this, "Stribak Tyranny ", "$tyranny$", "tyranny", "Buy Stribak Tyranny for 782 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 782 );
 	}
 	
 	{
