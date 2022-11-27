@@ -952,7 +952,16 @@ void Reset(CRules@ this)
     this.set("start_gametime", getGameTime() + core.warmUpTime);
     this.set_u32("game_end_time", getGameTime() + core.gameDuration); //for TimeToEnd.as
 }
-
+/*void onPlayerLeave( CRules@ this, CPlayer@ player )
+{
+	int players = getPlayersCount();
+	if (players == 0)
+	{
+		this.SetCurrentState(GAME_OVER);
+		this.RestartRules();
+		rebuild();
+	}
+}*/
 //void onTick()
 //{
 ///	CBlob@ victim;
