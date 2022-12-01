@@ -93,7 +93,7 @@ void onTick(CBlob@ this)
 
 bool treeBreakableTile(CMap@ map, TileType t)
 {
-	return map.isTileSand(t);
+	return map.isTileWood(t) || map.isTileCastle(t);
 }
 
 void DoGrow(CBlob@ this, TreeVars@ vars)
