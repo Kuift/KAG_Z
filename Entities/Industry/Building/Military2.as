@@ -33,7 +33,7 @@ void onInit( CBlob@ this )
 	// SHOP
 
 	this.set_Vec2f("shop offset", Vec2f(0, 0));
-	this.set_Vec2f("shop menu size", Vec2f(2,10));
+	this.set_Vec2f("shop menu size", Vec2f(2,7));
 	this.set_string("shop description", "Construct");
 	this.set_u8("shop icon", 12);
 	
@@ -52,12 +52,12 @@ void onInit( CBlob@ this )
 		ShopItem@ s = addShopItem( this, "Transport Tunnel", "$tunnel$", "tunnel", "quick transportation" );
 		AddRequirement( s.requirements, "blob", "mat_stone", "Stone", COST_STONE_TUNNEL );
 	}
-	{
-		ShopItem@ s = addShopItem( this, "Boulder Factory", "$boulderfactory$", "boulderfactory", "Have you always wanted your own boulder?" );
-		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 200 );
-		AddRequirement( s.requirements, "blob", "mat_stone", "Stone", 500 );
-		AddRequirement( s.requirements, "no more", "boulderfactory", "Boulder Factory", 12 );
-	}
+	// {
+	// 	ShopItem@ s = addShopItem( this, "Boulder Factory", "$boulderfactory$", "boulderfactory", "Have you always wanted your own boulder?" );
+	// 	AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 200 );
+	// 	AddRequirement( s.requirements, "blob", "mat_stone", "Stone", 500 );
+	// 	AddRequirement( s.requirements, "no more", "boulderfactory", "Boulder Factory", 12 );
+	// }
 	/*{
 		ShopItem@ s = addShopItem( this, "Saw Factory", "$sawfactory$", "sawfactory", "Now we know how to produce saw in a factory!" );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 500 );
@@ -70,11 +70,11 @@ void onInit( CBlob@ this )
 		AddRequirement( s.requirements, "blob", "mat_stone", "Stone", 100 );
 		AddRequirement( s.requirements, "no more", "lanternfactory", "Lantern Factory", 12 );
 	}
-	{
-		ShopItem@ s = addShopItem( this, "Flag Factory", "$flagfactory$", "flagfactory", "Factory for decorative flags." );
-		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 150 );
-		AddRequirement( s.requirements, "no more", "flagfactory", "Flag Factory", 12 );
-	}
+	// {
+	// 	ShopItem@ s = addShopItem( this, "Flag Factory", "$flagfactory$", "flagfactory", "Factory for decorative flags." );
+	// 	AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 150 );
+	// 	AddRequirement( s.requirements, "no more", "flagfactory", "Flag Factory", 12 );
+	// }
 	{
 		ShopItem@ s = addShopItem( this, "McDonalds", "$kitchen$", "kitchen", "used for cooking"  );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 300 );
@@ -83,10 +83,10 @@ void onInit( CBlob@ this )
 		ShopItem@ s = addShopItem( this, "Runes Trader", "$pa$", "pa", "A trader selling runes at his shop" );
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 600 );
 	}
-	{
-		ShopItem@ s = addShopItem(this, "Scrolls Shop", "$scrollshop$", "scrollshop", "A trader selling scrolls at his shop");
-		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 250);
-	}
+	// {
+	// 	ShopItem@ s = addShopItem(this, "Scrolls Shop", "$scrollshop$", "scrollshop", "A trader selling scrolls at his shop");
+	// 	AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 250);
+	// }
 	{
 		ShopItem@ s = addShopItem( this, "Back", "$building$", "building", "Go Back" );
 			//	s.customButton = true;
@@ -103,35 +103,8 @@ void GetButtonsFor( CBlob@ this, CBlob@ caller )
 								   
 void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 {
-	bool isServer = getNet().isServer();	
-	//if (cmd == this.getCommandID("shop buy"))
-	//{
-	//	u16 callerID;
-	//	if (!params.saferead_u16(callerID))
-	//		return;
-	//	bool spawnToInventory = params.read_bool();
-	//	bool spawnInCrate = params.read_bool();
-	//	bool producing = params.read_bool();
-	//	string blobName = params.read_string();		
-	//	u8 s_index = params.read_u8();
+	bool isServer = getNet().isServer();
 
-	//	CBlob@ caller = getBlobByNetworkID( callerID );
-	//	if (caller !is null)
-	//	{				
-	//		this.getSprite().PlaySound("/Construct.ogg" ); 
-	//		this.getSprite().getVars().gibbed = true;
-	//		this.server_Die();
-
-	//		// open factory upgrade menu immediately
-	//		if (blobName = "factory")
-	//		{
-	//			if (cmd == this.getCommandID("upgrade factory menu"))
-	//			{
-	//				CBlob@ caller = getBlobByNetworkID( params.read_u16() );
-	//		}
-	//	}
-	//} 
-	//else 
 	if (cmd == this.getCommandID("shop made item"))
 	{
 		CBlob@ caller = getBlobByNetworkID( params.read_netid() );
@@ -152,17 +125,4 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 		}
 		this.server_Die();
 	}
-}
-   
-// leave a pile of wood	after death
-void onDie(CBlob@ this)
-{
-	/*if (getNet().isServer()) //TODO: Maybe do this if teamkilled.
-	{
-		CBlob@ blob = server_CreateBlob( "mat_wood", this.getTeamNum(), this.getPosition() );
-		if (blob !is null)
-		{
-			blob.server_SetQuantity( COST_WOOD_BUILDING/2 );
-		}
-	}*/
 }
