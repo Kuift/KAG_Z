@@ -16,7 +16,7 @@ void onInit( CBlob@ this )
 
 	this.Tag("ZombiePortalz"); //HOPEFULLY YOU STOPPED DISAPPEARING - Tsilliev
 	this.getSprite().SetZ(-50); //background
-	CSpriteLayer@ portal = this.getSprite().addSpriteLayer( "portal", "ZombiePortal.png" , 64, 64, -1, -1 );
+	CSpriteLayer@ portal = this.getSprite().addSpriteLayer( "portal", "tukraportal.png" , 64, 64, -1, -1 );
 	CSpriteLayer@ lightning = this.getSprite().addSpriteLayer( "lightning", "EvilLightning.png" , 32, 32, -1, -1 );
 	Animation@ anim = portal.addAnimation( "default", 0, true );
 	Animation@ lanim = lightning.addAnimation( "default", 4, false );
