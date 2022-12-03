@@ -90,6 +90,13 @@ void server_PutIn(CBlob@ this, CBlob@ picker, CBlob@ pickBlob)
 	this.SendCommand(this.getCommandID("putin"), params);
 }
 
+f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData){
+	if(hitterBlob.getTeamNum() == this.getTeamNum()){
+		return damage * 0.25f;
+	}
+	return damage;
+}
+
 bool ClickGridMenu(CBlob@ this, int button)
 {
 	CGridMenu @gmenu;
