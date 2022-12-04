@@ -2,16 +2,18 @@
 #include "TunnelCommon.as"
 #include "StandardRespawnCommand.as"
 #include "StandardControlsCommon.as"
+#include "Requirements_Tech.as"
 // original idea by SK
 void onInit(CBlob@ this){
-    this.set_TileType("background tile", CMap::tile_wood_back);
+    this.set_TileType("background tile", CMap::tile_castle_back);
+    this.setPosition(Vec2f(this.getPosition().x, this.getPosition().y-16.0f)); //required to not dig into ground
     this.set_u16("castle level", 1); //required to be set at level 1 to start
-    this.set_u16("max level", 3);
+    this.set_u16("max level", 6);
     this.set_u16("wood cost", 0); //assume the costs are for level 2
     this.set_u16("stone cost", 500);
     this.set_u16("gold cost", 500);
     this.addCommandID("Upgrade Level");
-    this.getSprite().SetZ(100.0f);
+    this.getSprite().SetZ(-50.0f);
     this.set_u16("day", getRules().get_u16("dayNumber")); //DAY EQUATION IN ZOMBIE_RULES.AS
 
     // InitRespawnCommand(this);
@@ -20,12 +22,12 @@ void onInit(CBlob@ this){
     this.Tag("change class drop inventory");
     
     this.Tag("travel tunnel"); //tunnel stuff
-    this.set_Vec2f("travel button pos", Vec2f(-6, 0));
-    this.set_Vec2f("travel offset", Vec2f(-10, 0));
+    this.set_Vec2f("travel button pos", Vec2f(-10.5f, 8));
+    this.set_Vec2f("travel offset", Vec2f(-21, 10));
     this.Tag("teamlocked tunnel");
     this.Tag("ignore raid");
 
-    this.inventoryButtonPos = Vec2f(0, -16);
+    this.inventoryButtonPos = Vec2f(-4, 16);
     this.Tag("builder always hit");
 
     AddIconToken("$upgrade$", "/GUI/InteractionIcons.png", Vec2f(32, 32), 15, 2); //builder hammer icon
@@ -35,6 +37,7 @@ void onInit(CBlob@ this){
 
 void onTick(CBlob@ this){
     if(getGameTime() % 30 == 0){ //prevent lag
+        print(""+this.get_u16("castle level"));
         if(getRules().get_u16("dayNumber") != this.get_u16("day")){
             this.set_u16("day", getRules().get_u16("dayNumber"));
             if(this !is null){
@@ -57,13 +60,13 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
 	if (caller.isOverlapping(this))
     {
         if (canChangeClass(this, caller)){
-        	caller.CreateGenericButton("$change_class$", Vec2f(6, 0), this, buildSpawnMenu, getTranslatedString("Swap Class"));
+            caller.CreateGenericButton("$change_class$", Vec2f(6, 8), this, buildSpawnMenu, getTranslatedString("Swap Class"));
         }
-        if(this.get_u16("castle level") < 3){
+        if(this.get_u16("castle level") < this.get_u16("max level")){
             CBitStream params;
             params.write_u16(caller.getNetworkID());
             int castlelvl = this.get_u16("castle level")+1;
-            caller.CreateGenericButton("$upgrade$", Vec2f(-6, -8), this, this.getCommandID("Upgrade Level"), getTranslatedString("Upgrade to level " + castlelvl + "!"), params);
+            caller.CreateGenericButton("$upgrade$", Vec2f(6, 0), this, this.getCommandID("Upgrade Level"), getTranslatedString("Upgrade to level " + castlelvl + "!"), params);
         }
     }
 }
@@ -71,7 +74,7 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
 void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
 	if (getNet().isServer())
 	{
-        onRespawnCommand(this, cmd, params);
+        // onRespawnCommand(this, cmd, params);
 		if (cmd == this.getCommandID("Upgrade Level"))
 		{
             CBlob@ caller = getBlobByNetworkID(params.read_u16());
@@ -124,7 +127,7 @@ int getGoldinInv(CBlob@ this){ //get amount of coins it should produce
             }
             else if(this.get_u16("castle level") == 3){
                 coins = 90;
-            } //dont give more than 90 for levels above this
+            } //dont give more than 90 coins for levels above this
             int goldininv = 0;
 
             for(int i = 0; i < inv.getItemsCount(); i++){
@@ -140,4 +143,8 @@ int getGoldinInv(CBlob@ this){ //get amount of coins it should produce
         }
     }
     return 0;
+}
+
+void onDie(CBlob@ this){
+    RemoveFakeTech(getRules(), "Castle", this.getTeamNum());
 }
