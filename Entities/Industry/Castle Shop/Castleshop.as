@@ -2,10 +2,11 @@
 #include "TunnelCommon.as"
 #include "StandardRespawnCommand.as"
 #include "StandardControlsCommon.as"
-// idea by SK
+// original idea by SK
 void onInit(CBlob@ this){
     this.set_TileType("background tile", CMap::tile_wood_back);
     this.set_u16("castle level", 1); //required to be set at level 1 to start
+    this.set_u16("max level", 3);
     this.set_u16("wood cost", 0); //assume the costs are for level 2
     this.set_u16("stone cost", 500);
     this.set_u16("gold cost", 500);
@@ -79,9 +80,9 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
                 if(hasMats(caller,this)){
                     stealmats(caller, this); //take away the mats from person
                     this.set_u16("castle level", this.get_u16("castle level") + 1);
-                    this.set_u16("wood cost", 250); //set materials for the level 3
-                    this.set_u16("stone cost", 750); //assume these costs are for level 3
-                    this.set_u16("gold cost", 500);
+                    this.set_u16("wood cost", this.get_u16("wood cost")+250);
+                    this.set_u16("stone cost", this.get_u16("stone cost")+250);
+                    this.set_u16("gold cost", this.get_u16("gold cost")+250);
                 }
             }
         }
@@ -99,20 +100,11 @@ void stealmats(CBlob@ caller, CBlob@ castle){
 
 bool hasMats(CBlob@ caller, CBlob@ castle){
     CInventory@ inv = caller.getInventory();
-    bool classrequired = false; //tier 3 needs tier 1 builder
-    if(castle.get_u16("castle level") < 3){
+    if(castle.get_u16("castle level") < castle.get_u16("max level")){
         if(inv !is null){
-            if(castle.get_u16("castle level") == 2){
-                classrequired = true;
-            }
             if(inv.getCount("mat_stone") >= castle.get_u16("stone cost")){ //enough stone?
                 if(inv.getCount("mat_gold") >= castle.get_u16("gold cost")){ //enough gold?
                     if(inv.getCount("mat_wood") >= castle.get_u16("wood cost")){ //enough wood?
-                        if(classrequired){
-                            if(caller.getName() == "onestarbuilder" || caller.getName() == "twostarbuilder" || caller.getName() == "threestarbuilder"){
-                                return true;
-                            }
-                        }
                         return true;
                     }
                 }
@@ -132,7 +124,7 @@ int getGoldinInv(CBlob@ this){ //get amount of coins it should produce
             }
             else if(this.get_u16("castle level") == 3){
                 coins = 90;
-            }
+            } //dont give more than 90 for levels above this
             int goldininv = 0;
 
             for(int i = 0; i < inv.getItemsCount(); i++){
