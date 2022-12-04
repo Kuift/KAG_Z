@@ -428,6 +428,7 @@ shared class ZombiesCore : RulesCore
 		float difficulty = 2.0*(getGameTime()-gamestart)/getTicksASecond()/day_cycle;
 		float actdiff = 4.0*((getGameTime()-gamestart)/getTicksASecond()/day_cycle);
 		int dayNumber = ((getGameTime()-gamestart)/getTicksASecond()/day_cycle)+1;
+		getRules().set_u16("dayNumber",dayNumber);
 		if (actdiff>9) { actdiff=9; difficulty=difficulty-1.0; } else { difficulty=1.0; }
 		
 		if (rules.isWarmup() && timeElapsed>getTicksASecond()*30) { rules.SetCurrentState(GAME); warn("TE:"+timeElapsed); }
