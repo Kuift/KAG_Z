@@ -2,9 +2,19 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 6900.00f;
-const int bloodletting_FREQUENCY = 60; //4 secs
+const f32 bloodletting_range = 6900.00f;
+const f32 bloodletting_range2 = 128.00f;
+const f32 bloodletting_range3 = 720.00f;
+const f32 bloodletting_range4 = 1444.00f;
+const int bloodletting_FREQUENCY = 50; //4 secs
+const int bloodletting_FREQUENCY2 = 35; //4 secs
+const int bloodletting_FREQUENCY3 = 35; //4 secs
+const int bloodletting_FREQUENCY4 = 45; //4 secs
 const int bloodletting_DISTANCE = 1;//getMap().tilesize;
+const int bloodletting_DISTANCE2 = 1;//getMap().tilesize;
+const int bloodletting_DISTANCE3 = 1;//getMap().tilesize;
+const int bloodletting_DISTANCE4 = 1;//getMap().tilesize;
+
 
 void onInit(CBlob@ this)
 {
@@ -13,6 +23,7 @@ void onInit(CBlob@ this)
 	this.set_bool("bloodletting ready", true );
 	this.getCurrentScript().tickFrequency = 5;
 	this.Tag("bld");
+	
 }
 
 void onTick(CBlob@ this)
@@ -21,9 +32,11 @@ void onTick(CBlob@ this)
   bool ready = this.get_bool("bloodletting ready");
 	const u32 gametime = getGameTime();
 	CBlob@[] blobs;
-
-	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("bld") && (this.getHealth()>0.5)) // I would make it slight stronger now
+					
+						
+	if(this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), bloodletting_range, @blobs) && this.hasTag("bld")) // I would make it slight stronger now
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
@@ -41,7 +54,7 @@ void onTick(CBlob@ this)
 				this.set_bool("bloodletting ready", false );
 				if(blob.hasTag("player") || blob.hasTag("fanatic"))
 				{
-				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.75f, Hitters::fall);
+				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 0.5f, Hitters::fall);
 				}
 			} 	
 
@@ -62,25 +75,137 @@ void onTick(CBlob@ this)
 			
 		}
 	}
-}
+	}
+	
+	else if( this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), bloodletting_range2, @blobs) && this.hasTag("bld")) // I would make it slight stronger now
+	{
+		for (int i = 0; i < blobs.length; i++)
+		{
+			CBlob@ blob = blobs[i];
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("bld")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > bloodletting_DISTANCE2 )
+				{
+				this.set_u32("last bloodletting", gametime);
+				this.set_bool("bloodletting ready", false );
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
+				{
+				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.5f, Hitters::fall);
+				}
+			} 	
 
+		}
+	} 
+	
+		else {		
+		u32 lastbloodletting = this.get_u32("last bloodletting");
+		int diff = gametime - (lastbloodletting + bloodletting_FREQUENCY2);
+		
 
-bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
-{
-    return blob.getShape().isStatic();
-}
-
-void bloodletting( CBlob@ blob, Vec2f pos){	
-	AttachmentPoint@[] ap;
-	blob.getAttachmentPoints(ap);
-	blob.hasTag("flesh");
-	for (uint i = 0; i < ap.length; i++){
-		if(!ap[i].socket && ap[i].getOccupied() !is null){
-			@blob = ap[i].getOccupied();
-			break;
+		if (diff > 0)
+		{
+			this.set_bool("bloodletting ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
 		}
 	}
-	blob.setPosition( pos );
-	blob.setVelocity( Vec2f_zero );	
-	blob.getSprite().PlaySound("/gasp.ogg");
+			
+		}
+	}
+	}
+	
+	else if( this.hasTag("PhaseThree") && !this.hasTag("PhaseFour"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), bloodletting_range3, @blobs) && this.hasTag("bld")) // I would make it slight stronger now
+	{
+		for (int i = 0; i < blobs.length; i++)
+		{
+			CBlob@ blob = blobs[i];
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("bld")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > bloodletting_DISTANCE3 )
+				{
+				this.set_u32("last bloodletting", gametime);
+				this.set_bool("bloodletting ready", false );
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
+				{
+				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
+				}
+			} 	
+
+		}
+	} 
+	
+		else {		
+		u32 lastbloodletting = this.get_u32("last bloodletting");
+		int diff = gametime - (lastbloodletting + bloodletting_FREQUENCY3);
+		
+
+		if (diff > 0)
+		{
+			this.set_bool("bloodletting ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
+		}
+	}
+			
+		}
+	}
+	}
+	
+	else if( this.hasTag("PhaseFour"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), bloodletting_range4, @blobs) && this.hasTag("bld")) // I would make it slight stronger now
+	{
+		for (int i = 0; i < blobs.length; i++)
+		{
+			CBlob@ blob = blobs[i];
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("bld")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > bloodletting_DISTANCE4 )
+				{
+				this.set_u32("last bloodletting", gametime);
+				this.set_bool("bloodletting ready", false );
+				if(blob.hasTag("player") || blob.hasTag("fanatic"))
+				{
+				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 2.0f, Hitters::fall);
+				}
+			} 	
+
+		}
+	} 
+	
+		else {		
+		u32 lastbloodletting = this.get_u32("last bloodletting");
+		int diff = gametime - (lastbloodletting + bloodletting_FREQUENCY4);
+		
+
+		if (diff > 0)
+		{
+			this.set_bool("bloodletting ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg"); 
+		}
+	}
+			
+		}
+	}
+	}
 }
+
+
+

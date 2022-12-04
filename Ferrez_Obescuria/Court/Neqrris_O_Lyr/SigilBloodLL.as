@@ -2,28 +2,35 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 460.00f;
-const int TELEPORT_FREQUENCY = 120; //4 secs
-const int TELEPORT_DISTANCE = 20;//getMap().tilesize;
+const f32 sigilbloodhold_range = 460.00f;
+const f32 sigilbloodhold_range2 = 720.00f;
+const f32 sigilbloodhold_range3 = 1440.00f;
+const int sigilbloodhold_FREQUENCY = 180; //4 secs
+const int sigilbloodhold_FREQUENCY2 = 100;
+const int sigilbloodhold_FREQUENCY3 = 70; //4 secs
+const int sigilbloodhold_DISTANCE = 20;//getMap().tilesize;
+const int sigilbloodhold_DISTANCE2 = 40;//getMap().tilesize;
+const int sigilbloodhold_DISTANCE3 = 60;
 
 void onInit(CBlob@ this)
 {
 
-	this.set_u32("last teleport", 0 );
-	this.set_bool("teleport ready", true );
+	this.set_u32("last sigilbloodhold", 0 );
+	this.set_bool("sigilbloodhold ready", true );
 	this.getCurrentScript().tickFrequency = 5;
-	this.Tag("tep");
+	this.Tag("sigilbloodhold");
 }
 
 void onTick(CBlob@ this)
 {
 
-  bool ready = this.get_bool("teleport ready");
+  bool ready = this.get_bool("sigilbloodhold ready");
 	const u32 gametime = getGameTime();
 	CBlob@[] blobs;
 
-	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tep")) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	if(this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), sigilbloodhold_range, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
@@ -33,15 +40,15 @@ void onTick(CBlob@ this)
 			
 			
 				if(ready) {
-				if(this.hasTag("tep")) {
+				if(this.hasTag("sigilbloodhold")) {
 				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > TELEPORT_DISTANCE )
+				if(delta.Length() > sigilbloodhold_DISTANCE )
 				{
-				this.set_u32("last teleport", gametime);
-				this.set_bool("teleport ready", false );
+				this.set_u32("last sigilbloodhold", gametime);
+				this.set_bool("sigilbloodhold ready", false );
 				if(blob.hasTag("player"))
 				{
-				server_CreateBlob("bloodrainsigil", -1, blob.getOldPosition() + Vec2f(0, -80.0f));
+				server_CreateBlob("bloodrainsigil", -1, blob.getOldPosition() + Vec2f((0+XORRandom(60) -XORRandom(60)), -80.0f));
 
 				}
 			} 	
@@ -50,38 +57,104 @@ void onTick(CBlob@ this)
 	} 
 	
 		else {		
-		u32 lastTeleport = this.get_u32("last teleport");
-		int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
+		u32 lastsigilbloodhold = this.get_u32("last sigilbloodhold");
+		int diff = gametime - (lastsigilbloodhold + sigilbloodhold_FREQUENCY);
 		
 
 		if (diff > 0)
 		{
-			this.set_bool("teleport ready", true );
+			this.set_bool("sigilbloodhold ready", true );
 			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
 		}
 	}
 			
 		}
 	}
-}
+	}
+	else if(this.hasTag("PhaseThree") && !this.hasTag("PhaseFour"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), sigilbloodhold_range2, @blobs) ) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	{
+		for (int i = 0; i < blobs.length; i++)
+		{
+			CBlob@ blob = blobs[i];
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("sigilbloodhold")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > sigilbloodhold_DISTANCE2 )
+				{
+				this.set_u32("last sigilbloodhold", gametime);
+				this.set_bool("sigilbloodhold ready", false );
+				if(blob.hasTag("player"))
+				{
+				server_CreateBlob("bloodrainsigil", -1, blob.getOldPosition() + Vec2f((0+XORRandom(60) -XORRandom(60)), -80.0f));
 
+				}
+			} 	
 
-bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
-{
-    return blob.getShape().isStatic();
-}
+		}
+	} 
+	
+		else {		
+		u32 lastsigilbloodhold = this.get_u32("last sigilbloodhold");
+		int diff = gametime - (lastsigilbloodhold + sigilbloodhold_FREQUENCY2);
+		
 
-void Teleport( CBlob@ blob, Vec2f pos){	
-	AttachmentPoint@[] ap;
-	blob.getAttachmentPoints(ap);
-	blob.hasTag("flesh");
-	for (uint i = 0; i < ap.length; i++){
-		if(!ap[i].socket && ap[i].getOccupied() !is null){
-			@blob = ap[i].getOccupied();
-			break;
+		if (diff > 0)
+		{
+			this.set_bool("sigilbloodhold ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
 		}
 	}
-	blob.setPosition( pos );
-	blob.setVelocity( Vec2f_zero );	
-	blob.getSprite().PlaySound("/gasp.ogg");
+			
+		}
+	}
+	}
+	else if(this.hasTag("PhaseFour"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), sigilbloodhold_range3, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	{
+		for (int i = 0; i < blobs.length; i++)
+		{
+			CBlob@ blob = blobs[i];
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("sigilbloodhold")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > sigilbloodhold_DISTANCE3 )
+				{
+				this.set_u32("last sigilbloodhold", gametime);
+				this.set_bool("sigilbloodhold ready", false );
+				if(blob.hasTag("player"))
+				{
+				server_CreateBlob("bloodrainsigil", -1, blob.getOldPosition() + Vec2f((0+XORRandom(60) -XORRandom(60)), -80.0f));
+
+				}
+			} 	
+
+		}
+	} 
+	
+		else {		
+		u32 lastsigilbloodhold = this.get_u32("last sigilbloodhold");
+		int diff = gametime - (lastsigilbloodhold + sigilbloodhold_FREQUENCY3);
+		
+
+		if (diff > 0)
+		{
+			this.set_bool("sigilbloodhold ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
+		}
+	}
+			
+		}
+	}
+	}
 }

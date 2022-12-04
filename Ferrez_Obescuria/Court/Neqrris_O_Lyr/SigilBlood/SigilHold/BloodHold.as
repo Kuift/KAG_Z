@@ -8,12 +8,12 @@
 const f32 MEDIUM_SPEED = 9.0f;
 const f32 FAST_SPEED = 16.0f;
 
-const f32 max_range = 256.00f;
-const float field_force = 1.0;
-const float mass = 1.0;
+const f32 max_range = 164.00f;
+const float field_force = 0.5;
+const float mass = 0.3;
 
-const float first_radius = 64.0;
-const float second_radius = 220.0;
+const float first_radius = 140.0;
+const float second_radius = 280.0;
 // Speed required to pierce Wooden tiles.
 
 void onInit(CBlob@ this)
@@ -23,7 +23,7 @@ void onInit(CBlob@ this)
 	this.set_bool("static", false);
 	this.Tag("not_tamable");
 
-	this.server_SetTimeToDie(7);
+	this.server_SetTimeToDie(2);
 
 	this.getShape().getConsts().mapCollisions = false;
 	this.getShape().getConsts().bullet = true;
@@ -199,8 +199,8 @@ void Pierce(CBlob@ this, Vec2f velocity, const f32 angle)
 				if (!doesCollideWithBlob(this, blob) || LimitedAttack_has_hit_actor(this, blob))
 					continue;
 
-				this.server_Hit(blob, hit_position, velocity, 0.5f, Hitters::ballista, true);
-				BallistaHitBlob(this, hit_position, velocity, 0.5f, blob, Hitters::ballista);
+				this.server_Hit(blob, hit_position, velocity, 1.5f, Hitters::ballista, true);
+				BallistaHitBlob(this, hit_position, velocity, 1.5f, blob, Hitters::ballista);
 				LimitedAttack_add_actor(this, blob);
 
 			}

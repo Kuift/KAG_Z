@@ -48,7 +48,7 @@ void onTick(CSprite@ this)
 		{
 			if (XORRandom(100)==0)
 			{
-				this.PlaySound( "/ZombieGroan" );
+				this.PlaySound( "/NeqrrisGroan" );
 			}
 			if (!this.isAnimation("idle")) {
 			this.SetAnimation("idle");
@@ -119,7 +119,7 @@ void onInit(CBlob@ this)
 	//for EatOthers
 	string[] tags = {"player","lantern"};
 	this.set("tags to eat", tags);
-	this.set_f32("gib health", -2.0f);	
+	this.set_f32("gib health", -50.0f);	
 	float difficulty = getRules().get_f32("difficulty")/4.0;
 	if (difficulty<1.0) difficulty=1.0;
 	this.set_f32("bite damage", 0.25f);
@@ -154,18 +154,50 @@ void onInit(CBlob@ this)
 //	this.getCurrentScript().runProximityTag = "player";
 //	this.getCurrentScript().runProximityRadius = 320.0f;
 	this.getCurrentScript().runFlags = Script::tick_not_attached;
+	this.Tag("PhaseOne");
 }
 
 
 void onTick(CBlob@ this)
 {
+
+
+
 	f32 x = this.getVelocity().x;
 	// ferre you idiot
-	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
+	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
 	{
-		this.server_SetHealth(2.0);
+		this.server_SetHealth(50.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseTwo");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(50.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseThree");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseThree") && !this.hasTag("PhaseFour"))
+	{
+		this.server_SetHealth(50.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseFour");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 360 && this.hasTag("PhaseFour"))
+	{
+		this.server_SetHealth(50.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+
 	}
 	if (this.getHealth()<=0.0) return;
 
@@ -198,7 +230,7 @@ void onTick(CBlob@ this)
 					vel.Normalize();
 					HitInfo@[] hitInfos;
 					CMap @map = getMap();
-					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 2.0f, this, @hitInfos ))
+					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 12.0f, this, @hitInfos ))
 					{
 						//HitInfo objects are sorted, first come closest hits
 						bool hit_block = false;
@@ -211,7 +243,7 @@ void onTick(CBlob@ this)
 								if ((other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum()) || other.getName() == "bison" || other.getName() == "shark")
 								{
 									f32 power = this.get_f32("bite damage");
-									this.server_Hit(other,other.getPosition(),vel,power,Hitters::bite, false);
+									this.server_Hit(other,other.getPosition(),vel,4.0f,Hitters::bite, false);
 									this.set_u16("lastbite",0);
 									break;
 								}
@@ -220,13 +252,13 @@ void onTick(CBlob@ this)
 									const bool large = other.hasTag("blocks sword") && other.isCollidable();
 									if (other.getName() == "wooden_platform" || other.getName() == "GoldBrick" || other.getName() == "triangle" || other.getName() == "glider" || other.getName() == "bomber2" || other.getName() == "fighter" || other.getName() == "miniballoon")
 									{
-										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,4.0f,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
 									if (other.getTeamNum() != this.getTeamNum())
 									{
-										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,4.0f,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
