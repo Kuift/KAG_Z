@@ -181,7 +181,7 @@ void onTick(CBlob@ this)
 			if (other.getName() == "lantern" || other.getName() == "wooden_door")
 			{
 				Vec2f vel(0,0);
-				this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+				this.server_Hit(other,other.getPosition(),vel,4.0,Hitters::saw, false);
 				break;				
 			}
 		}	
