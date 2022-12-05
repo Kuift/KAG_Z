@@ -8,7 +8,7 @@ void onInit(CBlob@ this){
     this.set_TileType("background tile", CMap::tile_castle_back);
     this.setPosition(Vec2f(this.getPosition().x, this.getPosition().y-16.0f)); //required to not dig into ground
     this.set_u16("castle level", 1); //required to be set at level 1 to start
-    this.set_u16("max level", 6);
+    this.set_u16("max level", 3);
     this.set_u16("wood cost", 0); //assume the costs are for level 2
     this.set_u16("stone cost", 500);
     this.set_u16("gold cost", 500);
