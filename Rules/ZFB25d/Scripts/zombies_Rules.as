@@ -10,20 +10,20 @@
 //#include "ZombiePortal.as"
 
 void dynamicmapcycle(){
-	print("players: "+getPlayersCount());
+	// print("players: "+getPlayersCount());
 	if(getPlayersCount() <= 3){ //3 players or less
 		LoadMapCycle("Rules\\ZFB25d\\mapcycle1.cfg");
-		print("small size cycle");
+		// print("small size cycle");
 		return;
 	}
 	if(getPlayersCount() > 3 && getPlayersCount() <= 6){ //4 - 6 players
 		LoadMapCycle("Rules\\ZFB25d\\mapcycle2.cfg");
-		print("medium size cycle");
+		// print("medium size cycle");
 		return;
 	}
 	else{ //anything else
 		LoadMapCycle("Rules\\ZFB25d\\mapcycle.cfg");
-		print("full size cycle");
+		// print("full size cycle");
 		return;
 	}
 }
@@ -75,8 +75,8 @@ void Config(ZombiesCore@ this)
 
     s32 max_portal_zombies = Maths::Ceil(max_zombies*0.25f);
     max_zombies = Maths::Floor(max_zombies*0.75f);
-	print("" + max_portal_zombies);
-	print("" + max_zombies);
+	// print("" + max_portal_zombies);
+	// print("" + max_zombies);
 
 	// if (max_zombies<100) max_zombies=100;
 	getRules().set_s32("max_zombies", max_zombies);
@@ -336,7 +336,7 @@ shared class ZombiesSpawns : RespawnSystem
 		if (player.getTeamNum() == core.rules.getSpectatorTeamNum())
 			return;
 			
-		print("ADD SPAWN FOR " + player.getUsername()+ "Spawn Delay: " +tickspawndelay);
+		// print("ADD SPAWN FOR " + player.getUsername()+ "Spawn Delay: " +tickspawndelay);
 
 		if (info.team < Zombies_core.teams.length)
 		{
@@ -428,6 +428,7 @@ shared class ZombiesCore : RulesCore
 		float difficulty = 2.0*(getGameTime()-gamestart)/getTicksASecond()/day_cycle;
 		float actdiff = 4.0*((getGameTime()-gamestart)/getTicksASecond()/day_cycle);
 		int dayNumber = ((getGameTime()-gamestart)/getTicksASecond()/day_cycle)+1;
+		getRules().set_u16("dayNumber",dayNumber);
 		if (actdiff>9) { actdiff=9; difficulty=difficulty-1.0; } else { difficulty=1.0; }
 		
 		if (rules.isWarmup() && timeElapsed>getTicksASecond()*30) { rules.SetCurrentState(GAME); warn("TE:"+timeElapsed); }
@@ -451,13 +452,13 @@ shared class ZombiesCore : RulesCore
 			getBlobsByTag("zombie", @zombie_blobs );
 			num_zombies = zombie_blobs.length;
 			rules.set_s32("num_zombies",num_zombies);
-			printf("Zombies: "+num_zombies+" Extra: "+extra_zombies);
+			// printf("Zombies: "+num_zombies+" Extra: "+extra_zombies);
 
 			CBlob@[] zombie_blobs2;
 			getBlobsByTag("portal_zombie", @zombie_blobs2);
 			num_portal_zombies = zombie_blobs2.length;
 			rules.set_s32("num_portal_zombies", num_portal_zombies);
-			printf("Portal Zombies: "+num_portal_zombies+" Extra: "+extra_zombies);
+			// printf("Portal Zombies: "+num_portal_zombies+" Extra: "+extra_zombies);
 		}
 		
 		if(getMap() !is null){
