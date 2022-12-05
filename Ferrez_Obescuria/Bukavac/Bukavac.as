@@ -181,7 +181,7 @@ void onTick(CBlob@ this)
 			if (other.getName() == "lantern" || other.getName() == "wooden_door")
 			{
 				Vec2f vel(0,0);
-				this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+				this.server_Hit(other,other.getPosition(),vel,4.0,Hitters::saw, false);
 				break;				
 			}
 		}	
@@ -191,7 +191,7 @@ void onTick(CBlob@ this)
 	{
 		u16 lastbite = this.get_u16("lastbite");
 		u16 bitefreq = this.get_u16("bite freq");
-		if (bitefreq<0) bitefreq=20;
+		if (bitefreq<0) bitefreq=1;
 		if (lastbite > bitefreq)
 		{
 			float aimangle=0;
@@ -202,39 +202,52 @@ void onTick(CBlob@ this)
 				if(b !is null)
 				{
 					vel = b.getPosition()-this.getPosition();
+					
 				}
 				else vel = Vec2f(1,0);
 				{
 					vel.Normalize();
 					HitInfo@[] hitInfos;
 					CMap @map = getMap();
-					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 2.0f, this, @hitInfos ))
+					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 6.0f, this, @hitInfos ))
 					{
 						//HitInfo objects are sorted, first come closest hits
+						bool hit_block = false;
 						for (uint i = 0; i < hitInfos.length; i++)
 						{
 							HitInfo@ hi = hitInfos[i];
 							CBlob@ other = hi.blob;	  
 							if (other !is null)
 							{
-								if (other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum())
+								if ((other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum()) || other.getName() == "bison" || other.getName() == "shark")
 								{
 									f32 power = this.get_f32("bite damage");
-									this.server_Hit(other,other.getPosition(),vel,power,Hitters::bite, true);
+									this.server_Hit(other,other.getPosition(),vel,2.0,Hitters::bite, false);
 									this.set_u16("lastbite",0);
+									break;
 								}
-								else
+								else if (!hit_block)
 								{
 									const bool large = other.hasTag("blocks sword") && other.isCollidable();
-									if (other.hasTag("large") || large || other.getTeamNum() == this.getTeamNum())
+									if (other.getName() == "wooden_platform" || other.getName() == "GoldBrick" || other.getName() == "triangle" || other.getName() == "glider" || other.getName() == "bomber2" || other.getName() == "fighter" || other.getName() == "miniballoon")
 									{
-										break;
+										this.server_Hit(other,other.getPosition(),vel,4.0,Hitters::saw, false);
+										this.set_u16("lastbite",0);
+										hit_block=true;
 									}
+									if (other.getTeamNum() != this.getTeamNum())
+									{
+										this.server_Hit(other,other.getPosition(),vel,4.0,Hitters::saw, false);
+										this.set_u16("lastbite",0);
+										hit_block=true;
+									}
+									
+									
 								}
 							}
 							else
 							{
-								break;
+								//break;
 							}
 						}
 					}
