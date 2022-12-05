@@ -3,12 +3,12 @@
 #include "Hitters.as";
 #include "FireCommon.as";
 const f32 max_range = 126.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCY = 90; //4 secs
+const int TELEPORT_FREQUENCY = 120; //4 secs
 const int TELEPORT_DISTANCE = 20;//getMap().tilesize;
 
 
 const f32 max_rangeA = 252.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCYA = 15; //4 secs
+const int TELEPORT_FREQUENCYA = 60; //4 secs
 const int TELEPORT_DISTANCEA = 20;//getMap().tilesize;
 void onInit(CBlob@ this)
 {
