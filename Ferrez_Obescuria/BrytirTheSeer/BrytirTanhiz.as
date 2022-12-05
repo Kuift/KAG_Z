@@ -1,8 +1,8 @@
-const int FIRE_FREQUENCY = 25;
+const int FIRE_FREQUENCY = 30;
 const f32 BOLT_SPEED = 19.0f;
 const f32 max_range = 264.00f;
 
-const int FIRE_FREQUENCY2 = 12;
+const int FIRE_FREQUENCY2 = 18;
 const f32 BOLT_SPEED2 = 24.0f;
 const f32 max_range2 = 375.00f;
 void onInit(CBlob@ this)
