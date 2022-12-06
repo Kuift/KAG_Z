@@ -1,58 +1,46 @@
-// Lantern script
-#include "Knocked.as";
-#include "Hitters.as";
-const f32 max_range = 256.00f;
-const float field_force = 1.0;
-const float mass = 1.0;
+#include "FireCommon.as";
 
-const float first_radius = 64.0;
-const float second_radius = 220.0;
+const f32 fyrfyrnigh_range = 256.00f;
+
 void onInit(CBlob@ this)
 {
-
-	this.Tag("dont deactivate");
-	this.Tag("not_tamable");
-
-	this.Tag("fire source");
-	this.getCurrentScript().tickFrequency = 1;
-	this.Tag("fyr");
+    this.Tag("dont deactivate");
+    this.Tag("fire source");
+    this.Tag("fyr");
+    this.getCurrentScript().tickFrequency = 45;
+	this.server_SetTimeToDie(12);
 }
 
 void onTick(CBlob@ this)
 {
-CBlob@[] blobs;
 
-    if (getNet().isServer())
+    if (getNet().isServer() && this.getHealth() > 0.5f)
     {
-    if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("fyr"))
-    {
-        for (int i = 0; i < blobs.length; i++)
+        CBlob@[] blobs;
+        if (getMap().getBlobsInRadius(this.getPosition(), fyrfyrnigh_range, @blobs))
         {
-            CBlob@ blob = blobs[i];
-
-            if (!this.getMap().rayCastSolidNoBlobs(blob.getPosition(), this.getPosition()))
+            for (int i = 0; i < blobs.length; i++)
             {
-                f32 dist = (blob.getPosition() - this.getPosition()).getLength();
-                f32 factor = 1.00f - Maths::Pow(dist / max_range, 2);
+                CBlob@ blob = blobs[i];
 
-                 //SetKnocked(blob, 75 * factor);
-
-                if (blob is getLocalPlayerBlob() && this.getTeamNum() != blob.getTeamNum())
+                if (!getMap().rayCastSolidNoBlobs(blob.getPosition(), this.getPosition()))
                 {
-                    Vec2f delta = this.getPosition() - blob.getPosition();
+                    if (blob.getPlayer() !is null && this.getTeamNum() != blob.getTeamNum())
+                    {
+                        Vec2f delta = this.getPosition() - blob.getPosition();
 
-        Vec2f lastBurnPos = this.get_Vec2f("last burn pos");
-        getMap().server_setFireWorldspace(lastBurnPos, false);
-        getMap().server_setFireWorldspace(blob.getPosition(), true);
-        this.set_Vec2f("last burn pos", blob.getPosition());
-
+                        Vec2f lastBurnPos = this.exists("last burn pos") ? this.get_Vec2f("last burn pos") : blob.getPosition();
+                        getMap().server_setFireWorldspace(lastBurnPos, false);
+                        getMap().server_setFireWorldspace(blob.getPosition(), true);
+                        this.set_Vec2f("last burn pos", blob.getOldPosition());
+                    }
                 }
             }
         }
     }
-    }
-    }
+	
 
+}
 
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
 {
