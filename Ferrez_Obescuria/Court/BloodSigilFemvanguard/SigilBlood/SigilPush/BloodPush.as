@@ -9,8 +9,8 @@ const f32 MEDIUM_SPEED = 9.0f;
 const f32 FAST_SPEED = 16.0f;
 
 const f32 max_range = 256.00f;
-const float field_force = 1.5;
-const float mass = 0.6;
+const float field_force = 4.0;
+const float mass = 0.3;
 
 const float first_radius = 64.0;
 const float second_radius = 220.0;
@@ -23,7 +23,7 @@ void onInit(CBlob@ this)
 	this.set_bool("static", false);
 	this.Tag("not_tamable");
 
-	this.server_SetTimeToDie(7);
+	this.server_SetTimeToDie(1);
 
 	this.getShape().getConsts().mapCollisions = false;
 	this.getShape().getConsts().bullet = true;
@@ -345,4 +345,3 @@ bool CollidesWithPlatform(CBlob@ this, CBlob@ blob, Vec2f velocity)
 
 	return !(velocity_angle > -90.0f && velocity_angle < 90.0f);
 }
-
