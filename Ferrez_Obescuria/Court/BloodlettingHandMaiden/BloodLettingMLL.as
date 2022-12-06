@@ -2,8 +2,8 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 480.00f; // giving her buff in range was :240:, tsuyani nerf is equal to more power
-const int TELEPORT_FREQUENCY = 45; //4 secs
+const f32 max_range = 240.00f;
+const int TELEPORT_FREQUENCY = 90; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
 void onInit(CBlob@ this)
