@@ -48,7 +48,7 @@ void onTick(CSprite@ this)
 		{
 			if (XORRandom(100)==0)
 			{
-				this.PlaySound( "/ZombieGroan" );
+				this.PlaySound( "/NeqrrisGroan" );
 			}
 			if (!this.isAnimation("idle")) {
 			this.SetAnimation("idle");
@@ -119,14 +119,13 @@ void onInit(CBlob@ this)
 	//for EatOthers
 	string[] tags = {"player","lantern"};
 	this.set("tags to eat", tags);
-	this.set_f32("gib health", -2.0f);	
+	this.set_f32("gib health", -50.0f);	
 	float difficulty = getRules().get_f32("difficulty")/4.0;
 	if (difficulty<1.0) difficulty=1.0;
-	this.set_f32("bite damage", 4.0f);
+	this.set_f32("bite damage", 0.25f);
 	int bitefreq = 45-difficulty*1.0;
 	if (bitefreq<5) bitefreq=2;
 	this.set_u16("bite freq", bitefreq);
-	this.Tag("not_tamable");
 
 	//brain
 	this.set_u8(personality_property, DEFAULT_PERSONALITY);
@@ -147,6 +146,7 @@ void onInit(CBlob@ this)
 	this.Tag("flesh");
 	this.Tag("zombie");
 	this.set_s16("mad timer", 0);
+	this.Tag("not_tamable");
 
 	this.getShape().SetOffset(Vec2f(0,0));
 	
@@ -154,19 +154,42 @@ void onInit(CBlob@ this)
 //	this.getCurrentScript().runProximityTag = "player";
 //	this.getCurrentScript().runProximityRadius = 320.0f;
 	this.getCurrentScript().runFlags = Script::tick_not_attached;
+	this.Tag("PhaseOne");
 	this.Tag("EndlessFlame");
 }
 
 
 void onTick(CBlob@ this)
 {
+
+
+
 	f32 x = this.getVelocity().x;
 	// ferre you idiot
-	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 120)
+	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
 	{
-		this.server_SetHealth(4.0);
+		this.server_SetHealth(20.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseTwo");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseThree");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 360 && this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+
 	}
 	if (this.getHealth()<=0.0) return;
 
@@ -199,7 +222,7 @@ void onTick(CBlob@ this)
 					vel.Normalize();
 					HitInfo@[] hitInfos;
 					CMap @map = getMap();
-					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 6.0f, this, @hitInfos ))
+					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 12.0f, this, @hitInfos ))
 					{
 						//HitInfo objects are sorted, first come closest hits
 						bool hit_block = false;
@@ -212,7 +235,7 @@ void onTick(CBlob@ this)
 								if ((other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum()) || other.getName() == "bison" || other.getName() == "shark")
 								{
 									f32 power = this.get_f32("bite damage");
-									this.server_Hit(other,other.getPosition(),vel,power,Hitters::bite, false);
+									this.server_Hit(other,other.getPosition(),vel,4.0f,Hitters::bite, false);
 									this.set_u16("lastbite",0);
 									break;
 								}
@@ -221,13 +244,13 @@ void onTick(CBlob@ this)
 									const bool large = other.hasTag("blocks sword") && other.isCollidable();
 									if (other.getName() == "wooden_platform" || other.getName() == "GoldBrick" || other.getName() == "triangle" || other.getName() == "glider" || other.getName() == "bomber2" || other.getName() == "fighter" || other.getName() == "miniballoon")
 									{
-										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,4.0f,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
 									if (other.getTeamNum() != this.getTeamNum())
 									{
-										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,4.0f,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
@@ -456,6 +479,11 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 	{
 		MadAt( this, blob );
 	}
+}
+
+void onDie(CBlob@ this)
+{
+	
 }
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )

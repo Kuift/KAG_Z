@@ -2,8 +2,8 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 320.00f; // range will get a lil buff was :128:
-const int TELEPORT_FREQUENCY = 60; //4 secs
+const f32 max_range = 160.00f; // range will get a lil buff was :128:
+const int TELEPORT_FREQUENCY = 180; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
 void onInit(CBlob@ this)
@@ -57,7 +57,6 @@ void onTick(CBlob@ this)
 		if (diff > 0)
 		{
 			this.set_bool("teleport ready", true );
-			this.getSprite().PlaySound("/sand_fall.ogg"); 
 		}
 	}
 			
