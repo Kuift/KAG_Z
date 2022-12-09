@@ -1,18 +1,28 @@
 #include "GenericButtonCommon.as"
-#include "TunnelCommon.as"
 #include "StandardRespawnCommand.as"
 #include "StandardControlsCommon.as"
-#include "Requirements_Tech.as"
+#include "Requirements_Tech.as" //for only one castle
+
 // original idea by SK
 void onInit(CBlob@ this){
     this.set_TileType("background tile", CMap::tile_castle_back);
     this.setPosition(Vec2f(this.getPosition().x, this.getPosition().y-16.0f)); //required to not dig into ground
     this.set_u16("castle level", 1); //required to be set at level 1 to start
+    getRules().set_u16("castle level", this.get_u16("castle level"));
     this.set_u16("max level", 3);
     this.set_u16("wood cost", 0); //assume the costs are for level 2
     this.set_u16("stone cost", 500);
     this.set_u16("gold cost", 500);
+    getRules().set_u16("castle level", 1);
+    getRules().set_u16("builder level", 0);
+    getRules().set_u16("archer level", 0);
+    getRules().set_u16("knight level", 0);
+    getRules().set_u16("polearm level", 0);
     this.addCommandID("Upgrade Level");
+    this.addCommandID("castle_level_sync");
+    this.addCommandID("trigger_castle_level_sync");
+    this.addCommandID("addGoldToInv");
+    this.set_u16("gold", 0); //how much gold has been fed?
     this.getSprite().SetZ(-50.0f);
     this.set_u16("day", getRules().get_u16("dayNumber")); //DAY EQUATION IN ZOMBIE_RULES.AS
 
@@ -20,12 +30,6 @@ void onInit(CBlob@ this){
     InitClasses(this);
     // this.Tag("respawn");
     this.Tag("change class drop inventory");
-    
-    this.Tag("travel tunnel"); //tunnel stuff
-    this.set_Vec2f("travel button pos", Vec2f(-10.5f, 8));
-    this.set_Vec2f("travel offset", Vec2f(-21, 10));
-    this.Tag("teamlocked tunnel");
-    this.Tag("ignore raid");
 
     this.inventoryButtonPos = Vec2f(-4, 16);
     this.Tag("builder always hit");
@@ -37,7 +41,6 @@ void onInit(CBlob@ this){
 
 void onTick(CBlob@ this){
     if(getGameTime() % 30 == 0){ //prevent lag
-        print(""+this.get_u16("castle level"));
         if(getRules().get_u16("dayNumber") != this.get_u16("day")){
             this.set_u16("day", getRules().get_u16("dayNumber"));
             if(this !is null){
@@ -62,19 +65,82 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
         if (canChangeClass(this, caller)){
             caller.CreateGenericButton("$change_class$", Vec2f(6, 8), this, buildSpawnMenu, getTranslatedString("Swap Class"));
         }
+
+        if(this.get_u16("castle level") <= 2){
+            if(this.get_u16("gold") < 2000){
+                CBitStream params;
+                params.write_u16(caller.getNetworkID());
+                caller.CreateGenericButton("$mat_gold$", Vec2f(-10.5f, 8), this, this.getCommandID("addGoldToInv"), getTranslatedString("Upgrade coin gain!"), params);
+            }
+        }
+        else{
+            if(this.get_u16("gold") < 3000){
+                CBitStream params;
+                params.write_u16(caller.getNetworkID());
+                caller.CreateGenericButton("$mat_gold$", Vec2f(-10.5f, 8), this, this.getCommandID("addGoldToInv"), getTranslatedString("Upgrade coin gain!"), params);
+            }
+        }
+
         if(this.get_u16("castle level") < this.get_u16("max level")){
             CBitStream params;
             params.write_u16(caller.getNetworkID());
             int castlelvl = this.get_u16("castle level")+1;
-            caller.CreateGenericButton("$upgrade$", Vec2f(6, 0), this, this.getCommandID("Upgrade Level"), getTranslatedString("Upgrade to level " + castlelvl + "!"), params);
+            caller.CreateGenericButton("$upgrade$", Vec2f(6, 0), this, this.getCommandID("Upgrade Level"), getTranslatedString("Upgrade to level " + castlelvl + "!"+extratext(this)), params);
         }
     }
 }
 
+string extratext(CBlob@ this){
+    return "\nWood Cost: " + this.get_u16("wood cost") + "\nStone Cost: " + this.get_u16("stone cost") + "\nGold Cost: " + this.get_u16("gold cost");
+}
+
+void onCommand(CRules@ this, u8 cmd, CBitStream @params){
+    if (cmd == this.getCommandID("trigger_castle_level_sync"))
+    {
+        if(isServer())
+        {
+            u16 castleLevel = getRules().get_u16("castle level");
+            u16 builderLevel = getRules().get_u16("builder level");
+            u16 archerLevel = getRules().get_u16("archer level");
+            u16 knightLevel = getRules().get_u16("knight level");
+            u16 polearmLevel = getRules().get_u16("polearm level");
+            CBitStream params;
+            params.write_u16(castleLevel);
+            params.write_u16(builderLevel);
+            params.write_u16(archerLevel);
+            params.write_u16(knightLevel);
+            params.write_u16(polearmLevel);
+            this.SendCommand(this.getCommandID("castle_level_sync"), params);
+        }
+    }
+    if (cmd == this.getCommandID("castle_level_sync"))
+    {
+        if(!isServer())
+        {
+            u16 castleLevel = params.read_u16();
+            u16 builderLevel = params.read_u16();
+            u16 archerLevel = params.read_u16();
+            u16 knightLevel = params.read_u16();
+            u16 polearmLevel = params.read_u16();
+            getRules().set_u16("castle level", castleLevel);
+            getRules().set_u16("builder level", builderLevel);
+            getRules().set_u16("archer level", archerLevel);
+            getRules().set_u16("knight level", knightLevel);
+            getRules().set_u16("polearm level", polearmLevel);
+        }
+    }
+}
+
+void onNewPlayerJoin( CRules@ this, CPlayer@ player )
+{
+    this.SendCommand(this.getCommandID("trigger_castle_level_sync"));
+}
+
+
 void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
 	if (getNet().isServer())
 	{
-        // onRespawnCommand(this, cmd, params);
+        onRespawnCommand(this, cmd, params);
 		if (cmd == this.getCommandID("Upgrade Level"))
 		{
             CBlob@ caller = getBlobByNetworkID(params.read_u16());
@@ -83,12 +149,51 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
                 if(hasMats(caller,this)){
                     stealmats(caller, this); //take away the mats from person
                     this.set_u16("castle level", this.get_u16("castle level") + 1);
+                    getRules().set_u16("castle level", this.get_u16("castle level") + 1);
                     this.set_u16("wood cost", this.get_u16("wood cost")+250);
                     this.set_u16("stone cost", this.get_u16("stone cost")+250);
                     this.set_u16("gold cost", this.get_u16("gold cost")+250);
+                    this.SendCommand(this.getCommandID("trigger_castle_level_sync"));
                 }
             }
         }
+        if(cmd == this.getCommandID("addGoldToInv")){
+            CBlob@ caller = getBlobByNetworkID(params.read_u16());
+            if(caller !is null && this !is null){
+                CInventory@ inv = caller.getInventory();
+                if(inv !is null){
+                    
+                    int goldcount = this.get_u16("gold"); // GOLD IS STORED LOCALLY ON EACH COMPUTER, AMOUNT OF GOLD SHOULD BE SENT OVER THE NETWORK
+                    int goldmax = this.get_u16("castle level") <= 2 ? 2000 : 3000; //set max here
+                    
+                    if(goldcount >= goldmax){return;}
+                    
+                    if(inv.getCount("mat_gold") >= 250){ //this is to prevent taking all the gold from a player
+                        if(goldcount + 250 <= goldmax){ //under max gold amount
+                            this.set_u16("gold",goldcount+250);
+                            inv.server_RemoveItems("mat_gold", 250);
+                        }
+                        else{ //over max amount
+                            int surplusAmount = (goldcount + 250) - goldmax; // if limit is 7000, you have 6850 gold, you add 250, then you are at 7100. 7100-7000 = 100
+                            this.set_u16("gold",goldmax);//goldcount+amounttoadd); // I THINK THIS SHOULD JUST BE GOLDMAX
+                            inv.server_RemoveItems("mat_gold", 250-surplusAmount);
+                        }
+                    }
+                    else{ //dont have 250 or more
+                        if(goldcount + inv.getCount("mat_gold") <= goldmax){ //under max gold amount
+                            this.set_u16("gold",goldcount+inv.getCount("mat_gold"));
+                            inv.server_RemoveItems("mat_gold", inv.getCount("mat_gold"));
+                        }
+                        else{ //over max amount // SO BASICALLY, YOU WANT IT SO THAT IF YOU HAVE only 50 GOLD, THAT IT TAKES THE WHOLE 50 GOLD ?
+                            // this code is to take any amount of gold under 250, two ifs above this one handles the max stack amount
+                            int surplusAmount = (goldcount + inv.getCount("mat_gold")) - goldmax; //level 1 max: 2000+0 - 2000 // 6975 + 50 = 7025 - 7000 = 25
+                            this.set_u16("gold",goldmax); //this is the only code block that doesnt work
+                            inv.server_RemoveItems("mat_gold", inv.getCount("mat_gold"));
+                        } //should i start adding upgrades for the uniforms in this? make it so that there's an easy way to retrieve the level of the castle from the CRULES
+                    } //this.get_u16("castle level"); yes but it would have to be sync across all instances in CRules, so that we can easily access it
+                } //will set in top as a crules thing too :thumbsupemoji: u should test the code i just changed btw
+            } //i believe i did it, should be getRules().get_u16("castle level") it wont be synced across clients. lemme fix that for u
+        } //need sync()?
     }
 }
 
@@ -119,28 +224,14 @@ bool hasMats(CBlob@ caller, CBlob@ castle){
 
 int getGoldinInv(CBlob@ this){ //get amount of coins it should produce
     if(this !is null){
-        CInventory@ inv = this.getInventory();
-        if(inv !is null){
-            int coins = 50; // tier 1 coin amount
-            if(this.get_u16("castle level") == 2){
-                coins = 80;
-            }
-            else if(this.get_u16("castle level") == 3){
-                coins = 90;
-            } //dont give more than 90 coins for levels above this
-            int goldininv = 0;
-
-            for(int i = 0; i < inv.getItemsCount(); i++){
-                CBlob@ item = inv.getItem(i);
-                if(item.getName() == "mat_gold"){
-                    if(item.getQuantity() == 250){
-                        goldininv++;
-                    }
-                }
-            }
-            int coinstoreturn = int(goldininv*0.5 * coins);
-            return coinstoreturn;
+        int coins = 50; // tier 1 coin amount
+        if(this.get_u16("castle level") == 2){
+            coins = 80;
         }
+        else if(this.get_u16("castle level") == 3){
+            coins = 90;
+        } //dont give more than 90 coins for levels above this
+        return int((this.get_u16("gold")/250)*0.5 * coins); //each stack is 250, thats why we divide by 250 here
     }
     return 0;
 }
