@@ -203,7 +203,12 @@ shared class ZombiesSpawns : RespawnSystem
 				RemovePlayerFromSpawn(p_info);
                 return;
             }
-            if (player.getTeamNum() != int(p_info.team))
+			if (player.getTeamNum() == getRules().getSpectatorTeamNum())
+			{
+				print("cringers");
+				return;
+			}
+			if (player.getTeamNum() != int(p_info.team))
             {
 				player.server_setTeamNum(p_info.team);
 				warn("team"+p_info.team);
