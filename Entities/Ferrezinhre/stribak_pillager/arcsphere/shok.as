@@ -30,6 +30,10 @@ void onTick(CBlob@ this)
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
+			if(!blob.hasTag("zombie") && !blob.hasTag("portal_zombie") !blob.hasTag("ZombiePortalz"))
+			{
+				continue;
+			}
 			
 			
 			
