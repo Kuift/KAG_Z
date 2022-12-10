@@ -35,10 +35,11 @@ bool canChangeClass(CBlob@ this, CBlob@ blob)
 void InitClasses(CBlob@ this)
 {
 	AddIconToken("$change_class$", "/GUI/InteractionIcons.png", Vec2f(32, 32), 12, 2);
+	// AddIconToken("$polearm_class_icon$", "PolearmShopIcon.png", Vec2f(14, 16), 1, 2);
 	addPlayerClass(this, "Builder", "$builder_class_icon$", "builder", "Build ALL the towers.");
 	addPlayerClass(this, "Knight", "$knight_class_icon$", "knight", "Hack and Slash.");
 	addPlayerClass(this, "Archer", "$archer_class_icon$", "archer", "The Ranged Advantage.");
-	addPlayerClass(this, "Polearm", "$polearm_class_icon$", "polearm", "Hack and Slash.");
+	addPlayerClass(this, "Polearm", "$polearm_class_icon$", "Polearm", "Hack and Slash.");
 }
 
 void BuildRespawnMenuFor(CBlob@ this, CBlob @caller)
@@ -61,6 +62,7 @@ void buildSpawnMenu(CBlob@ this, CBlob@ caller)
 	AddIconToken("$builder_class_icon$", "GUI/MenuItems.png", Vec2f(32, 32), 8, caller.getTeamNum());
 	AddIconToken("$knight_class_icon$", "GUI/MenuItems.png", Vec2f(32, 32), 12, caller.getTeamNum());
 	AddIconToken("$archer_class_icon$", "GUI/MenuItems.png", Vec2f(32, 32), 16, caller.getTeamNum());
+	AddIconToken("$polearm_class_icon$", "PolearmShopIcon.png", Vec2f(32, 32), 0, caller.getTeamNum());
 	BuildRespawnMenuFor(this, caller);
 }
 

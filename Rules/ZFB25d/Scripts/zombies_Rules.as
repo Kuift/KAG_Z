@@ -27,8 +27,10 @@ void dynamicmapcycle(){
 		return;
 	}
 }
-
 //simple config function - edit the variables below to change the basics
+
+
+
 
 void Config(ZombiesCore@ this)
 {
