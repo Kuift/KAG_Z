@@ -261,14 +261,14 @@ void Pickaxe(CBlob@ this)
 	}
 
 	// no damage cause we just check hit for cursor display
-	int frameindex = sprite.getFrameIndex(); // 21; 22; 23; 29; 30; 21, for strike //37; 38; 39; 47; 46; 37; for chop 
+	/*int frameindex = sprite.getFrameIndex(); // 21; 22; 23; 29; 30; 21, for strike //37; 38; 39; 47; 46; 37; for chop 
 	u16 advancement = 3;
 	while (advancement > 0 && frameindex+1 >= hit_frame - 1) // thhere's a semi colon kag_dismayed
 	{
 		sprite.SetFrameIndex(frameindex+1); //ok
 		advancement--;
 		print("SHOULD NOT SEE THIS : " + advancement);
-	}
+	}*/
 	bool justCheck = !sprite.isFrameIndex(hit_frame);
 	bool adjusttime = sprite.getFrameIndex() < hit_frame - 1;
 	//we can modulate the frame index so that it's more often below hit_frame, looking in kag manual for other way.
