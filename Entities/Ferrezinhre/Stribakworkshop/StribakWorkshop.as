@@ -63,6 +63,11 @@ void onInit( CBlob@ this )
 	}
 	
 	{
+		ShopItem@ s = addShopItem( this, "Sorrower ", "$sorrower$", "sorrower", " 836943 coins.", true );
+		AddRequirement( s.requirements, "coin", "", "Coins", 44738 );
+	}
+	
+	{
 		ShopItem@ s = addShopItem( this, "Travel Stone ", "$to$", "to", "No matter how far, it will find path to other one.", true );
 		AddRequirement( s.requirements, "coin", "", "Coins", 500 );
 	}
