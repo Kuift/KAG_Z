@@ -16,8 +16,8 @@ void onInit(CBlob@ this)
 {
 	AnimalVars vars;
 	//walking vars
-	vars.walkForce.Set(1000.0f, -0.0f);
-	vars.runForce.Set(1000.0f, -50.0f);
+	vars.walkForce.Set(700.0f, -0.0f);
+	vars.runForce.Set(700.0f, -50.0f);
 	vars.slowForce.Set(50.0f, 0.0f);
 	vars.jumpForce.Set(0.0f, -1000.0f);
 	vars.maxVelocity = 0.5f;
