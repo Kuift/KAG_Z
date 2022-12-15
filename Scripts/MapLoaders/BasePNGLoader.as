@@ -257,6 +257,8 @@ class PNGLoader
 
 			// Workshops
 			case map_colors::zombie_portal:   autotile(offset); spawnBlob(map, "ZombiePortal",  offset); break;
+			case map_colors::tukra_portal:    autotile(offset); spawnBlob(map, "tukraportal",  offset); break;
+			case map_colors::bukavac_portal:  autotile(offset); spawnBlob(map, "bukavacportal",  offset); break;
 			case map_colors::zombie_spawn:    autotile(offset); spawnBlob(map, "zombiespawn",  offset); break;
 			case map_colors::player_spawn:    autotile(offset); spawnBlob(map, "playerspawn",  offset); break;
 			case map_colors::knight_shop:     autotile(offset); spawnBlob(map, "knightshop",  offset); break;
@@ -296,6 +298,7 @@ class PNGLoader
 			case map_colors::shark:   autotile(offset); spawnBlob(map, "shark",   offset); break;
 			case map_colors::fish:    autotile(offset); spawnBlob(map, "fishy",   offset).set_u8("age", (offset * 997) % 4); break;
 			case map_colors::bison:   autotile(offset); spawnBlob(map, "bison",   offset); break;
+			case map_colors::ernaz:   autotile(offset); spawnBlob(map, "ernaz",   offset); break;
 			case map_colors::chicken: autotile(offset); spawnBlob(map, "chicken", offset, 255, false, Vec2f(0,-8)); break;
 
 			// Ladders
