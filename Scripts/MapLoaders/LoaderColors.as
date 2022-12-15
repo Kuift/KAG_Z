@@ -211,6 +211,7 @@ namespace map_colors
 		shark                  = 0xFF2CAFDE, // ARGB(255,  44, 175, 222);
 		fish                   = 0xFF79A8A3, // ARGB(255, 121, 168, 163);
 		bison                  = 0xFFB75646, // ARGB(255, 183,  86,  70);
+		ernaz                  = 0xFFB64771, // ARGB(255, 183,  86,  70);
 		chicken                = 0xFF8D2614, // ARGB(255, 141,  38,  20);
 
 		// ITEMS
