@@ -298,6 +298,7 @@ class PNGLoader
 			case map_colors::shark:   autotile(offset); spawnBlob(map, "shark",   offset); break;
 			case map_colors::fish:    autotile(offset); spawnBlob(map, "fishy",   offset).set_u8("age", (offset * 997) % 4); break;
 			case map_colors::bison:   autotile(offset); spawnBlob(map, "bison",   offset); break;
+			case map_colors::ernaz:   autotile(offset); spawnBlob(map, "ernaz",   offset); break;
 			case map_colors::chicken: autotile(offset); spawnBlob(map, "chicken", offset, 255, false, Vec2f(0,-8)); break;
 
 			// Ladders
