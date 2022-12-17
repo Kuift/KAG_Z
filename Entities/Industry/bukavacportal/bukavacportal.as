@@ -140,7 +140,7 @@ void onTick( CBlob@ this)
 		
 	
 		CBlob@[] blobs;
-		this.getMap().getBlobsInRadius( sp, 156, @blobs );
+		this.getMap().getBlobsInRadius( sp, 64, @blobs );
 		bool activate = false; //this may need to be synced as well idk 
 		for (uint step = 0; step < blobs.length; ++step)
 		{
