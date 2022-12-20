@@ -17,8 +17,8 @@ namespace AttackType
 void onInit( CBrain@ this )
 {
 	CBlob @blob = this.getBlob();
-	blob.set_u8( delay_property , 1);
-	blob.set_u8(state_property, MODE_IDLE);
+	blob.set_u8( delay_property , 1+XORRandom(1));
+	blob.set_u8(state_property, MODE_TARGET);
 
 	if (!blob.exists(terr_rad_property)) 
 	{
@@ -57,8 +57,8 @@ void onInit( CBrain@ this )
 //	this.getCurrentScript().runFlags |= Script::tick_blob_in_proximity;
 	this.getCurrentScript().runFlags |= Script::tick_not_attached;
 //	this.getCurrentScript().runProximityTag = "player";
-	//this.getCurrentScript().runProximityRadius = 3600.0f;
-	//this.getCurrentScript().tickFrequency = 1;
+	this.getCurrentScript().runProximityRadius = 200.0f;
+	this.getCurrentScript().tickFrequency = 1;
 
 	Vec2f terpos = blob.getPosition();
 	//terpos += blob.getRadius();
@@ -84,7 +84,7 @@ void onTick( CBrain@ this )
 		{
 			CBlob@ target = getBlobByNetworkID(blob.get_netid(target_property));
 			
-			if (target is null)
+			if (target is null ||  XORRandom( blob.get_u8(target_lose_random) ) == 0)
 			{
 				blob.set_u8(state_property,MODE_IDLE);
 			}
@@ -94,7 +94,7 @@ void onTick( CBrain@ this )
 			if (state == CBrain::has_path) {
 				this.SetSuggestedKeys();  // set walk keys here
 				JumpOverObstacles( blob );
-				delay = 1;
+				delay = 1+XORRandom(1);
 				blob.set_u8(delay_property, delay);
 				return;
 			}
@@ -102,7 +102,7 @@ void onTick( CBrain@ this )
 			{
 				if (target !is null) JustGo( blob, target );
 				JumpOverObstacles( blob );
-				delay = 1;
+				delay = 1+XORRandom(1);
 				blob.set_u8(delay_property, delay);
 				return;
 			}
@@ -128,7 +128,7 @@ void onTick( CBrain@ this )
 			}	  
 			
 		}
-		delay = 1;
+		delay = 1+XORRandom(1);
 		Vec2f pos = blob.getPosition();
 		
 		CMap@ map = blob.getMap();
@@ -151,7 +151,7 @@ void onTick( CBrain@ this )
 			{
 				CBlob@ target = getBlobByNetworkID(blob.get_netid(target_property));
 				
-				if (target is null || target.getTeamNum() == blob.getTeamNum() || blob.hasAttached() || target.isInInventory() )
+				if (target is null || target.getTeamNum() == blob.getTeamNum() || blob.hasAttached() || XORRandom( blob.get_u8(target_lose_random) ) == 0 || target.isInInventory() )
 				{
 					mode = MODE_IDLE;
 				}
@@ -168,7 +168,7 @@ void onTick( CBrain@ this )
 				{						
 					Vec2f tpos = target.getPosition();
 					const f32 search_radius = blob.get_f32(target_searchrad_property);
-					if ((tpos - pos).getLength() >= search_radius*12.0f)
+					if ((tpos - pos).getLength() >= search_radius*3.0f)
 					{
 						mode = MODE_IDLE;
 					}
@@ -195,12 +195,12 @@ void onTick( CBrain@ this )
 								Vec2f tpos = other.getPosition();									  
 								f32 dist = (tpos - pos).getLength();
 							
-								if (dist < best_dist && other.hasTag("zombie")) // not scared of same or smaller creatures
+								if (dist < best_dist && (other.hasTag("zombie") && other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
 								{
 									mode = MODE_FLEE;
 									best_dist=dist;
 									blob.set_netid(target_property,other.getNetworkID());
-									break;
+									//break;
 								}
 							}						
 						}
@@ -230,7 +230,7 @@ void onTick( CBrain@ this )
 							Vec2f tpos = other.getPosition();									  
 							f32 dist = (tpos - pos).getLength();
 						
-							if (dist < best_dist && other.hasTag("zombie")) // not scared of same or smaller creatures
+							if (dist < best_dist && (other.hasTag("zombie") && other.hasTag("portal_zombie"))) // not scared of same or smaller creatures
 							{
 								mode = MODE_FLEE;
 								best_dist=dist;
@@ -244,7 +244,7 @@ void onTick( CBrain@ this )
 									//TODO: flags for these...
 								if (blob.getName() == "Greg") 
 								{
-									bool otherzombies =  (XORRandom(4) == 0) || !other.hasTag("zombie");
+									bool otherzombies =  (XORRandom(4) == 0) || (!other.hasTag("zombie") && !other.hasTag("portal_zombie"));
 									if (other.getName() != name && //dont eat same type of blob
 										other.hasTag("flesh") && otherzombies && !other.hasTag("dead")) //attack flesh blobs
 									{
@@ -393,7 +393,7 @@ void onTick( CBrain@ this )
 	{	
 		this.getCurrentScript().tickFrequency = 1;
 
-		const f32 distance = (target.getPosition() - blob.getOldPosition()).getLength();
+		const f32 distance = (target.getPosition() - blob.getPosition()).getLength();
 		f32 visibleDistance;
 		const bool visibleTarget = isVisible( blob, target, visibleDistance);
 
@@ -401,7 +401,7 @@ void onTick( CBrain@ this )
 		{
 			if (!sawYou)
 			{
-				blob.setAimPos( target.getOldPosition() );
+				blob.setAimPos( target.getPosition() );
 				blob.Tag("saw you");
 			}
 
@@ -412,7 +412,7 @@ void onTick( CBrain@ this )
 			{
 				//blob.setKeyPressed( key_action1, true );
 				f32 vellen = target.getShape().vellen;
-				blob.setAimPos( target.getOldPosition() + target.getVelocity()*vellen*vellen );
+				blob.setAimPos( target.getPosition() + target.getVelocity()*vellen*vellen );
 			}
 
 			int x = gametime % 10;
