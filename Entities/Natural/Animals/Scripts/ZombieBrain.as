@@ -2,14 +2,14 @@
 
 #define SERVER_ONLY
 
-#include "ZombieBrainCommon.as"
+#include "BrainCommon.as"
 #include "PressOldKeys.as";
 #include "AnimalConsts.as";
 
 void onInit( CBrain@ this )
 {
 	CBlob @blob = this.getBlob();
-	blob.set_u8( delay_property , 1);
+	blob.set_u8( delay_property , 5+XORRandom(5));
 	blob.set_u8(state_property, MODE_IDLE);
 
 	if (!blob.exists(terr_rad_property)) 
@@ -72,18 +72,17 @@ void onTick( CBrain@ this )
 		{
 			CBlob@ target = getBlobByNetworkID(blob.get_netid(target_property));
 			
-			if (target is null)
+			if (target is null ||  XORRandom( blob.get_u8(target_lose_random) ) == 0)
 			{
 				blob.set_u8(state_property,MODE_IDLE);
 			}
 			//if (blob.getName() == "Greg" && target !is null) { blob.setKeyPressed( (target.getPosition().y > blob.getPosition().y) ? key_down : key_up, true); } 
 			//if (blob.getName() == "Wraith" && target !is null) { 
 			if (target !is null) blob.setKeyPressed( (target.getPosition().y > blob.getPosition().y) ? key_down : key_up, true); 
-			if (state == CBrain::has_path) 
-			{
+			if (state == CBrain::has_path) {
 				this.SetSuggestedKeys();  // set walk keys here
 				JumpOverObstacles( blob );
-				delay = 1;
+				delay = 4+XORRandom(4);
 				blob.set_u8(delay_property, delay);
 				return;
 			}
@@ -91,16 +90,7 @@ void onTick( CBrain@ this )
 			{
 				if (target !is null) JustGo( blob, target );
 				JumpOverObstacles( blob );
-				delay = 1;
-				blob.set_u8(delay_property, delay);
-				return;
-			}
-			
-			if (state == CBrain::stuck) 
-			{
-				Repath( this ); 
-				JumpOverObstacles( blob );
-				delay = 1;
+				delay = 4+XORRandom(4);
 				blob.set_u8(delay_property, delay);
 				return;
 			}
@@ -126,7 +116,7 @@ void onTick( CBrain@ this )
 			}	  
 			
 		}
-		delay = 1;
+		delay = 4+XORRandom(4);
 		Vec2f pos = blob.getPosition();
 		
 		CMap@ map = blob.getMap();
@@ -149,7 +139,7 @@ void onTick( CBrain@ this )
 			{
 				CBlob@ target = getBlobByNetworkID(blob.get_netid(target_property));
 				
-				if (target is null || target.getTeamNum() == blob.getTeamNum() || blob.hasAttached() || target.isInInventory() )
+				if (target is null || target.getTeamNum() == blob.getTeamNum() || blob.hasAttached() || XORRandom( blob.get_u8(target_lose_random) ) == 0 || target.isInInventory() )
 				{
 					mode = MODE_IDLE;
 				}
@@ -166,7 +156,7 @@ void onTick( CBrain@ this )
 				{						
 					Vec2f tpos = target.getPosition();
 					const f32 search_radius = blob.get_f32(target_searchrad_property);
-					if ((tpos - pos).getLength() >= search_radius*10.0f)
+					if ((tpos - pos).getLength() >= search_radius*3.0f)
 					{
 						mode = MODE_IDLE;
 					}
@@ -276,7 +266,7 @@ void onTick( CBrain@ this )
 												blob.Sync(target_property,true);
 												best_dist=dist;
 												this.SetPathTo(tpos, false);
-												break;
+												//break;
 											}
 											
 										}
