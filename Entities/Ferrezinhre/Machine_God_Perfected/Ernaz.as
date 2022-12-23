@@ -183,9 +183,17 @@ void MadAt(CBlob@ this, CBlob@ hitterBlob)
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {
+	if (customData == Hitters::arc)
+	{
+		damage*= -1.0;
+	}
+	if (customData == Hitters::blast) //need do other custom hitter later, or custom hitters as due this error
+	{
+		damage*= 0.0;
+	}
+	return damage;
 	
 	MadAt(this, hitterBlob);
-	return damage;
 }
 
 #include "Hitters.as";
