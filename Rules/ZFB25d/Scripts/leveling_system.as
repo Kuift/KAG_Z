@@ -22,10 +22,11 @@ bool justJoined = true;
 
 void onTick( CRules@ this )
 {
-    if (justJoined)
+    if (justJoined && this !is null)
     {
         justJoined = false;
-        CBitStream@ params;
+        CBitStream params;
+        params.write_s8(0);
         this.SendCommand(
             this.getCommandID("trigger_castle_level_sync"), 
             params);
