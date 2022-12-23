@@ -1,6 +1,7 @@
-const int FIRE_FREQUENCY = 13;
+const int FIRE_FREQUENCY = 52; // bigger increase the delay
 const f32 BOLT_SPEED = 19.0f;
-const f32 max_range = 64.00f;
+const f32 MAX_RANGE = 128.00f;
+const f32 MIN_RANGE = 64.00f;
 void onInit(CBlob@ this)
 {
 	this.set_u32("last bolt fire", 0);
@@ -28,7 +29,8 @@ void onTick(CBlob@ this)
 		CBlob@ playerBlob = player.getBlob();
 		if (playerBlob is null) {continue;}
 
-		if ((this.getPosition() - playerBlob.getPosition()).getLength() > max_range){continue;}
+		float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
+		if (distanceBetweenPlayerAndThis < MIN_RANGE || distanceBetweenPlayerAndThis > MAX_RANGE){continue;}
 
 		if(map.rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
 
@@ -42,7 +44,9 @@ void onTick(CBlob@ this)
 		if (bolt is null) {continue;}
 		Vec2f norm = aim - pos;
 		norm.Normalize();
-		bolt.setVelocity(norm * (diff <= FIRE_FREQUENCY ? BOLT_SPEED : 0.1f * BOLT_SPEED));
+		Vec2f velocityVector = norm * (diff <= FIRE_FREQUENCY ? BOLT_SPEED : 0.1f * BOLT_SPEED);
+		float bias = XORRandom(30)/2; // make it easier, there's a 15 degree mistake range
+		bolt.setVelocity(velocityVector.RotateBy(-bias));
 
 		if (targetID != 0xffff)
 		{
