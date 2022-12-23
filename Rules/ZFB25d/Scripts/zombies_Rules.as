@@ -558,9 +558,27 @@ shared class ZombiesCore : RulesCore
 					server_CreateBlob( "crawler", -1, sp);
 					else
 					if (r>=3)
-					server_CreateBlob( "Zombie", -1, sp);
+					{
+						if(dayNumber > 20)
+						{
+							server_CreateBlob( "vattka", -1, sp);
+						}
+						else{
+							server_CreateBlob( "Zombie", -1, sp);
+						}
+
+					}
 					else
-					server_CreateBlob( "Skeleton", -1, sp);
+					{
+						if(dayNumber > 26)
+						{
+							server_CreateBlob( "tukra", -1, sp);
+						}
+						else
+						{
+							server_CreateBlob( "Skeleton", -1, sp);
+						}
+					}
 					if (dayNumber == 14)
 					{
 						if(daily_transition == 1){
