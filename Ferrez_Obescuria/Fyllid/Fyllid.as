@@ -393,11 +393,11 @@ f32 getGibHealth( CBlob@ this )
 f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData )
 {	
 
-	if (customData == Hitters::notnormalfire)
+		if (customData == Hitters::notnormalfire)
 	{
 		damage*= 0.0;
 	}
-	return damage;
+	
 	
 	MadAt( this, hitterBlob );
 
@@ -483,7 +483,10 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 void onDie(CBlob@ this)
 {
-	
+	if(getNet().isServer())
+	{
+		getRules().set_u32("tsuyani_score", getRules().get_u32("tsuyani_score") + 8);
+	}
 }
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
