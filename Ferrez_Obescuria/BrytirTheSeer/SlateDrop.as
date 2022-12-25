@@ -2,108 +2,161 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 126.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCY = 120; //4 secs
-const int TELEPORT_DISTANCE = 20;//getMap().tilesize;
+const f32 drop_range = 126.00f; // giving her buff in range was :240:
+const int drop_FREQUENCY = 120; //4 secs
+const int drop_DISTANCE = 20;//getMap().tilesize;
 
 
-const f32 max_rangeA = 252.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCYA = 60; //4 secs
-const int TELEPORT_DISTANCEA = 20;//getMap().tilesize;
+const f32 drop_rangeA = 252.00f; // giving her buff in range was :240:
+const int drop_FREQUENCYA = 80; //4 secs
+const int drop_FREQUENCYB = 40; //4 secs
+const int drop_DISTANCEA = 20;//getMap().tilesize;
 void onInit(CBlob@ this)
 {
 
-	this.set_u32("last teleport", 0 );
-	this.set_bool("teleport ready", true );
+	this.set_u32("last drop", 0 );
+	this.set_bool("drop ready", true );
 	this.getCurrentScript().tickFrequency = 5;
-	this.Tag("tep");
+	this.Tag("drop");
 }
 
 void onTick(CBlob@ this)
 {
 
-  bool ready = this.get_bool("teleport ready");
+  bool ready = this.get_bool("drop ready");
 	const u32 gametime = getGameTime();
 	CBlob@[] blobs;
 
 	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tep") && (this.getHealth()>15.0))
+	if(this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), drop_range, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
-			if(ready) {
-				//
-				if(this.hasTag("tep")) {
-					Vec2f delta = this.getPosition() - blob.getPosition();
-					if(delta.Length() > TELEPORT_DISTANCE )
-					{
-						this.set_u32("last teleport", gametime);
-						this.set_bool("teleport ready", false );
-						if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-						{
-							server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
-							//MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
-							if(blob.hasTag("player")) {
-								break; // we only want to hit 1 zombie at a time
-							}
-						}
-					} 	
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("drop")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > drop_DISTANCE )
+				{
+				this.set_u32("last drop", gametime);
+				this.set_bool("drop ready", false );
+				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
+				{
+				server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
 
-			}
-		} 
+				}
+			} 	
+
+		}
+	} 
 	
 		else {		
-			u32 lastTeleport = this.get_u32("last teleport");
-			int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
+		u32 lastdrop= this.get_u32("last drop");
+		int diff = gametime - (lastdrop + drop_FREQUENCY);
 		
 
-			if (diff > 0)
-			{
-				this.set_bool("teleport ready", true );
-			}
+		if (diff > 0)
+		{
+			this.set_bool("drop ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
 		}
+	}
 			
 		}
 	}
+	}
 	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_rangeA, @blobs) && this.hasTag("tep") && (this.getHealth()<15.0) && (this.getHealth()>0.5))
+	if(this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), drop_rangeA, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
-			if(ready) {
-				//
-				if(this.hasTag("tep")) {
-					Vec2f delta = this.getPosition() - blob.getPosition();
-					if(delta.Length() > TELEPORT_DISTANCEA )
-					{
-						this.set_u32("last teleport", gametime);
-						this.set_bool("teleport ready", false );
-						if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-						{
-							server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
-							//MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
-							if(blob.hasTag("player")) {
-								break; // we only want to hit 1 zombie at a time
-							}
-						}
-					} 	
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("drop")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > drop_DISTANCEA )
+				{
+				this.set_u32("last drop", gametime);
+				this.set_bool("drop ready", false );
+				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
+				{
+				server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
 
-			}
-		} 
+				}
+			} 	
+
+		}
+	} 
 	
 		else {		
-			u32 lastTeleport = this.get_u32("last teleport");
-			int diff = gametime - (lastTeleport + TELEPORT_FREQUENCYA);
+		u32 lastdrop= this.get_u32("last drop");
+		int diff = gametime - (lastdrop + drop_FREQUENCYA);
 		
 
-			if (diff > 0)
-			{
-				this.set_bool("teleport ready", true );
-			}
+		if (diff > 0)
+		{
+			this.set_bool("drop ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
 		}
+	}
 			
 		}
+	}
+	}
+	
+		if(this.hasTag("PhaseThree"))
+	{
+	if (this.getMap().getBlobsInRadius(this.getPosition(), drop_rangeA, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	{
+		for (int i = 0; i < blobs.length; i++)
+		{
+			CBlob@ blob = blobs[i];
+			
+			
+			
+			
+				if(ready) {
+				if(this.hasTag("drop")) {
+				Vec2f delta = this.getPosition() - blob.getPosition();
+				if(delta.Length() > drop_DISTANCEA )
+				{
+				this.set_u32("last drop", gametime);
+				this.set_bool("drop ready", false );
+				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
+				{
+				server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+
+				}
+			} 	
+
+		}
+	} 
+	
+		else {		
+		u32 lastdrop= this.get_u32("last drop");
+		int diff = gametime - (lastdrop + drop_FREQUENCYB);
+		
+
+		if (diff > 0)
+		{
+			this.set_bool("drop ready", true );
+			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
+		}
+	}
+			
+		}
+	}
 	}
 }
