@@ -1,4 +1,5 @@
 // Lantern script
+#define SERVER_ONLY;
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";

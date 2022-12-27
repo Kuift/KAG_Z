@@ -311,7 +311,7 @@ void onTick(CBlob@ this)
 		}
 	}
 	
-	if(getNet().isServer() && getGameTime() % 10 == 0)
+	if(isServer() && getGameTime() % 10 == 0)
 	{
 		if(this.get_u8(state_property) == MODE_TARGET )
 		{
