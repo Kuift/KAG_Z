@@ -6,7 +6,6 @@
 const u8 DEFAULT_PERSONALITY = AGGRO_BIT;
 const s16 MAD_TIME = 600;
 const string chomp_tag = "chomping";
-
 //sprite
 
 void onInit(CSprite@ this)
@@ -14,6 +13,12 @@ void onInit(CSprite@ this)
 	CBlob@ blob = this.getBlob();
 	
     this.ReloadSprites(blob.getTeamNum(),0);
+	getRules().set_u32("max_cocoon", getRules().get_u32("max_cocoon") + 1);
+}
+
+void onDie(CBlob@ this)
+{
+	getRules().set_u32("max_cocoon", getRules().get_u32("max_cocoon") - 1);
 }
 
 void onTick(CSprite@ this)
