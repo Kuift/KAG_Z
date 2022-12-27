@@ -4,18 +4,12 @@
 #include "Hitters.as";
 #include "FireCommon.as";
 
-<<<<<<< HEAD
-const int SLATE_SPAWNING_FREQUENCY_PHASE_1 = 120; //4 secs
-const int SLATE_SPAWNING_FREQUENCY_PHASE_2 = 60; //2 secs
-const f32 MAX_RANGE = 128.00f;
-=======
 const int SLATE_SPAWNING_FREQUENCY_PHASE_1 = 180; //6 secs
 const int SLATE_SPAWNING_FREQUENCY_PHASE_2 = 120; //4 secs
 const int SLATE_SPAWNING_FREQUENCY_PHASE_3 = 60; //4 secs
 const f32 MAX_RANGEA = 128.00f;
 const f32 MAX_RANGEB = 244.00f;
 const f32 MAX_RANGEC = 328.00f;
->>>>>>> 03fe2c3d227cf835d89bff91e7d099ff557a7c2d
 const f32 MIN_RANGE = 16.0f;
 void onInit(CBlob@ this)
 {
