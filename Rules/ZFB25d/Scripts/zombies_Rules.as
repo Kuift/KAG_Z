@@ -151,7 +151,7 @@ shared class ZombiesSpawns : RespawnSystem
 			
 			if(info.can_spawn_time > 0) {
 				info.can_spawn_time--;
-				spawn_property = u8(Maths::Min(250,info.can_spawn_time));
+				spawn_property = u8(Maths::Min(250,info.can_spawn_time/getTicksASecond()));
 			}
 			
 			string propname = "Zombies spawn time "+info.username;
@@ -333,7 +333,7 @@ shared class ZombiesSpawns : RespawnSystem
 			tickspawndelay = ((day_cycle - timeElapsed)*getTicksASecond()) / 10;
 			warn("DC: "+day_cycle+" TE:"+timeElapsed);
 			if (timeElapsed<30) tickspawndelay=0;
-			tickspawndelay = 15*getTicksASecond(); // SET THE RESPAWN TIME, (time in secs)
+			tickspawndelay = 20*getTicksASecond(); // SET THE RESPAWN TIME, (time in secs)
 		}
 		
 		
