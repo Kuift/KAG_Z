@@ -16,7 +16,6 @@ void onTick(CBlob@ this)
 
 		if (diff <= 0) {return;}
 
-		u16 targetID = 0xffff;
 		CMap@ map = this.getMap();
 		if (map is null) {return;}
 
@@ -40,11 +39,11 @@ void onTick(CBlob@ this)
 
 void shoot_ibrak(CBlob@ this, CBlob@ targetBlob)
 {
+	u16 targetID = 0xffff;
 	targetID = targetBlob.getNetworkID();
-
 	Vec2f pos = this.getPosition();
 	Vec2f aim = this.getAimPos();
-
+	int diff = getGameTime() - (lastFireTime + FIRE_FREQUENCY);
 	CBlob@ bolt = server_CreateBlob("ibrak", this.getTeamNum(), pos + Vec2f(0.0f, -0.5f * this.getRadius()));
 	if (bolt !is null)
 	{
