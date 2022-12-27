@@ -3,7 +3,7 @@
 #include "StandardControlsCommon.as"
 #include "Requirements_Tech.as" //for only one castle
 
-// original idea by SK
+
 void onInit(CBlob@ this){
     this.set_TileType("background tile", CMap::tile_castle_back);
     this.setPosition(Vec2f(this.getPosition().x, this.getPosition().y-16.0f)); //required to not dig into ground
@@ -102,7 +102,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
                 if(hasMats(caller,this)){
                     stealmats(caller, this); //take away the mats from person
                     this.set_u16("castle level", this.get_u16("castle level") + 1);
-                    getRules().set_u16("castle level", this.get_u16("castle level") + 1);
+                    getRules().set_u16("castle level", this.get_u16("castle level"));
                     this.set_u16("wood cost", this.get_u16("wood cost")+250);
                     this.set_u16("stone cost", this.get_u16("stone cost")+250);
                     this.set_u16("gold cost", this.get_u16("gold cost")+250);

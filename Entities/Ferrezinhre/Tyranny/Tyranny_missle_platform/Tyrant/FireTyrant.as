@@ -43,7 +43,7 @@ void shoot_ibrak(CBlob@ this, CBlob@ targetBlob)
 	targetID = targetBlob.getNetworkID();
 	Vec2f pos = this.getPosition();
 	Vec2f aim = this.getAimPos();
-	int diff = getGameTime() - (lastFireTime + FIRE_FREQUENCY);
+	int diff = getGameTime() - (this.get_u32("last bolt fire") + FIRE_FREQUENCY);
 	CBlob@ bolt = server_CreateBlob("ibrak", this.getTeamNum(), pos + Vec2f(0.0f, -0.5f * this.getRadius()));
 	if (bolt !is null)
 	{

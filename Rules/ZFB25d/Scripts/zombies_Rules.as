@@ -333,7 +333,7 @@ shared class ZombiesSpawns : RespawnSystem
 			tickspawndelay = ((day_cycle - timeElapsed)*getTicksASecond()) / 10;
 			warn("DC: "+day_cycle+" TE:"+timeElapsed);
 			if (timeElapsed<30) tickspawndelay=0;
-			tickspawndelay = 20 * getTicksASecond(); // SET THE RESPAWN TIME, (time in secs)
+			tickspawndelay = 15*getTicksASecond(); // SET THE RESPAWN TIME, (time in secs)
 		}
 		
 		
