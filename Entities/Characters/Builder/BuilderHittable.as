@@ -44,6 +44,8 @@ const string[] builder_alwayshit =
 	"bomber2",
 	"logfactory",
 	"ZombiePortal",
+	"tukraportal",
+	"bukavacportal",
 	"minefactory",
 	
 	"bombsfactory",
