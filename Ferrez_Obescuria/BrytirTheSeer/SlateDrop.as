@@ -3,108 +3,41 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 126.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCY = 120; //4 secs
-const int TELEPORT_DISTANCE = 20;//getMap().tilesize;
 
-
-const f32 max_rangeA = 252.00f; // giving her buff in range was :240:
-const int TELEPORT_FREQUENCYA = 60; //4 secs
-const int TELEPORT_DISTANCEA = 20;//getMap().tilesize;
+const int SLATE_SPAWNING_FREQUENCY_PHASE_1 = 120; //4 secs
+const int SLATE_SPAWNING_FREQUENCY_PHASE_2 = 60; //2 secs
+const f32 MAX_RANGE = 128.00f;
+const f32 MIN_RANGE = 16.0f;
 void onInit(CBlob@ this)
 {
 
-	this.set_u32("last teleport", 0 );
-	this.set_bool("teleport ready", true );
+	this.set_u32("last slate spawned", 0 );
 	this.getCurrentScript().tickFrequency = 5;
 	this.Tag("tep");
 }
 
 void onTick(CBlob@ this)
 {
+	u32 lastSlateSpawningTime = this.get_u32("last slate spawned");
+	f32 spawning_frequency = this.getHealth() > 15.0f ? SLATE_SPAWNING_FREQUENCY_PHASE_1 : SLATE_SPAWNING_FREQUENCY_PHASE_2;
+	int diff = getGameTime() - (lastSlateSpawningTime + spawning_frequency);
 
-  bool ready = this.get_bool("teleport ready");
-	const u32 gametime = getGameTime();
-	CBlob@[] blobs;
+	if (diff <= 0) {return;}
 
-	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tep") && (this.getHealth()>15.0))
-	{
-		for (int i = 0; i < blobs.length; i++)
-		{
-			CBlob@ blob = blobs[i];
-			if(ready) {
-				//
-				if(this.hasTag("tep")) {
-					Vec2f delta = this.getPosition() - blob.getPosition();
-					if(delta.Length() > TELEPORT_DISTANCE )
-					{
-						this.set_u32("last teleport", gametime);
-						this.set_bool("teleport ready", false );
-						if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-						{
-							server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
-							//MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
-							if(blob.hasTag("player")) {
-								break; // we only want to hit 1 zombie at a time
-							}
-						}
-					} 	
+	for(int i = 0; i < getPlayerCount(); ++i){
+		CPlayer@ player = getPlayer(i);
+		if(player is null){continue;}
 
-			}
-		} 
-	
-		else {		
-			u32 lastTeleport = this.get_u32("last teleport");
-			int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
-		
+		CBlob@ playerBlob = player.getBlob();
+		if (playerBlob is null) {continue;}
 
-			if (diff > 0)
-			{
-				this.set_bool("teleport ready", true );
-			}
-		}
-			
-		}
+		float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
+		if (distanceBetweenPlayerAndThis < MIN_RANGE || distanceBetweenPlayerAndThis > MAX_RANGE){continue;}
+
+		if(getMap().rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
+
+		server_CreateBlob("slate", -1, playerBlob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+		//put a break here if we want brytir to target 1 player instead of all player within range
 	}
-	
-	if (this.getMap().getBlobsInRadius(this.getPosition(), max_rangeA, @blobs) && this.hasTag("tep") && (this.getHealth()<15.0) && (this.getHealth()>0.5))
-	{
-		for (int i = 0; i < blobs.length; i++)
-		{
-			CBlob@ blob = blobs[i];
-			if(ready) {
-				//
-				if(this.hasTag("tep")) {
-					Vec2f delta = this.getPosition() - blob.getPosition();
-					if(delta.Length() > TELEPORT_DISTANCEA )
-					{
-						this.set_u32("last teleport", gametime);
-						this.set_bool("teleport ready", false );
-						if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-						{
-							server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
-							//MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
-							if(blob.hasTag("player")) {
-								break; // we only want to hit 1 zombie at a time
-							}
-						}
-					} 	
-
-			}
-		} 
-	
-		else {		
-			u32 lastTeleport = this.get_u32("last teleport");
-			int diff = gametime - (lastTeleport + TELEPORT_FREQUENCYA);
-		
-
-			if (diff > 0)
-			{
-				this.set_bool("teleport ready", true );
-			}
-		}
-			
-		}
-	}
+	this.set_u32("last slate spawned", getGameTime());
 }
