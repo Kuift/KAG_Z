@@ -1,162 +1,107 @@
 // Lantern script
+#define SERVER_ONLY;
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 drop_range = 126.00f; // giving her buff in range was :240:
-const int drop_FREQUENCY = 120; //4 secs
-const int drop_DISTANCE = 20;//getMap().tilesize;
 
-
-const f32 drop_rangeA = 252.00f; // giving her buff in range was :240:
-const int drop_FREQUENCYA = 80; //4 secs
-const int drop_FREQUENCYB = 40; //4 secs
-const int drop_DISTANCEA = 20;//getMap().tilesize;
+const int SLATE_SPAWNING_FREQUENCY_PHASE_1 = 180; //6 secs
+const int SLATE_SPAWNING_FREQUENCY_PHASE_2 = 120; //4 secs
+const int SLATE_SPAWNING_FREQUENCY_PHASE_3 = 60; //4 secs
+const f32 MAX_RANGEA = 128.00f;
+const f32 MAX_RANGEB = 244.00f;
+const f32 MAX_RANGEC = 328.00f;
+const f32 MIN_RANGE = 16.0f;
 void onInit(CBlob@ this)
 {
 
-	this.set_u32("last drop", 0 );
-	this.set_bool("drop ready", true );
+	this.set_u32("last slate spawned", 0 );
 	this.getCurrentScript().tickFrequency = 5;
-	this.Tag("drop");
+	this.Tag("tep");
 }
 
 void onTick(CBlob@ this)
 {
-
-  bool ready = this.get_bool("drop ready");
-	const u32 gametime = getGameTime();
-	CBlob@[] blobs;
-
-	
 	if(this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
 	{
-	if (this.getMap().getBlobsInRadius(this.getPosition(), drop_range, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	if ((this.getHealth()>0.5))
 	{
-		for (int i = 0; i < blobs.length; i++)
-		{
-			CBlob@ blob = blobs[i];
-			
-			
-			
-			
-				if(ready) {
-				if(this.hasTag("drop")) {
-				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > drop_DISTANCE )
-				{
-				this.set_u32("last drop", gametime);
-				this.set_bool("drop ready", false );
-				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-				{
-				server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+	u32 lastSlateSpawningTime = this.get_u32("last slate spawned");
+	f32 spawning_frequency = SLATE_SPAWNING_FREQUENCY_PHASE_1;
+	int diff = getGameTime() - (lastSlateSpawningTime + spawning_frequency);
 
-				}
-			} 	
+	if (diff <= 0) {return;}
 
-		}
-	} 
-	
-		else {		
-		u32 lastdrop= this.get_u32("last drop");
-		int diff = gametime - (lastdrop + drop_FREQUENCY);
-		
+	for(int i = 0; i < getPlayerCount(); ++i){
+		CPlayer@ player = getPlayer(i);
+		if(player is null){continue;}
 
-		if (diff > 0)
-		{
-			this.set_bool("drop ready", true );
-			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
-		}
+		CBlob@ playerBlob = player.getBlob();
+		if (playerBlob is null) {continue;}
+
+		float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
+		if (distanceBetweenPlayerAndThis < MIN_RANGE || distanceBetweenPlayerAndThis > MAX_RANGEA){continue;}
+
+		if(getMap().rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
+
+		server_CreateBlob("slate", -1, playerBlob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+		//put a break here if we want brytir to target 1 player instead of all player within range
 	}
-			
-		}
-	}
-	}
+	this.set_u32("last slate spawned", getGameTime());
+	}}
 	
 	if(this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
 	{
-	if (this.getMap().getBlobsInRadius(this.getPosition(), drop_rangeA, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	if ((this.getHealth()>0.5))
 	{
-		for (int i = 0; i < blobs.length; i++)
-		{
-			CBlob@ blob = blobs[i];
-			
-			
-			
-			
-				if(ready) {
-				if(this.hasTag("drop")) {
-				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > drop_DISTANCEA )
-				{
-				this.set_u32("last drop", gametime);
-				this.set_bool("drop ready", false );
-				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-				{
-				server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+	u32 lastSlateSpawningTime = this.get_u32("last slate spawned");
+	f32 spawning_frequency = SLATE_SPAWNING_FREQUENCY_PHASE_2;
+	int diff = getGameTime() - (lastSlateSpawningTime + spawning_frequency);
 
-				}
-			} 	
+	if (diff <= 0) {return;}
 
-		}
-	} 
+	for(int i = 0; i < getPlayerCount(); ++i){
+		CPlayer@ player = getPlayer(i);
+		if(player is null){continue;}
+
+		CBlob@ playerBlob = player.getBlob();
+		if (playerBlob is null) {continue;}
+
+		float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
+		if (distanceBetweenPlayerAndThis < MIN_RANGE || distanceBetweenPlayerAndThis > MAX_RANGEB){continue;}
+
+		if(getMap().rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
+
+		server_CreateBlob("slate", -1, playerBlob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+		//put a break here if we want brytir to target 1 player instead of all player within range
+	}
+	this.set_u32("last slate spawned", getGameTime());
+	}}
 	
-		else {		
-		u32 lastdrop= this.get_u32("last drop");
-		int diff = gametime - (lastdrop + drop_FREQUENCYA);
-		
-
-		if (diff > 0)
-		{
-			this.set_bool("drop ready", true );
-			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
-		}
-	}
-			
-		}
-	}
-	}
-	
-		if(this.hasTag("PhaseThree"))
+	if(this.hasTag("PhaseThree"))
 	{
-	if (this.getMap().getBlobsInRadius(this.getPosition(), drop_rangeA, @blobs)) // not adding && (this.getHealth()>0.5) yet she needs some defense while downed
+	if ((this.getHealth()>0.5))
 	{
-		for (int i = 0; i < blobs.length; i++)
-		{
-			CBlob@ blob = blobs[i];
-			
-			
-			
-			
-				if(ready) {
-				if(this.hasTag("drop")) {
-				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > drop_DISTANCEA )
-				{
-				this.set_u32("last drop", gametime);
-				this.set_bool("drop ready", false );
-				if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
-				{
-				server_CreateBlob("slate", -1, blob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+	u32 lastSlateSpawningTime = this.get_u32("last slate spawned");
+	f32 spawning_frequency = SLATE_SPAWNING_FREQUENCY_PHASE_3;
+	int diff = getGameTime() - (lastSlateSpawningTime + spawning_frequency);
 
-				}
-			} 	
+	if (diff <= 0) {return;}
 
-		}
-	} 
-	
-		else {		
-		u32 lastdrop= this.get_u32("last drop");
-		int diff = gametime - (lastdrop + drop_FREQUENCYB);
-		
+	for(int i = 0; i < getPlayerCount(); ++i){
+		CPlayer@ player = getPlayer(i);
+		if(player is null){continue;}
 
-		if (diff > 0)
-		{
-			this.set_bool("drop ready", true );
-			//this.getSprite().PlaySound("/sand_fall.ogg");  // annoying sound need replace
-		}
+		CBlob@ playerBlob = player.getBlob();
+		if (playerBlob is null) {continue;}
+
+		float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
+		if (distanceBetweenPlayerAndThis < MIN_RANGE || distanceBetweenPlayerAndThis > MAX_RANGEC){continue;}
+
+		if(getMap().rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
+
+		server_CreateBlob("slate", -1, playerBlob.getPosition() + Vec2f(0 , -40.0f - XORRandom(80)));
+		//put a break here if we want brytir to target 1 player instead of all player within range
 	}
-			
-		}
-	}
-	}
+	this.set_u32("last slate spawned", getGameTime());
+	}}
 }
