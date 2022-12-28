@@ -337,7 +337,6 @@ shared class ZombiesSpawns : RespawnSystem
 		}
 		
 		
-		//; //
         
         CTFPlayerInfo@ info = cast<CTFPlayerInfo@>(core.getInfoFromPlayer(player));
 

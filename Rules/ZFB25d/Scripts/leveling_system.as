@@ -7,6 +7,7 @@ void onInit(CRules@ this)
     this.set_u16("polearm level", 0);
 	this.addCommandID("castle_level_sync");
     this.addCommandID("trigger_castle_level_sync");
+    this.addCommandID("increase_level");
 }
 
 void onRestart(CRules@ this)
@@ -26,7 +27,6 @@ void onTick( CRules@ this )
     {
         justJoined = false;
         CBitStream params;
-        params.write_s8(0);
         this.SendCommand(
             this.getCommandID("trigger_castle_level_sync"), 
             params);
@@ -34,6 +34,19 @@ void onTick( CRules@ this )
 }
 
 void onCommand(CRules@ this, u8 cmd, CBitStream @params){
+    if (cmd == this.getCommandID("increase_level"))
+    {
+        if(isServer())
+        {
+            string levelType = params.read_string();
+            getRules().set_u16(levelType, getRules().get_u16(levelType) + 1);
+
+            CBitStream params;
+            this.SendCommand(
+                this.getCommandID("trigger_castle_level_sync"), 
+                params);
+        }
+    }
     if (cmd == this.getCommandID("trigger_castle_level_sync"))
     {
         if(isServer())

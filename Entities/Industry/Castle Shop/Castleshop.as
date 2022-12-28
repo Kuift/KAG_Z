@@ -17,6 +17,7 @@ void onInit(CBlob@ this){
 
     this.addCommandID("Upgrade Level");
     this.addCommandID("addGoldToInv");
+    this.addCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters");
     this.set_u16("gold", 0); //how much gold has been fed?
     this.getSprite().SetZ(-50.0f);
     this.set_u16("day", getRules().get_u16("dayNumber")); //DAY EQUATION IN ZOMBIE_RULES.AS
@@ -80,19 +81,69 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
             CBitStream params;
             params.write_u16(caller.getNetworkID());
             int castlelvl = this.get_u16("castle level")+1;
-            caller.CreateGenericButton("$upgrade$", Vec2f(6, 0), this, this.getCommandID("Upgrade Level"), getTranslatedString("Upgrade to level " + castlelvl + "!"+extratext(this)), params);
+            caller.CreateGenericButton("$upgrade$", Vec2f(6, 0), this, this.getCommandID("Upgrade Level"), getTranslatedString("Upgrade castle to level " + castlelvl + "!"+extratext(this)), params);
         }
+
+        CBitStream params;
+        params.write_u16(caller.getNetworkID());
+        string levelType = "builder level";
+        params.write_string(levelType);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-8, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade builder to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params);
+        
+        CBitStream params2;
+        params.write_u16(caller.getNetworkID());
+        levelType = "archer level";
+        params.write_string(levelType);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-12, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade archer to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params2);
+        
+        CBitStream params3;
+        params.write_u16(caller.getNetworkID());
+        levelType = "knight level";
+        params.write_string(levelType);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-8, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade knight to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params3);
+        
+        CBitStream params4;
+        params.write_u16(caller.getNetworkID());
+        levelType = "polearm level";
+        params.write_string(levelType);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-12, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade polearm to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params4);
     }
+}
+
+void increaseLevel(string levelType, CBlob@ caller)
+{
+    u16 currentLevel = getRules().get_u16(levelType);
+    //mats progression for upgrades could be altered here, currently all classes cost increase by 50 stone and 25 wood per level
+    if (yoinkMats(caller, 250, currentLevel*50, currentLevel*25))
+    {
+        CBitStream params;
+        params.write_string(levelType);
+        getRules().SendCommand(
+            getRules().getCommandID("increase_level"), 
+            params);
+    }
+
 }
 
 string extratext(CBlob@ this){
     return "\nWood Cost: " + this.get_u16("wood cost") + "\nStone Cost: " + this.get_u16("stone cost") + "\nGold Cost: " + this.get_u16("gold cost");
 }
+string classUpgradeCostText(CBlob@ this, string levelType)
+{
+    return "\nWood Cost: " + getRules().get_u16(levelType) * 25 + "\nStone Cost: " + getRules().get_u16(levelType) * 50 + "\nGold Cost: " + 250;
+}
 
 
 void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
-	if (getNet().isServer())
+	if (isServer())
 	{
+        if(cmd == this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters")){
+            CBlob@ caller = getBlobByNetworkID(params.read_u16());
+            string levelType = params.read_string();
+            if(caller is null) {return;}
+            increaseLevel(levelType, caller);
+            return;
+        }
         onRespawnCommand(this, cmd, params);
 		if (cmd == this.getCommandID("Upgrade Level"))
 		{
@@ -157,6 +208,28 @@ void stealmats(CBlob@ caller, CBlob@ castle){
         inv.server_RemoveItems("mat_stone", castle.get_u16("stone cost"));
         inv.server_RemoveItems("mat_wood", castle.get_u16("wood cost"));
     }
+}
+bool hasMatsRequirements(CBlob@ blobToCheck, int gold, int stone, int wood)
+{
+    CInventory@ inv = blobToCheck.getInventory();
+    if(inv is null){ return false;}
+
+    if(inv.getCount("mat_gold") < gold){ return false;}
+    if(inv.getCount("mat_stone") < stone){ return false;}
+    if(inv.getCount("mat_wood") < wood){ return false;}
+    return true;
+}
+
+bool yoinkMats(CBlob@ blobToCheck, int gold, int stone, int wood){ //return false if no yoinking happened
+    CInventory@ inv = blobToCheck.getInventory();
+    if(inv is null){ return false;}
+
+    if (!hasMatsRequirements(blobToCheck,gold,stone,wood)){return false;}
+
+    inv.server_RemoveItems("mat_gold", gold);
+    inv.server_RemoveItems("mat_stone", stone);
+    inv.server_RemoveItems("mat_wood", wood);
+    return true;
 }
 
 bool hasMats(CBlob@ caller, CBlob@ castle){
