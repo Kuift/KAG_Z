@@ -33,23 +33,20 @@ void onInit(CBlob@ this){
     AddIconToken("$upgrade$", "/GUI/InteractionIcons.png", Vec2f(32, 32), 15, 2); //builder hammer icon
     AddIconToken("$tunnel_travel$", "/GUI/InteractionIcons.png", Vec2f(32, 32), 9, 2); //tunnel travel icon
     AddIconToken("$change_class$", "/GUI/InteractionIcons.png", Vec2f(32, 32), 12, 2); //change class icon
-}
 
+
+
+}
+u32 oldtime = getGameTime()/getTicksASecond(); 
 void onTick(CBlob@ this){
-    if(getGameTime() % 30 == 0){ //prevent lag
-        if(getRules().get_u16("dayNumber") != this.get_u16("day")){
-            this.set_u16("day", getRules().get_u16("dayNumber"));
-            if(this !is null){
-                int coinamount = getGoldinInv(this);
-                if(coinamount == 0){return;}
-                for(int i = 0; i < getPlayerCount(); ++i){
-                    CPlayer@ p = getPlayer(i);
-                    if(p !is null){
-                        p.server_setCoins(p.getCoins()+coinamount); //give coins
-                    }
-                }
-            }
-        }
+    if(getGameTime()/getTicksASecond()-oldtime > (60 - (this.get_u16("castle level") * 5)) ) // every 60 seconds, we gib coins, upgrading castle upgrade rate
+    {
+        oldtime = getGameTime()/getTicksASecond();
+        int coinamount = getGoldinInv(this);
+        if(coinamount == 0){return;}
+        CPlayer@ localPlayer = getLocalPlayer();
+        if(localPlayer is null){ return;}
+        localPlayer.server_setCoins(localPlayer.getCoins()+coinamount); //give coins
     }
 }
 
@@ -88,25 +85,25 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
         params.write_u16(caller.getNetworkID());
         string levelType = "builder level";
         params.write_string(levelType);
-        caller.CreateGenericButton("$upgrade$", Vec2f(-8, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade builder to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-10, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade builder to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params);
         
         CBitStream params2;
         params.write_u16(caller.getNetworkID());
         levelType = "archer level";
         params.write_string(levelType);
-        caller.CreateGenericButton("$upgrade$", Vec2f(-12, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade archer to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params2);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-14, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade archer to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params2);
         
         CBitStream params3;
         params.write_u16(caller.getNetworkID());
         levelType = "knight level";
         params.write_string(levelType);
-        caller.CreateGenericButton("$upgrade$", Vec2f(-8, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade knight to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params3);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-10, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade knight to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params3);
         
         CBitStream params4;
         params.write_u16(caller.getNetworkID());
         levelType = "polearm level";
         params.write_string(levelType);
-        caller.CreateGenericButton("$upgrade$", Vec2f(-12, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade polearm to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params4);
+        caller.CreateGenericButton("$upgrade$", Vec2f(-14, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade polearm to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params4);
     }
 }
 
@@ -128,6 +125,7 @@ void increaseLevel(string levelType, CBlob@ caller)
 string extratext(CBlob@ this){
     return "\nWood Cost: " + this.get_u16("wood cost") + "\nStone Cost: " + this.get_u16("stone cost") + "\nGold Cost: " + this.get_u16("gold cost");
 }
+
 string classUpgradeCostText(CBlob@ this, string levelType)
 {
     return "\nWood Cost: " + getRules().get_u16(levelType) * 25 + "\nStone Cost: " + getRules().get_u16(levelType) * 50 + "\nGold Cost: " + 250;
@@ -251,13 +249,13 @@ bool hasMats(CBlob@ caller, CBlob@ castle){
 int getGoldinInv(CBlob@ this){ //get amount of coins it should produce
     if(this !is null){
         int coins = 50; // tier 1 coin amount
-        if(this.get_u16("castle level") == 2){
-            coins = 80;
+        if(this.get_u16("castle level") >= 2){
+            coins += 20;
         }
-        else if(this.get_u16("castle level") == 3){
-            coins = 90;
+        else if(this.get_u16("castle level") >= 3){
+            coins += 40;
         } //dont give more than 90 coins for levels above this
-        return int((this.get_u16("gold")/250)*0.5 * coins); //each stack is 250, thats why we divide by 250 here
+        return int((this.get_u16("gold")/250)*0.5 * coins * this.get_u16("castle level") * 5); //each stack is 250, thats why we divide by 250 here
     }
     return 0;
 }
