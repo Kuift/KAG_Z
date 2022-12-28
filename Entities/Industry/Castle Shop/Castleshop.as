@@ -63,14 +63,14 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
             if(this.get_u16("gold") < 2000){
                 CBitStream params;
                 params.write_u16(caller.getNetworkID());
-                caller.CreateGenericButton("$mat_gold$", Vec2f(-10.5f, 8), this, this.getCommandID("addGoldToInv"), getTranslatedString("Upgrade coin gain!"), params);
+                caller.CreateGenericButton("$mat_gold$", Vec2f(-10.5f, 8), this, this.getCommandID("addGoldToInv"), getTranslatedString("Upgrade coin gain for 250 gold"), params);
             }
         }
         else{
             if(this.get_u16("gold") < 3000){
                 CBitStream params;
                 params.write_u16(caller.getNetworkID());
-                caller.CreateGenericButton("$mat_gold$", Vec2f(-10.5f, 8), this, this.getCommandID("addGoldToInv"), getTranslatedString("Upgrade coin gain!"), params);
+                caller.CreateGenericButton("$mat_gold$", Vec2f(-10.5f, 8), this, this.getCommandID("addGoldToInv"), getTranslatedString("Upgrade coin gain for 250 gold"), params);
             }
         }
 
@@ -88,21 +88,21 @@ void GetButtonsFor(CBlob@ this, CBlob@ caller){
         caller.CreateGenericButton("$upgrade$", Vec2f(-10, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade builder to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params);
         
         CBitStream params2;
-        params.write_u16(caller.getNetworkID());
+        params2.write_u16(caller.getNetworkID());
         levelType = "archer level";
-        params.write_string(levelType);
+        params2.write_string(levelType);
         caller.CreateGenericButton("$upgrade$", Vec2f(-14, 0), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade archer to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params2);
         
         CBitStream params3;
-        params.write_u16(caller.getNetworkID());
+        params3.write_u16(caller.getNetworkID());
         levelType = "knight level";
-        params.write_string(levelType);
+        params3.write_string(levelType);
         caller.CreateGenericButton("$upgrade$", Vec2f(-10, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade knight to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params3);
         
         CBitStream params4;
-        params.write_u16(caller.getNetworkID());
+        params4.write_u16(caller.getNetworkID());
         levelType = "polearm level";
-        params.write_string(levelType);
+        params4.write_string(levelType);
         caller.CreateGenericButton("$upgrade$", Vec2f(-14, -4), this, this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters"), "Upgrade polearm to level " + (getRules().get_u16(levelType)+1) + classUpgradeCostText(this, levelType), params4);
     }
 }
@@ -137,8 +137,10 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params){
 	{
         if(cmd == this.getCommandID("necessarycommandbecausekagiscringeandcantdocallbackwithparameters")){
             CBlob@ caller = getBlobByNetworkID(params.read_u16());
-            string levelType = params.read_string();
-            if(caller is null) {return;}
+            string levelType;
+            if(!params.saferead_string(levelType)) return;
+            print("LEVELTYPE : " + levelType);
+            if(caller is null) {print("CALLER IS NULL"); return;}
             increaseLevel(levelType, caller);
             return;
         }
