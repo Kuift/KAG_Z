@@ -51,7 +51,7 @@ void onTick(CBlob@ this){
             {
                 CPlayer@ player = getPlayer(i);
                 if(player is null){ continue;}
-                localPlayer.server_setCoins(localPlayer.getCoins()+coinamount); //give coins
+                player.server_setCoins(player.getCoins()+coinamount); //give coins
             }
         }
     }
