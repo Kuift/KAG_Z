@@ -39,14 +39,21 @@ void onInit(CBlob@ this){
 }
 u32 oldtime = getGameTime()/getTicksASecond(); 
 void onTick(CBlob@ this){
-    if(getGameTime()/getTicksASecond()-oldtime > (60 - (this.get_u16("castle level") * 5)) ) // every 60 seconds, we gib coins, upgrading castle upgrade rate
+    if(isServer())
     {
-        oldtime = getGameTime()/getTicksASecond();
-        int coinamount = getGoldinInv(this);
-        if(coinamount == 0){return;}
-        CPlayer@ localPlayer = getLocalPlayer();
-        if(localPlayer is null){ return;}
-        localPlayer.server_setCoins(localPlayer.getCoins()+coinamount); //give coins
+        if(getGameTime()/getTicksASecond()-oldtime > (60 - (this.get_u16("castle level") * 5)) ) // every 60 seconds, we gib coins, upgrading castle upgrade rate
+        {
+            oldtime = getGameTime()/getTicksASecond();
+            int coinamount = getGoldinInv(this);
+            if(coinamount == 0){return;}
+            int count = getPlayerCount();
+            for (uint i = 0; i < count; i++)
+            {
+                CPlayer@ player = getPlayer(i);
+                if(player is null){ continue;}
+                localPlayer.server_setCoins(localPlayer.getCoins()+coinamount); //give coins
+            }
+        }
     }
 }
 
