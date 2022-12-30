@@ -25,7 +25,7 @@ void onTick(CBlob@ this)
 
 		for (int i = 0; i < targets.length; i++)
 		{
-			CBlob@ targetBlob = targets[i];
+			CBlob@ targetBlob = targets[XORRandom(targets.length-1)];
 			if ((targetBlob !is null && targetBlob.getTeamNum() != this.getTeamNum() && (targetBlob.hasTag("flesh") || targetBlob.hasTag("ZombiePortalz"))) && this.getTickSinceCreated() > 5 )
 			{
 				lastFireTime = getGameTime();
