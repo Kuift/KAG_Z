@@ -20,6 +20,7 @@ void onInit(CBlob@ this)
 	consts.net_threshold_multiplier = 4.0f;
 	this.Tag("projectile");
 	this.server_SetTimeToDie(5.0f);
+	this.set_bool("justHit", false);
 }
 
 void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point1)
@@ -32,7 +33,11 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		}
 		
 		this.set_u8("custom_hitter", Hitters::arrow);
-		this.server_Hit(blob, point1, normal, (4.0f + XORRandom(4)), Hitters::arrow); // You're my another favorite little meat grinder!
+		if(this.get_bool("justHit") == false)
+		{
+			this.server_Hit(blob, point1, normal, (4.0f + XORRandom(4)), Hitters::arrow); // You're my another favorite little meat grinder!
+			this.set_bool("justHit", true);
+		}
 	}
 }
 
