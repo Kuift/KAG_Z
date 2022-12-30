@@ -156,7 +156,7 @@ void onTick( CBlob@ this)
 			if (playerBlob is null) {continue;}
 
 			float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
-			print("distance : " + distanceBetweenPlayerAndThis);
+
 			if (distanceBetweenPlayerAndThis > 128){continue;}
 
 			if(getMap().rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
