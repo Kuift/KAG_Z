@@ -257,14 +257,14 @@ bool hasMats(CBlob@ caller, CBlob@ castle){
 
 int getGoldinInv(CBlob@ this){ //get amount of coins it should produce
     if(this !is null){
-        int coins = 50; // tier 1 coin amount
+        int coins = 5; // tier 1 coin amount
         if(this.get_u16("castle level") >= 2){
-            coins += 20;
+            coins += 5;
         }
         else if(this.get_u16("castle level") >= 3){
-            coins += 40;
+            coins += 5;
         } //dont give more than 90 coins for levels above this
-        return int((this.get_u16("gold")/250)*0.5 * coins * this.get_u16("castle level") * 5); //each stack is 250, thats why we divide by 250 here
+        return int((this.get_u16("gold")/250)*0.0625 * coins * this.get_u16("castle level") * 5); //each stack is 250, thats why we divide by 250 here
     }
     return 0;
 }
