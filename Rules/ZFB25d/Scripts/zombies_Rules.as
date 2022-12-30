@@ -612,7 +612,7 @@ shared class ZombiesCore : RulesCore
 								CBlob@ temp = server_CreateBlob("kaarn",-1,sp);
 							}
 						}
-						if (dayNumber > 10){
+						if (dayNumber > 19){
 							CBlob@ temp = server_CreateBlob("brytir",-1,sp);
 							for(int i = 0; i < 2; ++i) {
 								CBlob@ temp2 = server_CreateBlob("kaarn",-1,sp);
@@ -646,7 +646,6 @@ shared class ZombiesCore : RulesCore
 						if(dayNumber >= 20 && dayNumber < 24 )
 						{
 							CBlob@ temp = server_CreateBlob( "abomination", -1, sp);
-							CBlob@ temp2 = server_CreateBlob( "bukavac", -1, sp);
 						}
 						if(dayNumber >= 24 && dayNumber < 30 )
 						{
