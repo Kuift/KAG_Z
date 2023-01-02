@@ -2,8 +2,8 @@
 //script for a bison
 
 #include "AnimalConsts.as";
-
-const u8 DEFAULT_PERSONALITY = AGGRO_BIT;
+#include "MakeScroll.as";
+const u8 DEFAULT_PERSONALITY = MODE_TARGET;
 const s16 MAD_TIME = 600;
 const string chomp_tag = "chomping";
 
@@ -12,8 +12,7 @@ const string chomp_tag = "chomping";
 void onInit(CSprite@ this)
 {
 	CBlob@ blob = this.getBlob();
-	
-    this.ReloadSprites(blob.getTeamNum(),0);
+    this.ReloadSprites(blob.getTeamNum(),0); 
 }
 
 void onTick(CSprite@ this)
@@ -30,18 +29,10 @@ void onTick(CSprite@ this)
 			this.SetAnimation("revive");
 		}
 		else
-		if( blob.get_s32("climb") > 1 ) 
-		{
-			if (!this.isAnimation("climb")) {
-				this.SetAnimation("climb");
-			}
-		}
-		else
 		if( blob.hasTag(chomp_tag) && !this.isAnimation("bite"))
 		{
 			if (!this.isAnimation("bite")) {
-			this.PlaySound( "/SkeletonAttack" );
-			
+			this.PlaySound( "/ZombieBite" );
 			this.SetAnimation("bite");
 			return;
 			}
@@ -55,9 +46,9 @@ void onTick(CSprite@ this)
 		}
 		else
 		{
-			if (XORRandom(200)==0)
+			if (XORRandom(100)==0)
 			{
-				this.PlaySound( "/SkeletonSayDuh" );
+				this.PlaySound( "/ZombieGroan" );
 			}
 			if (!this.isAnimation("idle")) {
 			this.SetAnimation("idle");
@@ -69,9 +60,11 @@ void onTick(CSprite@ this)
 		if (!this.isAnimation("dead"))
 		{
 			this.SetAnimation("dead");
-			this.PlaySound( "/SkeletonBreak1" );
+			this.PlaySound( "/ZombieDie" );
+			blob.getShape().setFriction( 0.75f );
+			blob.getShape().setElasticity( 0.2f );					
 		}
-		this.getCurrentScript().runFlags |= Script::remove_after_this;
+//		this.getCurrentScript().runFlags |= Script::remove_after_this;
 	}
 }
 
@@ -102,16 +95,19 @@ void onGib(CSprite@ this)
     CBlob@ blob = this.getBlob();
     Vec2f pos = blob.getPosition();
     Vec2f vel = blob.getVelocity();
-	vel.y -= 3.0f;
+	vel.y -= 1.0f;
     f32 hp = Maths::Min(Maths::Abs(blob.getHealth()), 2.0f) + 1.0;
 	const u8 team = blob.getTeamNum();
-    CParticle@ Body     = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp , 80 ),       0, 0, Vec2f (8,8), 2.0f, 20, "/BodyGibFall", team );
-    CParticle@ Arm1     = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp - 0.2 , 80 ), 0, 1, Vec2f (8,8), 2.0f, 20, "/BodyGibFall", team );
-    CParticle@ Arm2     = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp - 0.2 , 80 ), 0, 2, Vec2f (8,8), 2.0f, 20, "/BodyGibFall", team );
-    CParticle@ Shield   = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp , 80 ),       0, 3, Vec2f (8,8), 2.0f, 0, "/BodyGibFall", team );
-    CParticle@ Sword    = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp + 1 , 80 ),   0, 4, Vec2f (8,8), 2.0f, 0, "/BodyGibFall", team );
-	
+	/*
+    CParticle@ Body     = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp , 80 ),       1, 0, Vec2f (8,8), 2.0f, 20, "/BodyGibFall", team );
+    CParticle@ Arm1     = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp - 0.2 , 80 ), 1, 1, Vec2f (8,8), 2.0f, 20, "/BodyGibFall", team );
+    CParticle@ Arm2     = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp - 0.2 , 80 ), 1, 2, Vec2f (8,8), 2.0f, 20, "/BodyGibFall", team );
+    CParticle@ Shield   = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp , 80 ),       1, 3, Vec2f (8,8), 2.0f, 0, "/BodyGibFall", team );
+    CParticle@ Sword    = makeGibParticle( "ZombieGibs.png", pos, vel + getRandomVelocity( 90, hp + 1 , 80 ),   1, 4, Vec2f (8,8), 2.0f, 0, "/BodyGibFall", team );
+	*/
 }
+
+
 
 //blob
 void onInit(CBrain@ this)
@@ -120,19 +116,24 @@ void onInit(CBrain@ this)
 }
 void onInit(CBlob@ this)
 {
-	
 	//for EatOthers
-	string[] tags = {"player"};
+	string[] tags = {"player","lantern"};
 	this.set("tags to eat", tags);
-	
-	this.set_f32("bite damage", 0.5f);
-	this.set_u16("bite freq", 4);
+	this.set_f32("gib health", -12.0f);	
+	float difficulty = getRules().get_f32("difficulty")/4.0;
+	if (difficulty<1.0) difficulty=1.0;
+	this.set_f32("bite damage", 4.0f);
+	int bitefreq = 45-difficulty*1.0;
+	if (bitefreq<5) bitefreq=2;
+	this.set_u16("bite freq", bitefreq);
+	this.Tag("not_tamable");
+
 	//brain
 	this.set_u8(personality_property, DEFAULT_PERSONALITY);
-	this.set_u8("random move freq",3);
+	//this.set_u8("random move freq",1);
 	this.set_f32(target_searchrad_property, 3600.0f);
 	this.set_f32(terr_rad_property, 185.0f);
-	this.set_u8(target_lose_random,34);
+	this.set_u8(target_lose_random, 32);
 	
 	this.getBrain().server_SetActive( true );
 	
@@ -142,56 +143,65 @@ void onInit(CBlob@ this)
 	//for shape
 	this.getShape().SetRotationsAllowed(false);
 	
-	//for flesh hit
-	this.set_f32("gib health", -0.0f);
 	
 	this.Tag("flesh");
 	this.Tag("zombie");
-	this.Tag("virginplayernightmare");
 	this.set_s16("mad timer", 0);
 
-//	this.getShape().SetOffset(Vec2f(0,8));
+	this.getShape().SetOffset(Vec2f(0,0));
 	
 //	this.getCurrentScript().runFlags = Script::tick_blob_in_proximity;
 //	this.getCurrentScript().runProximityTag = "player";
 //	this.getCurrentScript().runProximityRadius = 320.0f;
 	this.getCurrentScript().runFlags = Script::tick_not_attached;
+	this.Tag("PhaseOne");
+	this.Tag("EndlessFlame");
 }
 
-bool canBePickedUp( CBlob@ this, CBlob@ byBlob )
-{
-    return this.getTeamNum() == byBlob.getTeamNum(); //maybe make a knocked out state? for loading to cata?
-}
 
 void onTick(CBlob@ this)
 {
-	f32 x = this.getVelocity().x;
-
-	if (getGameTime() % 5 == 0 && (XORRandom(20)==0))
-	{	
-		string name = this.getName();
-		CBlob@[] blobs;
-		this.getMap().getBlobsInRadius( this.getPosition(), 16.0, @blobs );
-		for (uint step = 0; step < blobs.length; ++step)
-		{
-			//TODO: sort on proximity? done by engine?
-			CBlob@ other = blobs[step];
-			if (other is this) continue; //lets not run away from / try to eat ourselves...
-			if (other.hasTag("flesh")) continue;
-			if (other.getName() == "lantern" || other.getName() == "wooden_door")
-			{
-				Vec2f vel(0,0);
-				this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
-				break;				
-			}
-		}	
+		f32 x = this.getVelocity().x;
+	// ferre you idiot
+	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseTwo");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
 	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseThree");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 360 && this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+
+	}
+	if (this.getHealth()<=0.0) return;
+
+	
+	
+	
+	float difficulty = getRules().get_f32("difficulty");
+	int break_chance = 30 - 2*(difficulty-1.0);	
+	if (break_chance<2) break_chance=2;
 
 	if (getNet().isServer() && this.hasTag(chomp_tag))
 	{
 		u16 lastbite = this.get_u16("lastbite");
 		u16 bitefreq = this.get_u16("bite freq");
-		if (bitefreq<0) bitefreq=20;
+		if (bitefreq<0) bitefreq=1;
 		if (lastbite > bitefreq)
 		{
 			float aimangle=0;
@@ -202,39 +212,52 @@ void onTick(CBlob@ this)
 				if(b !is null)
 				{
 					vel = b.getPosition()-this.getPosition();
+					
 				}
 				else vel = Vec2f(1,0);
 				{
 					vel.Normalize();
 					HitInfo@[] hitInfos;
 					CMap @map = getMap();
-					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(2,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 2.0f, this, @hitInfos ))
+					if (map.getHitInfosFromArc( this.getPosition()- Vec2f(0,0).RotateBy(-vel.Angle()), -vel.Angle(), 90, this.getRadius() + 6.0f, this, @hitInfos ))
 					{
 						//HitInfo objects are sorted, first come closest hits
+						bool hit_block = false;
 						for (uint i = 0; i < hitInfos.length; i++)
 						{
 							HitInfo@ hi = hitInfos[i];
 							CBlob@ other = hi.blob;	  
 							if (other !is null)
 							{
-								if (other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum())
+								if ((other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum()) || other.getName() == "bison" || other.getName() == "shark")
 								{
 									f32 power = this.get_f32("bite damage");
-									this.server_Hit(other,other.getPosition(),vel,power,Hitters::bite, true);
+									this.server_Hit(other,other.getPosition(),vel,7.5,Hitters::bite, false);
 									this.set_u16("lastbite",0);
+									break;
 								}
-								else
+								else if (!hit_block)
 								{
 									const bool large = other.hasTag("blocks sword") && other.isCollidable();
-									if (other.hasTag("large") || large || other.getTeamNum() == this.getTeamNum())
+									if (other.getName() == "wooden_platform" || other.getName() == "GoldBrick" || other.getName() == "triangle" || other.getName() == "glider" || other.getName() == "bomber2" || other.getName() == "fighter" || other.getName() == "miniballoon")
 									{
-										break;
+										this.server_Hit(other,other.getPosition(),vel,7.5,Hitters::saw, false);
+										this.set_u16("lastbite",0);
+										hit_block=true;
 									}
+									if (other.getTeamNum() != this.getTeamNum())
+									{
+										this.server_Hit(other,other.getPosition(),vel,7.5,Hitters::saw, false);
+										this.set_u16("lastbite",0);
+										hit_block=true;
+									}
+									
+									
 								}
 							}
 							else
 							{
-								break;
+								//break;
 							}
 						}
 					}
@@ -246,7 +269,6 @@ void onTick(CBlob@ this)
 			this.set_u16("lastbite",this.get_u16("lastbite")+1);
 		}
 	}	
-	
 	if (Maths::Abs(x) > 1.0f)
 	{
 		this.SetFacingLeft( x < 0 );
@@ -284,19 +306,15 @@ void onTick(CBlob@ this)
 
 	if (this.isOnGround() && (this.isKeyPressed(key_left) || this.isKeyPressed(key_right)) )
 	{
-		if (XORRandom(20)==0)
+		if (XORRandom(break_chance)==0)
 		{
-			Vec2f tp = this.getPosition() + (Vec2f( XORRandom(16)-8, XORRandom(16)-8 )/8.0)*(this.getRadius() + 4.0f);
+			this.Tag(chomp_tag);
+			Vec2f dir = Vec2f( XORRandom(16)-8, XORRandom(16)-8 )/8.0;
+			dir.Normalize();
+			Vec2f tp = this.getPosition() + (dir)*(this.getRadius() + 4.0f);
 			TileType tile = this.getMap().getTile( tp ).type;
-			if ( this.getMap().isTileWood( tile ) ) {		
-			this.getMap().server_DestroyTile(tp, 0.1);
-			}
-		}	
-		if (this.isKeyPressed(key_right))
-		{
-			TileType tile = this.getMap().getTile( this.getPosition() + Vec2f( this.getRadius() + 4.0f, 0.0f )).type;
-			if (this.getMap().isTileCastle( tile )) {		
-			//this.getMap().server_DestroyTile(this.getPosition() + Vec2f( this.getRadius() + 4.0f, 0.0f ), 0.1);
+			if ( !this.getMap().isTileGroundStuff( tile ) ) {		
+			this.getMap().server_DestroyTile(tp, 1.5);
 			}
 		}
 		if ((this.getNetworkID() + getGameTime()) % 9 == 0)
@@ -313,7 +331,7 @@ void onTick(CBlob@ this)
 		}
 	}
 	
-	if(getNet().isServer() && getGameTime() % 10 == 0)
+	if(isServer() && getGameTime() % 10 == 0)
 	{
 		if(this.get_u8(state_property) == MODE_TARGET )
 		{
@@ -360,26 +378,81 @@ void MadAt( CBlob@ this, CBlob@ hitterBlob )
 	}
 }
 
+f32 getGibHealth( CBlob@ this )
+{
+    if (this.exists("gib health")) {
+        return this.get_f32("gib health");
+    }
+
+    return 0.0f;
+}
+
 f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData )
-{		
-	if (damage>this.getHealth() && this.getHealth()>0)
+{	
+
+
+	if (customData == Hitters::notnormalfire) //need do other custom hitter later, or custom hitters as due this error
 	{
+		damage*= 0.0;
+	}
+
+	
+	
+	MadAt( this, hitterBlob );
+
+	if (this.getHealth()>0 && this.getHealth() <= damage)
+	{
+		if (getNet().isServer())
+		this.set_u16("death ticks",this.getTickSinceCreated());
+		this.Sync("death ticks",true);
+	}
+	if (customData == Hitters::arrow) damage*=2.0;
+    this.Damage( damage, hitterBlob );
+    // Gib if health below gibHealth
+    f32 gibHealth = getGibHealth( this );
+	
+	//printf("ON HIT " + damage + " he " + this.getHealth() + " g " + gibHealth );
+    // blob server_Die()() and then gib
+
+	
+	//printf("gibHealth " + gibHealth + " health " + this.getHealth() );
+    if (this.getHealth() <= gibHealth)
+    {
+        this.getSprite().Gib();
 		if (hitterBlob.hasTag("player"))
 		{
 			CPlayer@ player = hitterBlob.getPlayer();
-			//player.server_setCoins( player.getCoins() + 10 );		
 		} else
 		if(hitterBlob.getDamageOwnerPlayer() !is null)
 		{
 			CPlayer@ player = hitterBlob.getDamageOwnerPlayer();
-			//player.server_setCoins( player.getCoins() + 10 );		
 		}
-		server_DropCoins(hitterBlob.getPosition() + Vec2f(0,-3.0f), 10);
+		if (getNet().isServer())
+		{
+			
+			warn("SS: "+getRules().get_bool("scrolls_spawn"));
+			int r = XORRandom(30);
+			if (r<3 && getRules().get_bool("scrolls_spawn"))
+			{
+				if (r == 0)
+					server_MakePredefinedScroll( hitterBlob.getPosition() + Vec2f(0,-3.0f), "carnage" );
+				else
+				if (r == 1)
+					server_MakePredefinedScroll( hitterBlob.getPosition() + Vec2f(0,-3.0f), "midas" );				
+				else
+				if (r == 2)
+					server_MakePredefinedScroll( hitterBlob.getPosition() + Vec2f(0,-3.0f), "tame" );				
+			}
+			else
+			{
+				server_DropCoins(hitterBlob.getPosition() + Vec2f(0,-3.0f), 50);
+			}
+		}
+        this.server_Die();
+    }
 		
-	}
-	if (customData == Hitters::arrow) damage*=2.0;
-	MadAt( this, hitterBlob );
-	return damage;
+    return 0.0f; //done, we've used all the damage	
+	
 }														
 
 #include "Hitters.as";
@@ -388,8 +461,8 @@ bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {
 	if (blob.hasTag("dead"))
 		return false;
-	if ((!blob.hasTag("zombie") && !blob.hasTag("portal_zombie")) && blob.hasTag("flesh") && this.getTeamNum() == blob.getTeamNum()) return false;
-	if ((blob.hasTag("zombie") && blob.hasTag("portal_zombie")) && blob.getHealth()<0.0) return false;
+	if (!blob.hasTag("zombie") && blob.hasTag("flesh") && this.getTeamNum() == blob.getTeamNum()) return false;
+	if (blob.hasTag("zombie") && blob.getHealth()<0.0) return false;
 	return true;
 }
 
@@ -401,19 +474,23 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 	const u16 friendId = this.get_netid(friend_property);
 	CBlob@ friend = getBlobByNetworkID(friendId);
-	if (blob.getTeamNum() != this.getTeamNum() && blob.hasTag("flesh") && !blob.hasTag("dead"))
+	if (blob.getTeamNum() != this.getTeamNum() && blob.hasTag("flesh") && (!blob.hasTag("dead") || blob.hasTag("zombie")))
 	{
 		MadAt( this, blob );
 	}
 }
 
+void onDie(CBlob@ this)
+{
+	
+}
+
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
 {
-/*	if (hitBlob !is null && customData == Hitters::flying)
+/*	if (hitBlob !is null)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
-		force.y -= 7.0f;
+		force.y -= 1.0f;
 		hitBlob.AddForce( force);
 	}*/
 }
-
