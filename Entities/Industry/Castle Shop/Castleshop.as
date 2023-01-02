@@ -233,9 +233,9 @@ bool yoinkMats(CBlob@ blobToCheck, int gold, int stone, int wood){ //return fals
 
     if (!hasMatsRequirements(blobToCheck,gold,stone,wood)){return false;}
 
-    inv.server_RemoveItems("mat_gold", gold);
-    inv.server_RemoveItems("mat_stone", stone);
-    inv.server_RemoveItems("mat_wood", wood);
+    if(gold != 0){inv.server_RemoveItems("mat_gold", gold);}
+    if(stone != 0){inv.server_RemoveItems("mat_stone", stone);}
+    if(wood != 0){inv.server_RemoveItems("mat_wood", wood);}
     return true;
 }
 
