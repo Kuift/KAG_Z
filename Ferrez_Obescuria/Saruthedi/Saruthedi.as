@@ -169,7 +169,7 @@ void onTick(CBlob@ this)
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
 		this.Tag("PhaseTwo");
-		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+		Sound::Play("/Laugh1.ogg", this.getPosition());
 	}
 	
 	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
@@ -178,7 +178,7 @@ void onTick(CBlob@ this)
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
 		this.Tag("PhaseThree");
-		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+		Sound::Play("/Laugh2.ogg", this.getPosition());
 	}
 	
 	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 360 && this.hasTag("PhaseThree"))
