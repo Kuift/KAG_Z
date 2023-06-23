@@ -400,7 +400,24 @@ f32 getGibHealth( CBlob@ this )
 
 f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData )
 {		
+
+	if (customData == Hitters::notnormalfire) //need do other custom hitter later, or custom hitters as due this error
+	{
+		damage*= 0.0;
+	}
+	if (customData == Hitters::spikes) //need do other custom hitter later, or custom hitters as due this error
+	{
+		damage*= 0.05;
+	}
+	
+	if (customData == Hitters::saw) //need do other custom hitter later, or custom hitters as due this error
+	{
+		damage*= 0.05;
+	}
+	
+
 	MadAt( this, hitterBlob );
+
 
 	if (this.getHealth()>0 && this.getHealth() <= damage)
 	{

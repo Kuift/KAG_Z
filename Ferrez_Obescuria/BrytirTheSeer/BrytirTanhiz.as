@@ -1,8 +1,8 @@
-const int FIRE_FREQUENCY = 30;
+const int FIRE_FREQUENCY = 50;
 const f32 BOLT_SPEED = 19.0f;
 const f32 max_range = 264.00f;
 
-const int FIRE_FREQUENCY2 = 18;
+const int FIRE_FREQUENCY2 = 21;
 const f32 BOLT_SPEED2 = 24.0f;
 const f32 max_range2 = 375.00f;
 void onInit(CBlob@ this)
@@ -10,9 +10,12 @@ void onInit(CBlob@ this)
 	this.set_u32("last bolt fire", 0);
 }
 
-void onTick(CBlob@ this)
+
+	void onTick(CBlob@ this)
 {
-	if (getNet().isServer() && (this.getHealth()<15.5) && (this.getHealth()>7.5))
+	if(this.hasTag("PhaseTwo"))
+	{
+	if (getNet().isServer() && (this.getHealth()>0.5))
 	{
 		u32 lastFireTime = this.get_u32("last bolt fire");
 		const u32 gametime = getGameTime();
@@ -44,12 +47,12 @@ void onTick(CBlob@ this)
 			lastFireTime = gametime;
 			this.set_u32("last bolt fire", lastFireTime);
 
-			CBlob@ bolt = server_CreateBlob("tanhiz", this.getTeamNum(), pos + Vec2f(0.0f, -4.5f * this.getRadius()));
+			CBlob@ bolt = server_CreateBlob("tanhiz", this.getTeamNum(), pos + Vec2f(0.0f, -0.5f * this.getRadius()));
 			if (bolt !is null)
 			{
 				Vec2f norm = aim - pos;
 				norm.Normalize();
-				bolt.setVelocity(norm * (diff <= FIRE_FREQUENCY ? BOLT_SPEED : 5.1f * BOLT_SPEED));
+				bolt.setVelocity(norm * (diff <= FIRE_FREQUENCY ? BOLT_SPEED : 0.1f * BOLT_SPEED));
 
 				if (targetID != 0xffff)
 				{
@@ -59,8 +62,10 @@ void onTick(CBlob@ this)
 			}}}} //fix
 		}
 	}
-	
-		if (getNet().isServer() && (this.getHealth()<7.5) && (this.getHealth()>0.5))
+	}
+	if(this.hasTag("PhaseThree"))
+	{
+	if (getNet().isServer() && (this.getHealth()>0.5))
 	{
 		u32 lastFireTime = this.get_u32("last bolt fire");
 		const u32 gametime = getGameTime();
@@ -92,12 +97,12 @@ void onTick(CBlob@ this)
 			lastFireTime = gametime;
 			this.set_u32("last bolt fire", lastFireTime);
 
-			CBlob@ bolt = server_CreateBlob("tanhiz", this.getTeamNum(), pos + Vec2f(0.0f, -4.5f * this.getRadius()));
+			CBlob@ bolt = server_CreateBlob("tanhiz", this.getTeamNum(), pos + Vec2f(0.0f, -0.5f * this.getRadius()));
 			if (bolt !is null)
 			{
 				Vec2f norm = aim - pos;
 				norm.Normalize();
-				bolt.setVelocity(norm * (diff <= FIRE_FREQUENCY2 ? BOLT_SPEED2 : 5.1f * BOLT_SPEED2));
+				bolt.setVelocity(norm * (diff <= FIRE_FREQUENCY2 ? BOLT_SPEED2 : 0.1f * BOLT_SPEED2));
 
 				if (targetID != 0xffff)
 				{
@@ -106,5 +111,6 @@ void onTick(CBlob@ this)
 			}
 			}}}} //fix
 		}
+	}
 	}
 }

@@ -27,8 +27,8 @@ void onInit( CBlob@ this )
 	 
 	
 	AddIconToken( "$land$", "building.png", Vec2f(16,16), 0 );
-		AddIconToken( "$naval$", "building.png", Vec2f(16,16), 0 );
-		AddIconToken( "$air$", "building.png", Vec2f(16,16), 0 );
+	AddIconToken( "$naval$", "building.png", Vec2f(16,16), 0 );
+	AddIconToken( "$air$", "building.png", Vec2f(16,16), 0 );
 	AddIconToken( "$ammunition$", "building.png", Vec2f(16,16), 0 );
 	
 	this.Tag(SHOP_AUTOCLOSE);
@@ -57,7 +57,7 @@ void GetButtonsFor( CBlob@ this, CBlob@ caller )
 {
 	this.set_bool("shop available", !builder_only || caller.getName() == "builder" );
 }
-								   
+
 void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 {
 	bool isServer = getNet().isServer();	
@@ -101,7 +101,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 		this.server_Die();
 	}
 }
-   
+
 // leave a pile of wood	after death
 void onDie(CBlob@ this)
 {

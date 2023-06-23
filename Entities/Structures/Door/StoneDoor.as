@@ -13,14 +13,15 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
         dmg *= 2.0f; //builder is great at smashing stuff
         break;
 	case Hitters::saw:
-		dmg *= 1.25;
+		dmg *= 0.25;
 		break;
 	case Hitters::bomb:
-		dmg *= 0.5f;
+		dmg *= 0.01f;
 		case Hitters::mine:
-	dmg *= 0.5f;
+	dmg *= 0.01f;
 		break;
 	default:
+		dmg = 0.1f;
 		break;		 						  
     }
 

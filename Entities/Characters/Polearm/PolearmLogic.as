@@ -9,7 +9,9 @@
 #include "Help.as";
 #include "Requirements.as"
 
-
+const f32 ATTACK_UPGRADE_RATE = 0.25f; //amount at which the damage increase per level gained
+const f32 GLIDE_UPGRADE_RATE = 0.025f; //same but for gliding
+const f32 MOBILITY_UPGRADE_RATE = 0.05f; //same but for walking and jumping
 //attacks limited to the one time per-actor before reset.
 
 void knight_actorlimit_setup(CBlob@ this)
@@ -120,8 +122,8 @@ void onTick(CBlob@ this)
 		return;
 	}
 
-	moveVars.walkFactor *= 1.05f;
-	moveVars.jumpFactor *= 1.05f;
+	moveVars.walkFactor *= 1.05f + MOBILITY_UPGRADE_RATE * getRules().get_u16("polearm level");
+	moveVars.jumpFactor *= 1.05f + MOBILITY_UPGRADE_RATE * getRules().get_u16("polearm level");
 
 	Vec2f pos = this.getPosition();
 	Vec2f vel = this.getVelocity();
@@ -251,7 +253,7 @@ void onTick(CBlob@ this)
 								this.getSprite().PlayRandomSound("/Scrape");
 							}
 
-							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime)) *1;
+							f32 factor = Maths::Max(1.0f, 2.2f / Maths::Sqrt(knight.slideTime)) * (1.0f-GLIDE_UPGRADE_RATE*getRules().get_u16("polearm level"));
 							moveVars.walkFactor *= factor;
 
 							//  printf("knight.slideTime = " + knight.slideTime  );
@@ -403,7 +405,7 @@ void onTick(CBlob@ this)
 					attackarc *= 0.6f;
 				}
 
-				DoAttack(this, 1.5f, attackAngle, attackarc, Hitters::sword, delta, knight);
+				DoAttack(this, 1.5f + ATTACK_UPGRADE_RATE/2*getRules().get_u16("polearm level"), attackAngle, attackarc, Hitters::sword, delta, knight);
 			}
 			else if (delta >= 9)
 			{
@@ -429,7 +431,7 @@ void onTick(CBlob@ this)
 			}
 			else if (delta > DELTA_BEGIN_ATTACK && delta < 10)
 			{
-				DoAttack(this, 3.0f, -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
+				DoAttack(this, 3.0f + ATTACK_UPGRADE_RATE*getRules().get_u16("polearm level"), -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
 			}
 			else if (delta >= KnightVars::slash_time ||
 			         (knight.doubleslash && delta >= KnightVars::double_slash_time))
@@ -459,7 +461,7 @@ void onTick(CBlob@ this)
 			if (Maths::Abs(vel.x) < KnightVars::slash_move_max_speed &&
 			        vel.y > -KnightVars::slash_move_max_speed)
 			{
-				Vec2f slash_vel =  knight.slash_direction * this.getMass() * 1.0f;
+				Vec2f slash_vel =  knight.slash_direction * this.getMass() * (1.0f + MOBILITY_UPGRADE_RATE * getRules().get_u16("polearm level"));
 				this.AddForce(slash_vel);
 			}
 		}

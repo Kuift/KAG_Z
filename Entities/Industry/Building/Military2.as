@@ -5,7 +5,7 @@
 #include "WARCosts.as";
 #include "CheckSpam.as";
 #include "Requirements_Tech.as";
-
+//Military2 = civil building
 //are builders the only ones that can finish construction?
 const bool builder_only = false;
 
@@ -69,7 +69,7 @@ void onInit( CBlob@ this )
 		AddRequirement( s.requirements, "blob", "mat_wood", "Wood", 600 );
 	}
 	{
-		ShopItem@ s = addShopItem(this, "Castle", "$castle$", "castle", "A giant castle for upgrades!");
+		ShopItem@ s = addShopItem(this, "Castle", "$castle$", "castle", "A giant castle to upgrade!");
 		AddRequirement(s.requirements, "blob", "mat_wood", "Wood", 500);
 		AddRequirement(s.requirements, "blob", "mat_stone", "Stone", 250);
 		AddRequirement(s.requirements, "not tech no extra text", "Castle", "There is already an existing Castle!\n", 1);

@@ -32,6 +32,7 @@ void onInit( CBlob@ this )
 	this.set_bool("portalplaybreach",false);
 	this.SetLight(false);
 	this.SetLightRadius( 64.0f );
+	this.set_f32("oldHealth", this.getHealth());
 	
 }
 
@@ -133,23 +134,35 @@ void onTick( CBlob@ this)
 			portal_zombie_list[furthest_zombie_index].setPosition(sp);
 		}
 	}
-
+	
+	if (!isServer()){return;}
 	if ((getGameTime()  + (this.getNetworkID() % 100)) % 260 == 0) //changed to be lower to activate from players faster
 	{
 		Vec2f sp = this.getPosition();
 		
-	
-		CBlob@[] blobs;
-		this.getMap().getBlobsInRadius( sp, 64, @blobs );
 		bool activate = false; //this may need to be synced as well idk 
-		for (uint step = 0; step < blobs.length; ++step)
+
+		if(Maths::Roundf(this.get_f32("oldHealth")) != Maths::Roundf(this.getHealth()))
 		{
-			CBlob@ other = blobs[step];
-			if (other.hasTag("player"))
-			{
-				activate = true;
-				break;
-			}
+			this.set_f32("oldHealth", this.getHealth());
+			activate = true;
+		}
+		for(int i = 0; i < getPlayerCount(); ++i){
+			if(activate){break;}
+			CPlayer@ player = getPlayer(i);
+			if(player is null){continue;}
+
+			CBlob@ playerBlob = player.getBlob();
+			if (playerBlob is null) {continue;}
+
+			float distanceBetweenPlayerAndThis = (this.getPosition() - playerBlob.getPosition()).getLength();
+
+			if (distanceBetweenPlayerAndThis > 128){continue;}
+
+			if(getMap().rayCastSolidNoBlobs(playerBlob.getPosition(), this.getPosition())){continue;}
+
+			activate = true;
+			break;
 		}
 		this.set_bool("portalbreach",activate);
 		this.set_bool("portalplaybreach",activate);

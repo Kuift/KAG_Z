@@ -5,7 +5,9 @@
 
 const u32 materials_wait = 20; //seconds between free mats
 const u32 materials_wait_warmup = 20; //seconds between free mats
-
+const int ARCHER_RESSUPLY_UPGRADE_LEVEL_INTERVAL = 5; //each x level, it will increase 1 bomb arrow per ressupply
+const int KNIGHT_RESSUPLY_UPGRADE_LEVEL_INTERVAL = 5; //each x level, it will increase 1 bomb per ressupply
+const int BUILDER_MATS_PER_LEVEL = 25; //each level, it will increase wood ressupply by x, stone by x/5 and gold by x/10
 //property
 const string SPAWN_ITEMS_TIMER = "CTF SpawnItems:";
 
@@ -54,8 +56,9 @@ bool GiveSpawnResources(CRules@ this, CBlob@ blob, CPlayer@ player, CTFPlayerInf
 		}
 		else
 		{
-			ret = SetMaterials(blob, "mat_wood", 100) || ret;
-			ret = SetMaterials(blob, "mat_stone", 30) || ret;
+			ret = SetMaterials(blob, "mat_wood", 100  + int(getRules().get_u16("builder level")*BUILDER_MATS_PER_LEVEL)) || ret;
+			ret = SetMaterials(blob, "mat_stone", 30 + int(getRules().get_u16("builder level")*BUILDER_MATS_PER_LEVEL/5)) || ret;
+			ret = SetMaterials(blob, "mat_gold", int(getRules().get_u16("builder level")*BUILDER_MATS_PER_LEVEL/10)) || ret;
 		}
 
 		if (ret)
@@ -99,6 +102,7 @@ bool GiveSpawnResources(CRules@ this, CBlob@ blob, CPlayer@ player, CTFPlayerInf
 
 			else if (blob.getName() == "knight")
 		{
+			ret = SetMaterials(blob, "mat_bombs", int(getRules().get_u16("knight level")/KNIGHT_RESSUPLY_UPGRADE_LEVEL_INTERVAL)) || ret;
 			if (ret)
 			{
 			info.items_collected |= ItemFlag::Knight;
@@ -133,6 +137,10 @@ bool GiveSpawnResources(CRules@ this, CBlob@ blob, CPlayer@ player, CTFPlayerInf
 		else if (blob.getName() == "archer")
 		{
 			ret = SetMaterials(blob, "mat_arrows", 30) || ret;
+			int ressuply_per_level = getRules().get_u16("archer level") / ARCHER_RESSUPLY_UPGRADE_LEVEL_INTERVAL;
+			int fireArrowsQty = 2*ressuply_per_level < 4 ? ressuply_per_level : 4;
+			ret = SetMaterials(blob, "mat_firearrows", fireArrowsQty) || ret;
+			ret = SetMaterials(blob, "mat_bombarrows", ressuply_per_level) || ret;
 
 			if (ret)
 			{

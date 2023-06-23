@@ -7,7 +7,10 @@
 #include "RulesCore.as";
 #include "RespawnSystem.as";
 #include "zombies_Technology.as";  
+#include "zombie_data.as";
 //#include "ZombiePortal.as"
+
+
 
 void dynamicmapcycle(){
 	// print("players: "+getPlayersCount());
@@ -148,7 +151,7 @@ shared class ZombiesSpawns : RespawnSystem
 			
 			if(info.can_spawn_time > 0) {
 				info.can_spawn_time--;
-				spawn_property = u8(Maths::Min(250,(info.can_spawn_time / 22)));
+				spawn_property = u8(Maths::Min(250,info.can_spawn_time/getTicksASecond()));
 			}
 			
 			string propname = "Zombies spawn time "+info.username;
@@ -330,10 +333,10 @@ shared class ZombiesSpawns : RespawnSystem
 			tickspawndelay = ((day_cycle - timeElapsed)*getTicksASecond()) / 10;
 			warn("DC: "+day_cycle+" TE:"+timeElapsed);
 			if (timeElapsed<30) tickspawndelay=0;
+			tickspawndelay = 20*getTicksASecond(); // SET THE RESPAWN TIME, (time in secs)
 		}
 		
 		
-		//; //
         
         CTFPlayerInfo@ info = cast<CTFPlayerInfo@>(core.getInfoFromPlayer(player));
 
@@ -397,7 +400,7 @@ shared class ZombiesCore : RulesCore
     {
         RulesCore::Setup(_rules, _respawns);
         @Zombies_spawns = cast<ZombiesSpawns@>(_respawns);
-        server_CreateBlob( "Entities/Meta/WARMusic.cfg" );
+        CBlob@ temp = server_CreateBlob( "Entities/Meta/WARMusic.cfg" );
 		int gamestart = getGameTime();
 		rules.set_s32("gamestart",gamestart);
 		rules.SetCurrentState(WARMUP);
@@ -540,32 +543,57 @@ shared class ZombiesCore : RulesCore
 					if (actdiff>9) r = XORRandom(11); else r = XORRandom(actdiff);
 					int rr = XORRandom(10);
 					if (r==8 && rr<wraiteRate*2)
-					server_CreateBlob( "horror", -1, sp);
-					else
-					if (r==7)
-					server_CreateBlob( "Wraith", -1, sp);
-					else										
-					if (r==6 && rr<wraiteRate*2)
-					server_CreateBlob( "Greg", -1, sp);
-					else					
-					if (r==5)
-					server_CreateBlob( "hellknight", -1, sp);
-					else					
-					if (r==4)
-					server_CreateBlob( "ZombieKnight", -1, sp);
-					else					
-					if (r==2)
-					server_CreateBlob( "crawler", -1, sp);
+					{
+						CBlob@ temp = server_CreateBlob( "horror", -1, sp);
+					}
+					else if (r==7)
+					{
+						CBlob@ temp = server_CreateBlob( "Wraith", -1, sp);
+					}
+					else if (r==6 && rr<wraiteRate*2)
+					{
+						CBlob@ temp = server_CreateBlob( "Greg", -1, sp);
+					}
+					else if (r==5)
+					{
+						CBlob@ temp = server_CreateBlob( "hellknight", -1, sp);
+					}
+					else if (r==4)
+					{
+						CBlob@ temp = server_CreateBlob( "ZombieKnight", -1, sp);
+					}
+					else if (r==2)
+					{
+						CBlob@ temp = server_CreateBlob( "crawler", -1, sp);
+					}
 					else
 					if (r>=3)
-					server_CreateBlob( "Zombie", -1, sp);
+					{
+						if(dayNumber > 20)
+						{
+							CBlob@ temp = server_CreateBlob( "vattka", -1, sp);
+						}
+						else{
+							CBlob@ temp = server_CreateBlob( "Zombie", -1, sp);
+						}
+
+					}
 					else
-					server_CreateBlob( "Skeleton", -1, sp);
+					{
+						if(dayNumber > 26)
+						{
+							CBlob@ temp = server_CreateBlob( "tukra", -1, sp);
+						}
+						else
+						{
+							CBlob@ temp = server_CreateBlob( "Skeleton", -1, sp);
+						}
+					}
 					if (dayNumber == 14)
 					{
 						if(daily_transition == 1){
-							server_CreateBlob("vroon",-1,sp);
-							server_CreateBlob("vroon",-1,sp);
+							CBlob@ temp = server_CreateBlob("vroon",-1,sp);
+							CBlob@ temp2 = server_CreateBlob("vroon",-1,sp);
 							rules.set_s32("daily_transition",0);
 						}
 					}
@@ -578,85 +606,84 @@ shared class ZombiesCore : RulesCore
 						transition=0;
 						rules.set_s32("transition",0);
 						Vec2f sp = zombiePlaces[XORRandom(zombiePlaces.length)];
-						server_CreateBlob( "BossZombieKnight", -1, sp);
+						CBlob@ temp = server_CreateBlob( "BossZombieKnight", -1, sp);
 						if (dayNumber > 5){
 							for(int i = 0; i < 2; ++i) {
-								server_CreateBlob("kaarn",-1,sp);
+								CBlob@ temp = server_CreateBlob("kaarn",-1,sp);
 							}
 						}
-						if (dayNumber > 10){
-							server_CreateBlob("brytir",-1,sp);
+						if (dayNumber > 19){
+							CBlob@ temp = server_CreateBlob("brytir",-1,sp);
 							for(int i = 0; i < 2; ++i) {
-								server_CreateBlob("kaarn",-1,sp);
+								CBlob@ temp2 = server_CreateBlob("kaarn",-1,sp);
 							}
 						}
 						if (dayNumber > 15){
 							for(int i = 0; i < 2; ++i){
-								server_CreateBlob("vroon",-1,sp);
+								CBlob@ temp = server_CreateBlob("vroon",-1,sp);
 							}
 						}
 						if (dayNumber > 15 && dayNumber % 8 == 0){
-							server_CreateBlob("magnar",-1,sp);
+							CBlob@ temp = server_CreateBlob("magnar",-1,sp);
 						}
 						if (dayNumber > 20 && dayNumber % 16 == 0){
-							server_CreateBlob("azair",-1,sp);
+							CBlob@ temp = server_CreateBlob("azair",-1,sp);
 						}
 						if(dayNumber >= 5 && dayNumber < 10)
 						{
-							server_CreateBlob( "BossZombieKnight", -1, sp);
+							CBlob@ temp = server_CreateBlob( "BossZombieKnight", -1, sp);
 							for(int i = 0; i < 3; ++i) {
-								server_CreateBlob( "Wraith", -1, sp);
+								CBlob@ temp2 = server_CreateBlob( "Wraith", -1, sp);
 							}
 						}
 						if(dayNumber >= 10 && dayNumber < 20 )
 						{
-							server_CreateBlob( "BossZombieKnight", -1, sp);
+							CBlob@ temp = server_CreateBlob( "BossZombieKnight", -1, sp);
 							for(int i = 0; i < 4; ++i) {
-								server_CreateBlob( "Wraith", -1, sp);
+								CBlob@ temp2 = server_CreateBlob( "Wraith", -1, sp);
 							}
 						}
 						if(dayNumber >= 20 && dayNumber < 24 )
 						{
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "bukavac", -1, sp);
+							CBlob@ temp = server_CreateBlob( "abomination", -1, sp);
 						}
 						if(dayNumber >= 24 && dayNumber < 30 )
 						{
 							for(int i = 0; i < 2; ++i) {
-								server_CreateBlob( "fyllid", -1, sp);
+								CBlob@ temp = server_CreateBlob( "fyllid", -1, sp);
 							}
 							for(int i = 0; i < 5; ++i) {
-								server_CreateBlob( "Wraith", -1, sp);
+								CBlob@ temp = server_CreateBlob( "Wraith", -1, sp);
 							}
 						}
 						if(dayNumber >= 30 && dayNumber < 40 )
 						{
-							server_CreateBlob( "bukavac", -1, sp);
+							CBlob@ temp = server_CreateBlob( "bukavac", -1, sp);
 							for(int i = 0; i < 2; ++i) {
-								server_CreateBlob( "abomination", -1, sp);
+								CBlob@ temp = server_CreateBlob( "abomination", -1, sp);
 							}
 							for(int i = 0; i < 6; ++i) {
-								server_CreateBlob( "Wraith", -1, sp);
+								CBlob@ temp = server_CreateBlob( "Wraith", -1, sp);
 							}
 							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
-							server_CreateBlob( "goresinger", -1, middle_up);
+							CBlob@ temp2 = server_CreateBlob( "goresinger", -1, middle_up);
 						}
 						if(dayNumber >= 40  && dayNumber < 51)
 						{
 							for(int i = 0; i < 10; ++i) {
-								server_CreateBlob( "Wraith", -1, sp);
+								CBlob@ temp = server_CreateBlob( "Wraith", -1, sp);
 							}
-							server_CreateBlob( "BossZombieKnight", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
+							CBlob@ temp = server_CreateBlob( "BossZombieKnight", -1, sp);
+							CBlob@ temp2 = server_CreateBlob( "abomination", -1, sp);
 							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,25);
-							server_CreateBlob( "goresinger", -1, middle_up);
-							server_CreateBlob( "goresinger", -1, middle_up);
+							CBlob@ temp3 = server_CreateBlob( "goresinger", -1, middle_up);
+							CBlob@ temp4 = server_CreateBlob( "goresinger", -1, middle_up);
 							
 						}
 						if(dayNumber >= 51 && dayNumber < 54)
 						{
 							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,76);
-							server_CreateBlob("tsuyani", -1, middle_up);
+							CBlob@ temp = server_CreateBlob("tsuyani", -1, middle_up);
 							// server_CreateBlob( "neqrris", -1, middle_up);
 							// server_CreateBlob( "bloodvainguard", -1, middle_up);
 							// server_CreateBlob( "bloodvainguard", -1, middle_up);
@@ -668,22 +695,22 @@ shared class ZombiesCore : RulesCore
 						{
 							Vec2f left_up = Vec2f(25,76);
 							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,76);
-							server_CreateBlob("tsuyani", -1, left_up);
+							CBlob@ temp = server_CreateBlob("tsuyani", -1, left_up);
 						}
 						if (dayNumber >= 58 && dayNumber < 68)
 						{
 							Vec2f left_up = Vec2f(25,76);
 							Vec2f middle_up = Vec2f(map.getMapDimensions().x/2,76);
 							Vec2f right_up = Vec2f(map.getMapDimensions().x-25,76);
-							server_CreateBlob("tsuyani", -1, right_up);
+							CBlob@ temp = server_CreateBlob("tsuyani", -1, right_up);
 						}
 						if (dayNumber >= 68)
 						{
-							server_CreateBlob( "bukavac", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "abomination", -1, sp);
-							server_CreateBlob( "fyllid", -1, sp);
-							server_CreateBlob( "BossZombieKnight", -1, sp);
+							CBlob@ temp = server_CreateBlob( "bukavac", -1, sp);
+							CBlob@ temp2 = server_CreateBlob( "abomination", -1, sp);
+							CBlob@ temp3 = server_CreateBlob( "abomination", -1, sp);
+							CBlob@ temp4 = server_CreateBlob( "fyllid", -1, sp);
+							CBlob@ temp5 = server_CreateBlob( "BossZombieKnight", -1, sp);
 						}
 					}
 				}
@@ -831,7 +858,7 @@ shared class ZombiesCore : RulesCore
 				Vec2f middle_up = Vec2f(getMap().getMapDimensions().x/2,25);
 				getRules().SetGlobalMessage( "Tsuyani has been summoned.");
 				getRules().set_bool("tsuyani_summoned",true);
-				server_CreateBlob("tsuyani", -1, middle_up);
+				CBlob@ temp = server_CreateBlob("tsuyani", -1, middle_up);
 			}
 		}
     }
@@ -863,7 +890,7 @@ shared class ZombiesCore : RulesCore
 
 void spawnPortal(Vec2f pos)
 {
-	server_CreateBlob("ZombiePortal",-1,pos+Vec2f(0,-24.0));
+	CBlob@ temp = server_CreateBlob("ZombiePortal",-1,pos+Vec2f(0,-24.0));
 	//ZombiePortalV++;
 }
 
@@ -875,10 +902,13 @@ void spawnRandomTech(Vec2f pos)
 	{
 		int r = XORRandom(2);
 		if (r == 0)
-			server_CreateBlob("RocketLauncher",-1,pos+Vec2f(0,-16.0));
-		else
-		if (r == 1)
-			server_CreateBlob("megasaw",-1,pos+Vec2f(0,-16.0));
+		{
+			CBlob@ temp = server_CreateBlob("RocketLauncher",-1,pos+Vec2f(0,-16.0));
+		}
+		else if (r == 1)
+		{
+			CBlob@ temp = server_CreateBlob("megasaw",-1,pos+Vec2f(0,-16.0));
+		}
 	}
 }
 

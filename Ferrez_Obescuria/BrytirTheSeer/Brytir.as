@@ -154,19 +154,39 @@ void onInit(CBlob@ this)
 //	this.getCurrentScript().runProximityTag = "player";
 //	this.getCurrentScript().runProximityRadius = 320.0f;
 	this.getCurrentScript().runFlags = Script::tick_not_attached;
+	this.Tag("PhaseOne");
 	this.Tag("EndlessFlame");
 }
 
 
 void onTick(CBlob@ this)
 {
-	f32 x = this.getVelocity().x;
+		f32 x = this.getVelocity().x;
 	// ferre you idiot
-	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 40)
+	if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseOne") && !this.hasTag("PhaseTwo"))
 	{
 		this.server_SetHealth(20.0);
 		this.getShape().setFriction( 0.3f );
 		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseTwo");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 15 && this.hasTag("PhaseTwo") && !this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+		this.Tag("PhaseThree");
+		Sound::Play("/screamNeqrrisPhase.ogg", this.getPosition());
+	}
+	
+	else if (this.getHealth()<=0.0 && (this.getTickSinceCreated() - this.get_u16("death ticks")) > 360 && this.hasTag("PhaseThree"))
+	{
+		this.server_SetHealth(20.0);
+		this.getShape().setFriction( 0.3f );
+		this.getShape().setElasticity( 0.1f );
+
 	}
 	if (this.getHealth()<=0.0) return;
 
@@ -311,7 +331,7 @@ void onTick(CBlob@ this)
 		}
 	}
 	
-	if(getNet().isServer() && getGameTime() % 10 == 0)
+	if(isServer() && getGameTime() % 10 == 0)
 	{
 		if(this.get_u8(state_property) == MODE_TARGET )
 		{
@@ -378,7 +398,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 	{
 		damage*= 0.0;
 	}
-	return damage;
+
 	
 	
 	MadAt( this, hitterBlob );
@@ -461,6 +481,11 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 	{
 		MadAt( this, blob );
 	}
+}
+
+void onDie(CBlob@ this)
+{
+	
 }
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )

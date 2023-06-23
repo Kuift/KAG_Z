@@ -8,6 +8,9 @@ const float mass = 1.0;
 
 const float first_radius = 64.0;
 const float second_radius = 220.0;
+
+u16 MAX_BOSS = 8;
+
 void onInit(CBlob@ this)
 {
 
@@ -18,19 +21,17 @@ void onInit(CBlob@ this)
 
 void onTick(CBlob@ this)
 {
-CBlob@[] blobs;
-const u32 gametime = getGameTime();
+	CBlob@[] blobs;
+	const u32 gametime = getGameTime();
 	
-	if (getNet().isServer())
+	if (isServer())
 	{
-	if (this.hasTag("laying") && this.getTickSinceCreated() > 640)
-	{
-	
-	
-		server_CreateBlob("begg", -1, this.getPosition() + Vec2f(0, -5.0f));
-		this.Untag("laying");
-		return;
-
-				}
-			}
+		if(getRules().get_u32("max_cocoon") >= MAX_BOSS) {return;}
+		if (this.hasTag("laying") && this.getTickSinceCreated() > 640)
+		{
+			server_CreateBlob("begg", -1, this.getPosition() + Vec2f(0, -5.0f));
+			this.Untag("laying");
+			return;
 		}
+	}
+}
