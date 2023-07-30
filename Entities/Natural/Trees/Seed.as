@@ -126,7 +126,7 @@ void onTick(CBlob@ this)
 {
 	u16 seed_grow_time = this.get_u16("seed_grow_time");
 
-	if (!this.isAttached() && !isNotTouchingOthers2(this))
+	if (!this.isAttached())// && !isNotTouchingOthers2(this))
 	{
 		this.getSprite().SetFrameIndex(1);
 
