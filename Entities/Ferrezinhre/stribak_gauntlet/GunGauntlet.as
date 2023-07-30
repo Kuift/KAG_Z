@@ -307,6 +307,14 @@ bool canBePickedUp(CBlob@ this, CBlob@ byBlob)
 
 void onAttach(CBlob@ this, CBlob@ attached, AttachmentPoint @attachedPoint)
 {
+	if (this is null)
+	{
+		return;
+	}
+	if(attached is null)
+	{
+		return;
+	}
 	//set so we update "all the time" when picked up
 	this.getCurrentScript().runFlags &= ~Script::tick_not_sleeping;
 	//and set so that any damage we do now, will be treated as done by whoever's holding us
@@ -318,6 +326,14 @@ void onAttach(CBlob@ this, CBlob@ attached, AttachmentPoint @attachedPoint)
 
 void onDetach(CBlob@ this, CBlob@ detached, AttachmentPoint @detachedPoint)
 {
+	if (this is null)
+	{
+		return;
+	}
+	if(detached is null)
+	{
+		return;
+	}
 
 	CSprite@ sprite = this.getSprite();
 	sprite.ResetTransform();

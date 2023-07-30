@@ -5,6 +5,10 @@ const float HIT_PER_SECOND = 6.0f;
 
 void onInit(CBlob@ this)
 {
+    if(this is null)
+    {
+        return;
+    }
 	this.getCurrentScript().tickFrequency = HIT_PER_SECOND;
     this.set_bool("attached", false);
     this.set_u32("oldTimeSecs", 0);
@@ -12,6 +16,10 @@ void onInit(CBlob@ this)
 
 void onTick(CBlob@ this )
 {
+    if(this is null)
+    {
+        return;
+    }
     if((getGameTime()/30.0f)-this.get_u32("oldTimeSecs")/1.0f > 1/HIT_PER_SECOND)
     {
         this.set_u32("oldTimeSecs", getGameTime()/30);
@@ -30,6 +38,10 @@ void onTick(CBlob@ this )
 }
 void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal )
 {
+    if(this is null)
+    {
+        return;
+    }
 	if (blob !is null /*&& doesCollideWithBlob(this, blob)*/ && !this.hasTag("collided") && blob.hasTag("zombie")  && this.get_bool("attached") == false)
 	{
         this.server_SetTimeToDie(20.0f);
@@ -40,6 +52,14 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal )
 
 void attachAttack(CBlob@ this, CBlob@ targetBlob)
 {
+    if(this is null)
+    {
+        return;
+    }
+    if(targetBlob is null)
+    {
+        return;
+    }
     targetBlob.set_u16("attached_slugs", targetBlob.get_u16("attached_slugs") + 1);
     u16 numberOfAttachedSlugs = targetBlob.get_u16("attached_slugs"); 
     this.set_netid("attached_blob_id", targetBlob.getNetworkID());

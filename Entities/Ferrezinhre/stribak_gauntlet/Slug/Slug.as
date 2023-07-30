@@ -67,6 +67,10 @@ return false;
 
 void onTick(CBlob@ this)
 {
+	if(this is null)
+	{
+		return;
+	}
 	f32 angle = (this.getVelocity()).Angle();
 	Pierce(this); //hit vs map
 	this.setAngleDegrees(-angle);
