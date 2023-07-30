@@ -250,13 +250,13 @@ void onTick(CBlob@ this)
 									const bool large = other.hasTag("blocks sword") && other.isCollidable();
 									if (other.getName() == "wooden_platform" || other.getName() == "GoldBrick" || other.getName() == "triangle" || other.getName() == "glider" || other.getName() == "bomber2" || other.getName() == "fighter" || other.getName() == "miniballoon")
 									{
-										this.server_Hit(other,other.getPosition(),vel,1.5,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
 									if (other.getTeamNum() != this.getTeamNum())
 									{
-										this.server_Hit(other,other.getPosition(),vel,1.5,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
