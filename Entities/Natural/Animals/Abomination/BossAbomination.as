@@ -251,7 +251,7 @@ void onTick(CBlob@ this)
 									
 									if (other.getName() == "wooden_platform")
 									{
-										this.server_Hit(other,other.getPosition(),vel,5.0,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
