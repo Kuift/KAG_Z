@@ -1,7 +1,7 @@
 // Spiker.as
 
 #include "MechanismsCommon.as";
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 
 class Spiker : Component
 {

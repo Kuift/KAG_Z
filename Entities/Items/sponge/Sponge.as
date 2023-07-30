@@ -1,4 +1,4 @@
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "SplashWater.as";
 #include "SpongeCommon.as";
 

@@ -1,4 +1,4 @@
-#include "Hitters.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 
 enum facing_direction
 {

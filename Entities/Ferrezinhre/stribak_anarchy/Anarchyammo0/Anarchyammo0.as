@@ -1,5 +1,5 @@
 // ClusterCharge
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "BombCommon.as";
 #include "Explosion.as";
 

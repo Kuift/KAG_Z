@@ -1,4 +1,4 @@
-#include "Hitters.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 #include "TeamColour.as";
 
 #include "FireCommon.as"

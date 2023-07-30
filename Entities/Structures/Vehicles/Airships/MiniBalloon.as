@@ -1,5 +1,5 @@
 #include "VehicleCommon.as"
-#include "Hitters.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 // Boat logic
 
 void onInit(CBlob@ this )

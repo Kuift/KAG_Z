@@ -13,11 +13,11 @@
  *
  * string custom_explosion_sound - the sound played when the explosion happens
  *
- * u8 custom_hitter             - the hitter from Hitters.as to use
+ * u8 custom_hitter             - the hitter from /Entities/Common/Attacks/Hitters.as to use
  */
 
 
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "ShieldCommon.as";
 #include "SplashWater.as";
 

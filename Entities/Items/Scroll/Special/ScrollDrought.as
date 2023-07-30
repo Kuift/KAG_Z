@@ -1,6 +1,6 @@
 // scroll script that builds gold into
 
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 
 const int radius = 30;
 

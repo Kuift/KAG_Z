@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "FireCommon.as";
 const f32 max_range = 340282350000000000000000000000000000000.00f;
 const int Attack_FREQUENCY = 45; //4 secs

@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "Hitters.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "FireCommon.as";
 const f32 max_range = 126.00f; // giving her buff in range was :240:
 const int TELEPORT_FREQUENCY = 30; //4 secs
