@@ -1,5 +1,5 @@
 
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 #include "TeamColour.as";
 
 #include "FireCommon.as"

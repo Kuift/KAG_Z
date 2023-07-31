@@ -1,5 +1,5 @@
 #include "Knocked.as";
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 const f32 max_range = 262.00f;
 const int shok_FREQUENCY = 75; // was 60, so from 9 "shots" to 8.
 const int shok_DISTANCE = 1;//getMap().tilesize;

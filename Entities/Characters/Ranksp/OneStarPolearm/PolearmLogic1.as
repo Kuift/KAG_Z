@@ -3,7 +3,7 @@
 #include "ThrowCommon.as"
 #include "PolearmCommon.as";
 #include "RunnerCommon.as";
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "ShieldCommon.as";
 #include "Knocked.as"
 #include "Help.as";

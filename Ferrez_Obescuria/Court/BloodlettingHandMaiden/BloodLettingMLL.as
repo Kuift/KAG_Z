@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "FireCommon.as";
 const f32 max_range = 240.00f;
 const int TELEPORT_FREQUENCY = 90; //4 secs

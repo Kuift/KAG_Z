@@ -2,7 +2,7 @@
 
 #include "GameplayEvents.as"
 #include "AssistCommon.as"
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 
 const int coinsOnDamageAdd = 6;
 const int coinsOnAssistAdd = 8;

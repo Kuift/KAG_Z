@@ -7,7 +7,7 @@
 #include "MakeScroll.as"
 #include "Help.as"
 #include "Costs.as"
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 #include "HallCommon.as"
 
 const string children_destructible_tag = "children destructible";

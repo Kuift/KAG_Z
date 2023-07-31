@@ -2,7 +2,7 @@
 
 #include "MechanismsCommon.as";
 #include "DummyCommon.as";
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 
 const u8 BURNOUT_COUNTER_MAX = 32;
 const u8 BURNOUT_TIME_STEP = 8;

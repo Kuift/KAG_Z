@@ -1,5 +1,5 @@
 #include "VehicleCommon.as"
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 // Boat logic
 
 

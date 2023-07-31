@@ -1,7 +1,7 @@
 // Lantern script
 #define SERVER_ONLY;
 #include "Knocked.as";
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "FireCommon.as";
 
 const int TELE_SPAWNING_FREQUENCY = 120;

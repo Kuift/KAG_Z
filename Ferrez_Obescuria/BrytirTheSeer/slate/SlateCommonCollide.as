@@ -3,7 +3,7 @@
 // set "hit dmg modifier" in your blob to modify blob hit damage
 // set "map dmg modifier" in your blob to modify map hit damage
 
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 
 void onInit(CBlob@ this)
 {

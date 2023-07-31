@@ -7,7 +7,7 @@
 #include "CheckSpam.as"
 #include "GenericButtonCommon.as"
 #include "TeamIconToken.as"
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 
 void onInit(CBlob@ this)
 {

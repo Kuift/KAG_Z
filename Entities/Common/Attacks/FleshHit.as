@@ -1,4 +1,4 @@
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 // Flesh hit
 f32 getGibHealth(CBlob@ this)
 {

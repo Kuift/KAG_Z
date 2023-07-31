@@ -1,6 +1,6 @@
 // Mine.as
 
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 #include "Explosion.as";
 
 const u8 MINE_PRIMING_TIME = 30; //45

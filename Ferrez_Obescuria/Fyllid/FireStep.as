@@ -1,6 +1,6 @@
 #include "RunnerCommon.as";
 #include "FireCommon.as";
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 
 // See HOTHOTHOT, IsFlammable, FireAnim
 

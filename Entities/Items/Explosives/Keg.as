@@ -1,5 +1,5 @@
 // Keg logic
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 
 void onInit(CBlob@ this)
 {

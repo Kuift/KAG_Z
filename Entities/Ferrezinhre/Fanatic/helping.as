@@ -1,4 +1,4 @@
-#include "Hitters_mod.as";
+#include "/Entities/Common/Attacks/Hitters.as";
 // require more work
 // regen hp back to
 const f32 max_range = 126.00f;

@@ -1,6 +1,6 @@
 //trap block script for devious builders
 
-#include "Hitters_mod.as"
+#include "/Entities/Common/Attacks/Hitters.as"
 #include "MapFlags.as"
 
 
