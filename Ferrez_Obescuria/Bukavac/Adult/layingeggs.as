@@ -9,7 +9,7 @@ const float mass = 1.0;
 const float first_radius = 64.0;
 const float second_radius = 220.0;
 
-u16 MAX_BOSS = 8;
+u16 MAX_BOSS = 4;
 
 void onInit(CBlob@ this)
 {
