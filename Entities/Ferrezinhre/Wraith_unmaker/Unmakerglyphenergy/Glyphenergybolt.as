@@ -83,11 +83,11 @@ void Pierce(CBlob @this)
 	Vec2f end;
 	if (rayCheck(this.getOldPosition(), this.getPosition(), end))
 	{
-		HitMap(this, end, this.getOldVelocity(), 1.5f, Hitters_modarrow);
+		HitMap(this, end, this.getOldVelocity(), 1.5f, Hitters::arrow);
 	}
 	// if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, this.getPosition() ,end))
 	// {
-	// 	HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_modarrow);
+	// 	HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::arrow);
 	// }
 }
 

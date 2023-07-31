@@ -26,7 +26,7 @@ void onInit(CBlob@ this)
 	this.set_f32("map_damage_ratio", 0.15f);
 	this.set_bool("map_damage_raycast", true);
 	this.set_string("custom_explosion_sound", "KegExplosion.ogg");
-	this.set_u8("custom_hitter", Hitters_modmine);
+	this.set_u8("custom_hitter", Hitters::mine);
 
 	this.Tag("ignore fall");
 
@@ -202,7 +202,7 @@ void onDie(CBlob@ this)
 			if(target.hasTag("flesh") &&
 			(target.getTeamNum() != this.getTeamNum() || target.getPlayer() is this.getDamageOwnerPlayer()))
 			{
-				this.server_Hit(target, POSITION, Vec2f_zero, 8.0f, Hitters_modmine_special, true);
+				this.server_Hit(target, POSITION, Vec2f_zero, 8.0f, Hitters::mine_special, true);
 			}
 		}
 	}
@@ -215,5 +215,5 @@ bool canBePickedUp(CBlob@ this, CBlob@ blob)
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {
-	return customData == Hitters_modbuilder? this.getInitialHealth() / 2 : damage;
+	return customData == Hitters::builder? this.getInitialHealth() / 2 : damage;
 }

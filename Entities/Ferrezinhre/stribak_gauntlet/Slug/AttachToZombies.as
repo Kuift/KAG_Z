@@ -28,7 +28,7 @@ void onTick(CBlob@ this )
             CBlob@ parent = getBlobByNetworkID(this.get_netid("attached_blob_id"));
             if (parent !is null)
             {
-                this.server_Hit(parent, parent.getPosition(), Vec2f(0.0f,0.0f), (DAMAGE + XORRandom(DAMAGE)), Hitters_modspikes);
+                this.server_Hit(parent, parent.getPosition(), Vec2f(0.0f,0.0f), (DAMAGE + XORRandom(DAMAGE)), Hitters::spikes);
             }
             else{
                 this.server_Die();

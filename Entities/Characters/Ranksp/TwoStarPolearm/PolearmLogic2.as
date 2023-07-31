@@ -400,7 +400,7 @@ void onTick(CBlob@ this)
 					attackarc *= 0.6f;
 				}
 
-				DoAttack(this, 3.0f, attackAngle, attackarc, Hitters_modsword, delta, knight);
+				DoAttack(this, 3.0f, attackAngle, attackarc, Hitters::sword, delta, knight);
 			}
 			else if (delta >= 9)
 			{
@@ -426,7 +426,7 @@ void onTick(CBlob@ this)
 			}
 			else if (delta > DELTA_BEGIN_ATTACK && delta < 10)
 			{
-				DoAttack(this, 6.0f, -(vec.Angle()), 80.0f, Hitters_modsword, delta, knight);
+				DoAttack(this, 6.0f, -(vec.Angle()), 80.0f, Hitters::sword, delta, knight);
 			}
 			else if (delta >= KnightVars::slash_time ||
 			         (knight.doubleslash && delta >= KnightVars::double_slash_time))
@@ -663,7 +663,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 						blob.set_f32("explosive_radius", 92.0f);
 						blob.set_bool("map_damage_raycast", false);
 						blob.set_string("custom_explosion_sound", "/GlassBreak");
-						blob.set_u8("custom_hitter", Hitters_modwater);
+						blob.set_u8("custom_hitter", Hitters::water);
                         blob.Tag("splash ray cast");
 
 					}
@@ -963,7 +963,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 				if (shieldVars.direction * normal < 0.0f)
 				{
 					knight_add_actor_limit(this, blob);
-					this.server_Hit(blob, pos, vel, 0.0f, Hitters_modshield);
+					this.server_Hit(blob, pos, vel, 0.0f, Hitters::shield);
 
 					Vec2f force = Vec2f(shieldVars.direction.x * this.getMass(), -this.getMass()) * 3.0f;
 
@@ -1055,7 +1055,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 		return;
 	}
 
-	if (customData == Hitters_modsword &&
+	if (customData == Hitters::sword &&
 	        ( //is a jab - note we dont have the dmg in here at the moment :/
 	            knight.state == KnightStates::sword_cut_mid ||
 	            knight.state == KnightStates::sword_cut_mid_down ||
@@ -1068,7 +1068,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 		SetKnocked(this, 30);
 	}
 
-	if (customData == Hitters_modshield)
+	if (customData == Hitters::shield)
 	{
 		SetKnocked(hitBlob, 20);
 		this.getSprite().PlaySound("/Stun", 1.0f, this.getSexNum() == 0 ? 1.0f : 2.0f);

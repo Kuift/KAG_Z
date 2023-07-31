@@ -48,7 +48,7 @@ class Spiker : Component
 				CBlob@ blob = blobs[i];
 				if(!blob.hasTag("flesh")) continue;
 
-				spike.server_Hit(blob, blob.getPosition(), blob.getVelocity() * -1, 1.0f, Hitters_modspikes, true);
+				spike.server_Hit(blob, blob.getPosition(), blob.getVelocity() * -1, 1.0f, Hitters::spikes, true);
 			}
 		}
 

@@ -10,7 +10,7 @@ void SetupBomb(CBlob@ this, const int fuseTicks, const f32 explRadius, const f32
 	this.set_f32("explosive_radius", explRadius);
 	this.set_f32("explosive_damage", 6.0f);
 	//use the bomb hitter
-	this.set_u8("custom_hitter", Hitters_modbomb);
+	this.set_u8("custom_hitter", Hitters::bomb);
 	this.set_f32("map_damage_radius", 0.0f);
 	this.set_f32("map_damage_ratio", 0.00f);
 	this.set_bool("map_damage_raycast", false);
@@ -38,7 +38,7 @@ bool UpdateBomb(CBlob@ this)
 		SColor lightColor;
 		const u8 hitter = this.get_u8("custom_hitter");
 
-		if (hitter == Hitters_modwater)
+		if (hitter == Hitters::water)
 		{
 			this.getSprite().SetEmitSound("WaterSparkle.ogg");
 			this.getSprite().SetEmitSoundPaused(false);

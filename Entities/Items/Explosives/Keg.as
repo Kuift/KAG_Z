@@ -7,7 +7,7 @@ void onInit(CBlob@ this)
 	this.set_f32("map_bomberman_width", 24.0f);
 	this.set_f32("explosive_radius", 64.0f);
 	this.set_f32("explosive_damage", 20.0f);
-	this.set_u8("custom_hitter", Hitters_modkeg);
+	this.set_u8("custom_hitter", Hitters::keg);
 	this.set_string("custom_explosion_sound", "Entities/Items/Explosives/KegExplosion.ogg");
 	this.set_f32("map_damage_radius", 72.0f);
 	this.set_f32("map_damage_ratio", 0.8f);
@@ -98,17 +98,17 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 
 	switch (customData)
 	{
-		case Hitters_modsword:
-		case Hitters_modarrow:
+		case Hitters::sword:
+		case Hitters::arrow:
 			damage *= 0.25f; //quarter damage from these
 			break;
-		case Hitters_modwater:
+		case Hitters::water:
 			if (hitterBlob.getName() == "bucket" && this.hasTag("exploding"))
 			{
 				this.SendCommand(this.getCommandID("deactivate"));
 			}
 			break;
-		case Hitters_modkeg:
+		case Hitters::keg:
 			if (!this.hasTag("exploding"))
 			{
 				this.SendCommand(this.getCommandID("activate"));

@@ -23,7 +23,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream@ params)
 {
     if (cmd == this.getCommandID("activate"))
     {
-        this.server_Hit(this, this.getPosition(), Vec2f(0,0), 1.0f, Hitters_modfall, true);
+        this.server_Hit(this, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall, true);
 
         CBlob@ caller = getBlobByNetworkID(params.read_u16());
         if (caller.getPlayer() !is null)
@@ -33,7 +33,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream@ params)
                 CBlob@ lightA = server_CreateBlob("whirlblade", caller.getTeamNum(), caller.getPosition());
                 lightA.Tag("SurgeLight");
                 lightA.SetDamageOwnerPlayer(caller.getPlayer());
-				this.server_Hit(caller, caller.getPosition(), Vec2f(0,0), 1.0f, Hitters_modfall, true);
+				this.server_Hit(caller, caller.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall, true);
 
             }
         }

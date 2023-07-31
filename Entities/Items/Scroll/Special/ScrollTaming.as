@@ -38,7 +38,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 						{
 							b.server_setTeamNum(team);
 						}
-						//	caller.server_Hit( b, this.getPosition(), Vec2f(0,0), 10.0f, Hitters_modsuddengib, true );
+						//	caller.server_Hit( b, this.getPosition(), Vec2f(0,0), 10.0f, Hitters::suddengib, true );
 						hit = true;
 					}
 				}

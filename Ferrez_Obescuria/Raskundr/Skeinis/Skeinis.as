@@ -76,7 +76,7 @@ void updateLaserPositions(CBlob@ this)
 				}
 				else if ( damageDealt == false && this.get_u32("NbOfFunctionCallUpdateLaser") % ((1/HIT_PER_SECOND)*getTicksASecond()) == 0 || this.get_bool("firstHit") == false)
 				{
-					this.server_Hit(hitBlob, hi.hitpos, Vec2f(0,1), DAMAGE, Hitters_modexplosion, true);
+					this.server_Hit(hitBlob, hi.hitpos, Vec2f(0,1), DAMAGE, Hitters::explosion, true);
 					if(this.get_bool("firstHit") == false)
 					{
 						this.set_bool("firstHit", true);

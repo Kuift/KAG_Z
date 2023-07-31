@@ -15,7 +15,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 	u16 castleLevel = getRules().get_u16("castle level");
 	switch(customData)
 	{
-	case Hitters_modblast:
+	case Hitters::blast:
 		damage *= (1.0f-(castleLevel*0.33f)); // intent is, at level 3, anarchy weapon do no damage to the player
 		break;
 	}

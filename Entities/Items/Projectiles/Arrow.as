@@ -50,7 +50,7 @@ void onInit(CBlob@ this)
 	if (arrowType == ArrowType::bomb)
 	{
 		SetupBomb(this, bomb_fuse, 48.0f, 1.5f, 24.0f, 0.5f, true);
-		this.set_u8("custom_hitter", Hitters_modbomb_arrow);
+		this.set_u8("custom_hitter", Hitters::bomb_arrow);
 	}
 	else if (arrowType == ArrowType::water)
 	{
@@ -125,7 +125,7 @@ void onTick(CBlob@ this)
 		{
 			if (this.getTickSinceCreated() > 20)
 			{
-				this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters_modcrush);
+				this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters::crush);
 			}
 		}
 
@@ -287,7 +287,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		else
 		{
 			// this isnt synced cause we want instant collision for arrow even if it was wrong
-			dmg = ArrowHitBlob(this, point1, initVelocity, dmg, blob, Hitters_modarrow, arrowType);
+			dmg = ArrowHitBlob(this, point1, initVelocity, dmg, blob, Hitters::arrow, arrowType);
 		}
 
 		if (dmg > 0.0f)
@@ -295,15 +295,15 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 			// determine the hit type
 			// fire arrows still act as normal arrows
 			const u8 hit_type =
-				(arrowType == ArrowType::bomb) ? Hitters_modbomb_arrow :
-				Hitters_modarrow;
+				(arrowType == ArrowType::bomb) ? Hitters::bomb_arrow :
+				Hitters::arrow;
 
 			//perform the hit and tag so that another doesn't happen
 			this.server_Hit(blob, point1, initVelocity, dmg, hit_type);
 
 			// for fire arrows, make fire
 			if (arrowType == ArrowType::fire && !this.hasTag("no_fire"))
-				this.server_Hit(blob, point1, initVelocity, 0.0f, Hitters_modfire);
+				this.server_Hit(blob, point1, initVelocity, 0.0f, Hitters::fire);
 			
 			this.Tag("collided");
 		}
@@ -389,7 +389,7 @@ void Pierce(CBlob @this, CBlob@ blob = null)
 
 	if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, position, end))
 	{
-		ArrowHitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_modarrow);
+		ArrowHitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::arrow);
 	}
 }
 
@@ -489,7 +489,7 @@ f32 ArrowHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlo
 			hitBlob.AddForce(velocity * force);
 
 			//die
-			this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters_modcrush);
+			this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters::crush);
 		}
 
 		// check if shielded
@@ -550,7 +550,7 @@ f32 ArrowHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlo
 		//stick into "map" blobs
 		if (hitBlob.getShape().isStatic())
 		{
-			ArrowHitMap(this, worldPoint, velocity, damage, Hitters_modarrow);
+			ArrowHitMap(this, worldPoint, velocity, damage, Hitters::arrow);
 		}
 		//die otherwise
 		else
@@ -628,7 +628,7 @@ void ArrowHitMap(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, u8 c
 			CBlob @b = blobsInRadius[i];
 			if (b.getName() == "grain_plant")
 			{
-				this.server_Hit(b, worldPoint, Vec2f(0, 0), velocity.Length() / 7.0f, Hitters_modarrow);
+				this.server_Hit(b, worldPoint, Vec2f(0, 0), velocity.Length() / 7.0f, Hitters::arrow);
 				break;
 			}
 		}
@@ -704,7 +704,7 @@ void MakeFireCross(CBlob@ this, Vec2f burnpos)
 		CShape@ s = b.getShape();
 		if (s !is null && s.isStatic())
 		{
-			this.server_Hit(b, this.getPosition(), this.getVelocity(), 0.5f, Hitters_modfire);
+			this.server_Hit(b, this.getPosition(), this.getVelocity(), 0.5f, Hitters::fire);
 		}
 	}
 }
@@ -803,7 +803,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 {
 	const u8 arrowType = this.get_u8("arrow type");
 
-	if (customData == Hitters_modwater || customData == Hitters_modwater_stun) //splash
+	if (customData == Hitters::water || customData == Hitters::water_stun) //splash
 	{
 		if (arrowType == ArrowType::fire)
 		{
@@ -811,7 +811,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 		}
 	}
 
-	if (customData == Hitters_modsword)
+	if (customData == Hitters::sword)
 	{
 		return 0.0f; //no cut arrows
 	}
@@ -823,7 +823,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 {
 	const u8 arrowType = this.get_u8("arrow type");
 	// unbomb, stick to blob
-	if (this !is hitBlob && customData == Hitters_modarrow)
+	if (this !is hitBlob && customData == Hitters::arrow)
 	{
 		// affect players velocity
 

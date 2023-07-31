@@ -183,7 +183,7 @@ void onTick(CBlob@ this)
 			if (other.getName() == "lantern" || other.getName() == "wooden_door")
 			{
 				Vec2f vel(0,0);
-				//this.server_Hit(other,other.getPosition(),vel,0.2,Hitters_modsaw, false);
+				//this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
 			}
 		}	
 	}
@@ -315,7 +315,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 		}
 		server_DropCoins(hitterBlob.getPosition() + Vec2f(0,-3.0f), 25);
 	}
-	if (customData == Hitters_modarrow) damage*=2.0;
+	if (customData == Hitters::arrow) damage*=2.0;
 	MadAt( this, hitterBlob );
 	return damage;
 }														
@@ -353,7 +353,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 			if (getNet().isServer() && XORRandom(4)==0)
 			{
 				//f32 power = Maths::Max( 0.25f, 1.0f*vellen );
-				//this.server_Hit( blob, point1, vel, power, Hitters_modbite, false);
+				//this.server_Hit( blob, point1, vel, power, Hitters::bite, false);
 				this.server_AttachTo(blob,"PICKUP");
 				lastpickuptime = getGameTime();
 				//this.getShape().getConsts().collideWhenAttached = true;
@@ -367,7 +367,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
 {
-	if (hitBlob !is null && customData == Hitters_modflying)
+	if (hitBlob !is null && customData == Hitters::flying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
 		force.y -= 7.0f;

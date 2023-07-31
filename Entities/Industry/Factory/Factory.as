@@ -256,7 +256,7 @@ string[] ChildDestruction(CBlob@ this, bool kill_kids)
 				{
 					if (kill_kids && server)
 					{
-						this.server_Hit(blob, blob.getPosition(), Vec2f(0, 0), 100, Hitters_modcrush, true);
+						this.server_Hit(blob, blob.getPosition(), Vec2f(0, 0), 100, Hitters::crush, true);
 					}
 
 					names.push_back(blob.getInventoryName());

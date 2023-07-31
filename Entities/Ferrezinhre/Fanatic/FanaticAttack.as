@@ -38,7 +38,7 @@ void onTick(CBlob@ this)
 						this.set_bool("teleport ready", false );
 						if(blob.hasTag("flesh") && blob.getTeamNum() != this.getTeamNum())
 						{
-							this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters_modfall);
+							this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
 							MakeParticleLine(this.getPosition(), blob.getPosition(), 50);
 							if(blob.hasTag("zombie") || blob.hasTag("ZombiePortalz")) {
 								break; // we only want to hit 1 zombie at a time

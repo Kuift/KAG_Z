@@ -80,7 +80,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid)
 {
 	if (blob !is null && blob.hasTag("player"))
 	{
-		if (isServer()) this.server_Hit(blob, this.getPosition(), blob.getVelocity() * -1, 2.0f, Hitters_modfall, true);
+		if (isServer()) this.server_Hit(blob, this.getPosition(), blob.getVelocity() * -1, 2.0f, Hitters::fall, true);
 	}
 }
 
@@ -89,7 +89,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 {
 	if (hitterBlob !is null && hitterBlob.hasTag("player"))
 	{
-		if (isServer()) this.server_Hit(hitterBlob, this.getPosition(), Vec2f(0, 0), 1.0f, Hitters_modfall, false);
+		if (isServer()) this.server_Hit(hitterBlob, this.getPosition(), Vec2f(0, 0), 1.0f, Hitters::fall, false);
 	}
 
 	return damage;

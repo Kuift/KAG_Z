@@ -290,7 +290,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid )
 		Vec2f pos = this.getPosition();
 		Vec2f bpos = blob.getPosition();
 		this.Tag("sawed");
-		this.server_Hit( blob, bpos, bpos - pos, 0.0f, Hitters_modsaw );
+		this.server_Hit( blob, bpos, bpos - pos, 0.0f, Hitters::saw );
 	}
 }
 

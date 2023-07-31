@@ -52,7 +52,7 @@ void server_setFireOff(CBlob@ this)
  */
 bool isIgniteHitter(u8 hitter)
 {
-	return hitter == Hitters_modfire;
+	return hitter == Hitters::fire;
 }
 
 /**
@@ -60,7 +60,7 @@ bool isIgniteHitter(u8 hitter)
  */
 bool isWaterHitter(u8 hitter)
 {
-	return hitter == Hitters_modwater ||
-	       hitter == Hitters_modwater_stun ||
-	       hitter == Hitters_modwater_stun_force;
+	return hitter == Hitters::water ||
+	       hitter == Hitters::water_stun ||
+	       hitter == Hitters::water_stun_force;
 }

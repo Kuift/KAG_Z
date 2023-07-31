@@ -106,7 +106,7 @@ void onPlayerDie(CRules@ this, CPlayer@ victim, CPlayer@ killer, u8 customData)
 
 	bool giveBuilderBonus = false;
 
-	if(customData == Hitters_moddrill || customData == Hitters_modspikes || customData == Hitters_modbuilder) 
+	if(customData == Hitters::drill || customData == Hitters::spikes || customData == Hitters::builder) 
 	{
 		giveBuilderBonus = true;
 	}

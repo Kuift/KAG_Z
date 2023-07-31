@@ -193,7 +193,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 			}
 		}
 	}
-	if (customData == Hitters_modarrow) damage*=2.0;
+	if (customData == Hitters::arrow) damage*=2.0;
 	this.getSprite().PlaySound("/MigrantScream1");
 	return damage;
 }														
@@ -209,7 +209,7 @@ bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
 {
-	if (hitBlob !is null && customData == Hitters_modflying)
+	if (hitBlob !is null && customData == Hitters::flying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
 		force.y -= 7.0f;

@@ -31,17 +31,17 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 	//scale per hitter
 	switch (customData)
 	{
-		case Hitters_modfall:
-		case Hitters_moddrown:
-		case Hitters_modburn:
-		case Hitters_modcrush:
-		case Hitters_modspikes:
+		case Hitters::fall:
+		case Hitters::drown:
+		case Hitters::burn:
+		case Hitters::crush:
+		case Hitters::spikes:
 			scale = 0.0f; break;
 
-		case Hitters_modarrow:
+		case Hitters::arrow:
 			scale = 0.0f; break;
 
-		case Hitters_modcata_stones:
+		case Hitters::cata_stones:
 			scale = 0.25f; break;
 
 		default: break;

@@ -118,7 +118,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
                 }
             }
 
-            this.server_Hit( this, point1, normal, damage, Hitters_modfall );
+            this.server_Hit( this, point1, normal, damage, Hitters::fall );
         }
     }
 }

@@ -14,7 +14,7 @@ void onInit( CBlob@ this )
 	this.set_f32("map_damage_ratio", 1.5f);
 	this.set_bool("map_damage_raycast", true);
 	this.set_bool("explosive_teamkill", false);
-	this.set_u8("custom_hitter", Hitters_modnotnormalfire);
+	this.set_u8("custom_hitter", Hitters::notnormalfire);
 	this.set_string("custom_explosion_sound", "KegExplosion.ogg");
 	this.Tag("exploding");
 }	
@@ -54,7 +54,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal)
 	{
 		if(blob !is null && (isEnemy(this, blob)))
 		{
-			this.server_Hit(blob, blob.getPosition(), Vec2f(0,0), 4.0f, Hitters_modfire, true); 
+			this.server_Hit(blob, blob.getPosition(), Vec2f(0,0), 4.0f, Hitters::fire, true); 
 		} 
 	}
 }
@@ -80,7 +80,7 @@ void onDie(CBlob@ this)
 			if (target.hasTag("flesh") &&
 			(target.getTeamNum() != this.getTeamNum() || !target.hasTag("EndlessFlame")))
 			{
-				this.server_Hit(target, POSITION, Vec2f_zero, 0.0f, Hitters_modnotnormalfire, true);
+				this.server_Hit(target, POSITION, Vec2f_zero, 0.0f, Hitters::notnormalfire, true);
 			}
 		}
 	}
