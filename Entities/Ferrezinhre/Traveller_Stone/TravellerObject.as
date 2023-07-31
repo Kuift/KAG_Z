@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 #include "GenericButtonCommon.as";
 const f32 max_range = 55200.00f; // range change due maps size
 const int TELEPORT_FREQUENCY = 30; //4 secs

@@ -1,6 +1,6 @@
 // scroll script that builds gold into 
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 
 void onInit( CBlob@ this )
 {

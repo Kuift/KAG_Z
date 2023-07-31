@@ -1,6 +1,6 @@
 // GenericSpike.as
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 
 namespace Spike
 {

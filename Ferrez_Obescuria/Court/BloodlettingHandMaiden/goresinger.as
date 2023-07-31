@@ -431,7 +431,7 @@ void onDie(CBlob@ this)
 		getRules().set_u32("tsuyani_score", getRules().get_u32("tsuyani_score") + 1);
 	}
 }
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 
 bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {

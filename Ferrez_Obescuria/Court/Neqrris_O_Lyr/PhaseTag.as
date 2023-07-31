@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 #include "FireCommon.as";
 
 

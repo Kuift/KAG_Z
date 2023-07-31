@@ -3,7 +3,7 @@
 #include "ThrowCommon.as"
 #include "KnightCommon.as";
 #include "RunnerCommon.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 #include "ShieldCommon.as";
 #include "KnockedCommon.as"
 #include "Help.as";

@@ -1,5 +1,5 @@
 #define SERVER_ONLY
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters_mod.as"
 
 // regen hp back to 
 

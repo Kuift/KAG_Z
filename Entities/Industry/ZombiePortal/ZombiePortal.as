@@ -1,5 +1,5 @@
 ﻿// Builder Workshop
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 //#include "Requirements.as"
 //#include "ShopCommon.as";
 //#include "Descriptions.as";

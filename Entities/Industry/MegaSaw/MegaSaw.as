@@ -1,6 +1,6 @@
 // Saw logic
 
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters_mod.as"
 
 const string toggle_id = "toggle_power";
 const string sawteammate_id = "sawteammate";

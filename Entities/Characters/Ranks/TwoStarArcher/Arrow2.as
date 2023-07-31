@@ -1,5 +1,5 @@
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 #include "ShieldCommon.as";
 #include "FireParticle.as"
 #include "ArcherCommon.as";

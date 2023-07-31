@@ -1,4 +1,4 @@
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 #include "/Entities/Common/Attacks/LimitedAttacks.as";
 
 const int pierce_amount = 64;

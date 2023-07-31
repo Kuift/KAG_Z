@@ -1,6 +1,6 @@
 // TrapBlock.as
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 #include "MapFlags.as";
 
 int openRecursion = 0;

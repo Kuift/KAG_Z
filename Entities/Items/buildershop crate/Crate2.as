@@ -5,7 +5,7 @@
 #include "VehicleAttachmentCommon.as"
 #include "MiniIconsInc.as"
 #include "Help.as"
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters_mod.as"
 #include "GenericButtonCommon.as"
 #include "KnockedCommon.as"
 

@@ -477,7 +477,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 	
 }														
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters_mod.as";
 
 bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {
