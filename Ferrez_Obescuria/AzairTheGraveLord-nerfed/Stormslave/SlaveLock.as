@@ -191,7 +191,7 @@ void onTick(CBlob@ this)
 			if (other.getName() == "lantern" || other.getName() == "wooden_door")
 			{
 				Vec2f vel(0,0);
-				this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+				this.server_Hit(other,other.getPosition(),vel,0.2,Hitters_modsaw, false);
 				break;				
 			}
 		}	
@@ -230,7 +230,7 @@ void onTick(CBlob@ this)
 								if (other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum())
 								{
 									f32 power = this.get_f32("bite damage");
-									this.server_Hit(other,other.getPosition(),vel,power,Hitters::bite, true);
+									this.server_Hit(other,other.getPosition(),vel,power,Hitters_modbite, true);
 									this.set_u16("lastbite",0);
 								}
 								else
@@ -387,7 +387,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 		server_DropCoins(hitterBlob.getPosition() + Vec2f(0,-3.0f), 10);
 		
 	}
-	if (customData == Hitters::arrow) damage*=2.0;
+	if (customData == Hitters_modarrow) damage*=2.0;
 	MadAt( this, hitterBlob );
 	return damage;
 }														
@@ -419,7 +419,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
 {
-/*	if (hitBlob !is null && customData == Hitters::flying)
+/*	if (hitBlob !is null && customData == Hitters_modflying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
 		force.y -= 7.0f;

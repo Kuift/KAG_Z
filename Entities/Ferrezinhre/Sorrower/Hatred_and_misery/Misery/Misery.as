@@ -82,7 +82,7 @@ void updateLaserPositions(CBlob@ this)
 				}
 				else if ( damageDealt == false )
 				{
-					this.server_Hit(hitBlob, hi.hitpos, Vec2f(0,1), DAMAGE, Hitters::explosion, true);
+					this.server_Hit(hitBlob, hi.hitpos, Vec2f(0,1), DAMAGE, Hitters_modexplosion, true);
 					
 					damageDealt = true;
 				}

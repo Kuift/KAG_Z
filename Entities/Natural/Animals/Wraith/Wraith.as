@@ -130,7 +130,7 @@ void onInit(CBlob@ this)
 //	this.set_f32("map_bomberman_width", 24.0f);
     this.set_f32("explosive_radius", 40.0f);
     this.set_f32("explosive_damage",2.0f);
-    this.set_u8("custom_hitter", Hitters::keg);
+    this.set_u8("custom_hitter", Hitters_modkeg);
     this.set_string("custom_explosion_sound", "Entities/Items/Explosives/KegExplosion.ogg");
     this.set_f32("map_damage_radius", 48.0f);
     this.set_f32("map_damage_ratio", 0.5f);
@@ -208,7 +208,7 @@ void onTick(CBlob@ this)
 			if (other.getName() == "lantern" || other.getName() == "wooden_door")
 			{
 				Vec2f vel(0,0);
-				//this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+				//this.server_Hit(other,other.getPosition(),vel,0.2,Hitters_modsaw, false);
 			}
 		}	
 	}
@@ -409,7 +409,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 			//if (vel * direction > 0.33f)
 			{
 				//f32 power = Maths::Max( 0.25f, 1.0f*vellen );
-				//this.server_Hit( blob, point1, vel, power, Hitters::bite, false);
+				//this.server_Hit( blob, point1, vel, power, Hitters_modbite, false);
 				//this.server_Pickup(blob);
 				//this.server_SetHealth(-1.0f);
 				//this.server_Die();				
@@ -422,7 +422,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
 {
-	if (hitBlob !is null && customData == Hitters::flying)
+	if (hitBlob !is null && customData == Hitters_modflying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
 		force.y -= 7.0f;

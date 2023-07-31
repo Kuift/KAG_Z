@@ -1,5 +1,5 @@
 
-namespace Hitters
+namespace Hitters_mod
 {
 	shared enum hits
 	{
@@ -77,5 +77,5 @@ namespace Hitters
 // not keg - not blockable :)
 bool isExplosionHitter(u8 type)
 {
-	return type == Hitters::bomb || type == Hitters::explosion || type == Hitters::mine || type == Hitters::bomb_arrow || type == Hitters::blast;
+	return type == Hitters_modbomb || type == Hitters_modexplosion || type == Hitters_modmine || type == Hitters_modbomb_arrow || type == Hitters_modblast;
 }

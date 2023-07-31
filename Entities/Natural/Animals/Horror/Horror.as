@@ -192,7 +192,7 @@ void onTick(CBlob@ this)
 			if (other.getName() == "lantern" || other.getName() == "stone_door" || other.getName() == "wooden_door" || other.getName() == "wooden_platform"  || other.getName() == "GoldBrick" || other.getTeamNum()!=this.getTeamNum())
 			{
 				Vec2f vel(0,0);
-				this.server_Hit(other,other.getPosition(),vel,0.3,Hitters::saw, false);
+				this.server_Hit(other,other.getPosition(),vel,0.3,Hitters_modsaw, false);
 				break;				
 			}
 		}	
@@ -233,7 +233,7 @@ void onTick(CBlob@ this)
 								if ((other.hasTag("flesh") && other.getTeamNum() != this.getTeamNum()) || other.getName() == "bison" || other.getName() == "shark")
 								{
 									f32 power = this.get_f32("bite damage");
-									this.server_Hit(other,other.getPosition(),vel,power,Hitters::bite, false);
+									this.server_Hit(other,other.getPosition(),vel,power,Hitters_modbite, false);
 									this.set_u16("lastbite",0);
 									break;
 								}
@@ -242,13 +242,13 @@ void onTick(CBlob@ this)
 									const bool large = other.hasTag("blocks sword") && other.isCollidable();
 									if (other.getName() == "wooden_platform" || other.getName() == "GoldBrick" || other.getName() == "triangle" || other.getName() == "glider" || other.getName() == "bomber2" || other.getName() == "fighter" || other.getName() == "miniballoon")
 									{
-										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters_modsaw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
 									if (other.getTeamNum() != this.getTeamNum())
 									{
-										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters::saw, false);
+										this.server_Hit(other,other.getPosition(),vel,0.2,Hitters_modsaw, false);
 										this.set_u16("lastbite",0);
 										hit_block=true;
 									}
@@ -398,7 +398,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 		this.set_u16("death ticks",this.getTickSinceCreated());
 		this.Sync("death ticks",true);
 	}
-	if (customData == Hitters::arrow) damage*=2.0;
+	if (customData == Hitters_modarrow) damage*=2.0;
     this.Damage( damage, hitterBlob );
     // Gib if health below gibHealth
     f32 gibHealth = getGibHealth( this );

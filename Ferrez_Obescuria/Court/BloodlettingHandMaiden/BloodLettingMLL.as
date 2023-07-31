@@ -41,7 +41,7 @@ void onTick(CBlob@ this)
 				this.set_bool("teleport ready", false );
 				if(blob.hasTag("player") || blob.hasTag("fanatic"))
 				{
-				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
+				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters_modfall);
 				}
 			} 	
 

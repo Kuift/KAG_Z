@@ -184,19 +184,19 @@ bool canBePickedUp(CBlob@ this, CBlob@ byBlob)
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {
 	switch (customData){
-		case Hitters::builder:
+		case Hitters_modbuilder:
 			damage *= 5.0f;
 			break;
-		case Hitters::explosion:
+		case Hitters_modexplosion:
 			damage *= 0.1f;
 			break;
-		case Hitters::mine:
+		case Hitters_modmine:
 			damage = 0.0f;
 			break;
-		case Hitters::keg:
+		case Hitters_modkeg:
 			damage = 0.0f;
 			break;
-		case Hitters::mine_special:
+		case Hitters_modmine_special:
 			damage = 0.0f;
 			break;
 	}

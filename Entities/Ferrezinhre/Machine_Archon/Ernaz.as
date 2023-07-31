@@ -175,15 +175,15 @@ void MadAt(CBlob@ this, CBlob@ hitterBlob)
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {
-	if (customData == Hitters::arc)
+	if (customData == Hitters_modarc)
 	{
 		damage*= -1.0;
 	}
-	if (customData == Hitters::blast) //need do other custom hitter later, or custom hitters as due this error
+	if (customData == Hitters_modblast) //need do other custom hitter later, or custom hitters as due this error
 	{
 		damage*= 0.0;
 	}
-	if (customData == Hitters::bite)
+	if (customData == Hitters_modbite)
 	{
 		damage*= 0.1;
 	}
@@ -224,7 +224,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 			if (vel * direction > 0.33f)
 			{
 				f32 power = Maths::Max(0.25f, 0.25f * vellen);
-				this.server_Hit(blob, point1, vel, power, Hitters::flying, false);
+				this.server_Hit(blob, point1, vel, power, Hitters_modflying, false);
 			}
 		}
 
@@ -254,7 +254,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 }
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
-	if (hitBlob !is null && customData == Hitters::flying)
+	if (hitBlob !is null && customData == Hitters_modflying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
 		force.y -= 0.5f;

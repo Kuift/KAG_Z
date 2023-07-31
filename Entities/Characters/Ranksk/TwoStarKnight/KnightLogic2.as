@@ -395,7 +395,7 @@ void onTick(CBlob@ this)
 					attackarc *= 0.9f;
 				}
 
-				DoAttack(this, 3.0f, attackAngle, attackarc, Hitters::sword, delta, knight);
+				DoAttack(this, 3.0f, attackAngle, attackarc, Hitters_modsword, delta, knight);
 			}
 			else if (delta >= 9)
 			{
@@ -421,7 +421,7 @@ void onTick(CBlob@ this)
 			}
 			else if (delta > DELTA_BEGIN_ATTACK && delta < 10)
 			{
-				DoAttack(this, 6.0f, -(vec.Angle()), 120.0f, Hitters::sword, delta, knight);
+				DoAttack(this, 6.0f, -(vec.Angle()), 120.0f, Hitters_modsword, delta, knight);
 			}
 			else if (delta >= KnightVars::slash_time ||
 			         (knight.doubleslash && delta >= KnightVars::double_slash_time))
@@ -658,7 +658,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 						blob.set_f32("explosive_radius", 92.0f);
 						blob.set_bool("map_damage_raycast", false);
 						blob.set_string("custom_explosion_sound", "/GlassBreak");
-						blob.set_u8("custom_hitter", Hitters::water);
+						blob.set_u8("custom_hitter", Hitters_modwater);
 					}
 				}
 			}
@@ -747,7 +747,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 	float y_side = 0.0f;
 	Vec2f f;
 	switch (customData){
-		case Hitters::bomb:
+		case Hitters_modbomb:
 			if (velocity.x > 0.7)
 			{
 				x_side = 1.0f;
@@ -981,7 +981,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 				if (shieldVars.direction * normal < 0.0f)
 				{
 					knight_add_actor_limit(this, blob);
-					this.server_Hit(blob, pos, vel, 0.0f, Hitters::shield);
+					this.server_Hit(blob, pos, vel, 0.0f, Hitters_modshield);
 
 					Vec2f force = Vec2f(shieldVars.direction.x * this.getMass(), -this.getMass()) * 3.0f;
 
@@ -1073,7 +1073,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 		return;
 	}
 
-	if (customData == Hitters::sword &&
+	if (customData == Hitters_modsword &&
 	        ( //is a jab - note we dont have the dmg in here at the moment :/
 	            knight.state == KnightStates::sword_cut_mid ||
 	            knight.state == KnightStates::sword_cut_mid_down ||
@@ -1086,7 +1086,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 		SetKnocked(this, 30);
 	}
 
-	if (customData == Hitters::shield)
+	if (customData == Hitters_modshield)
 	{
 		SetKnocked(hitBlob, 20);
 		this.getSprite().PlaySound("/Stun", 1.0f, this.getSexNum() == 0 ? 1.0f : 2.0f);

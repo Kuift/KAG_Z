@@ -94,7 +94,7 @@ void Explode ( CBlob@ this, f32 radius, f32 damage )
 	const bool bomberman = this.hasTag("bomberman_style");
 
     //actor damage
-    u8 hitter = Hitters::explosion;
+    u8 hitter = Hitters_modexplosion;
 
     if (this.exists("custom_hitter")) {
         hitter = this.get_u8("custom_hitter");
@@ -104,7 +104,7 @@ void Explode ( CBlob@ this, f32 radius, f32 damage )
 
 	const int r = (radius * (2.0/3.0));
 											
-	if (hitter == Hitters::water)
+	if (hitter == Hitters_modwater)
 	{
 		int tilesr = (r / map.tilesize) * 0.5f;
 		Splash( this, tilesr, tilesr, 0.0f );
@@ -201,7 +201,7 @@ void Explode ( CBlob@ this, f32 radius, f32 damage )
 									if (!map.isTileBedrock(tile))
 									{
 									
-										if (dist >= rad_thresh || (hitter == Hitters::bomb && map.isTileGroundStuff(tile ))  ) 										{
+										if (dist >= rad_thresh || (hitter == Hitters_modbomb && map.isTileGroundStuff(tile ))  ) 										{
 											if (destroy_dirt || !map.isTileGroundStuff(tile)) map.server_DestroyTile(tpos, 1.0f, this);
 										}
 										else	  										{
@@ -236,7 +236,7 @@ void Explode ( CBlob@ this, f32 radius, f32 damage )
    
 void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData )
 {			 
-    if (customData == Hitters::bomb || customData == Hitters::water)
+    if (customData == Hitters_modbomb || customData == Hitters_modwater)
     {
         hitBlob.AddForce( velocity );
     }
@@ -453,7 +453,7 @@ bool HitBlob( CBlob@ this, CBlob@ hit_blob, f32 radius, f32 damage, const u8 hit
 	//hit the object
 	this.server_Hit( 	hit_blob, hit_blob_pos,
 						bombforce, dam,
-						hitter, hitter == Hitters::water || //hit with water
+						hitter, hitter == Hitters_modwater || //hit with water
 							isOwnerBlob(this,hit_blob) ||	//allow selfkill with bombs
 							should_teamkill || hit_blob.hasTag("dead")			//hit all corpses
 					); 

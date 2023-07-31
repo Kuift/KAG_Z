@@ -19,7 +19,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		if (blob.getTeamNum() == this.getTeamNum())
 			return;
 
-		this.server_Hit(blob, point1, Vec2f(0,0), 0.01, Hitters::fire);
+		this.server_Hit(blob, point1, Vec2f(0,0), 0.01, Hitters_modfire);
 	}
 
 	Vec2f lastBurnPos = this.get_Vec2f("last burn pos");

@@ -397,7 +397,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 			this.server_PutOutInventory(sneaky_player);
 		}
 		// Attack self to pop out items
-		// this.server_Hit(this, this.getPosition(), Vec2f(), 100.0f, Hitters::crush, true);
+		// this.server_Hit(this, this.getPosition(), Vec2f(), 100.0f, Hitters_modcrush, true);
 		// this.server_Die();
 	}
 	else if (cmd == this.getCommandID("boobytrap"))
@@ -599,7 +599,7 @@ void onRemoveFromInventory(CBlob@ this, CBlob@ blob)
 	{
 		if (blob.hasTag("exploding") && blob.get_s32("explosion_timer") - getGameTime() <= 0)
 		{
-			this.server_Hit(this, this.getPosition(), Vec2f(), 100.0f, Hitters::explosion, true);
+			this.server_Hit(this, this.getPosition(), Vec2f(), 100.0f, Hitters_modexplosion, true);
 		}
 
 		this.Untag("medium weight");
@@ -617,15 +617,15 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 {
 	f32 dmg = damage;
 
-	if (customData == Hitters::builder)
+	if (customData == Hitters_modbuilder)
 	{
 		dmg *= 4;
 	}
-	if (customData == Hitters::saw)
+	if (customData == Hitters_modsaw)
 	{
 		DumpOutItems(this, 0);
 	}
-	if (isExplosionHitter(customData) || customData == Hitters::keg)
+	if (isExplosionHitter(customData) || customData == Hitters_modkeg)
 	{
 		if (dmg > 50.0f) // inventory explosion
 		{
@@ -636,12 +636,12 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 			if (sneaky_player !is null)
 			{
 				hitterBlob.server_Hit(sneaky_player, this.getPosition(), Vec2f(),
-									  sneaky_player.getInitialHealth() * 2 - 0.25f, Hitters::explosion, true);
+									  sneaky_player.getInitialHealth() * 2 - 0.25f, Hitters_modexplosion, true);
 			}
 		}
 		else
 		{
-			if (customData == Hitters::keg)
+			if (customData == Hitters_modkeg)
 			{
 				dmg = Maths::Max(dmg, this.getInitialHealth() * 2); // Keg always kills crate
 			}
@@ -649,7 +649,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 			if (sneaky_player !is null)
 			{
 				bool should_teamkill = (sneaky_player.getTeamNum() != hitterBlob.getTeamNum()
-										|| customData == Hitters::keg);
+										|| customData == Hitters_modkeg);
 				hitterBlob.server_Hit(getPlayerInside(this), this.getPosition(), Vec2f_zero,
 									  dmg / 2, customData, should_teamkill);
 			}

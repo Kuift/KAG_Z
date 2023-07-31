@@ -25,7 +25,7 @@ CBlob@ carryBlob3 = this.getCarriedBlob();
 	Vec2f pos = this.getPosition();
 	Vec2f vel = this.getVelocity();
 	//this.server_Heal(this.get_f32(rate_prop));
-	this.server_Hit(this, pos, vel * -1, 0.2f, Hitters::suicide);
-	//this.server_Hit(this, pos, Vec2f(0, -1), 1.0f, Hitters::fall, true);
+	this.server_Hit(this, pos, vel * -1, 0.2f, Hitters_modsuicide);
+	//this.server_Hit(this, pos, Vec2f(0, -1), 1.0f, Hitters_modfall, true);
 		}
 }

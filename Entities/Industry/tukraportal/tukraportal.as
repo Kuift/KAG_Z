@@ -182,11 +182,11 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 {						   
 	switch (customData)
 	{
-		case Hitters::bomb_arrow:
+		case Hitters_modbomb_arrow:
 			damage *= 0.25f; //quarter damage from these
 		break;
 			
-		case Hitters::arc:
+		case Hitters_modarc:
 			damage *= 0.3f; //1/3 damage from pillager
 		break;
 	}

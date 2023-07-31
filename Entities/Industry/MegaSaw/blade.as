@@ -135,10 +135,10 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 		{
 			// this isnt synced cause we want instant collision for arrow even if it was wrong
 			if (blob.getName() != "tree_bushy" && blob.getName() != "tree_pine") { 
-			dmg = ArrowHitBlob( this, point1, initVelocity, dmg, blob, Hitters::arrow, 0 );
+			dmg = ArrowHitBlob( this, point1, initVelocity, dmg, blob, Hitters_modarrow, 0 );
 			}
 			if (dmg > 0.0f) {
-				this.server_Hit( blob, point1, initVelocity, dmg, Hitters::saw);
+				this.server_Hit( blob, point1, initVelocity, dmg, Hitters_modsaw);
 			}
 		}
 
@@ -202,7 +202,7 @@ void Pierce( CBlob @this )
 
 	if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, this.getPosition() ,end))
 	{
-		ArrowHitMap( this, end, this.getOldVelocity(), 0.5f, Hitters::arrow );
+		ArrowHitMap( this, end, this.getOldVelocity(), 0.5f, Hitters_modarrow );
 	}
 }
 
@@ -442,7 +442,7 @@ void onHitBlob( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob
 {
 	const u8 arrowType = this.get_u8("arrow type");
 	// unbomb, stick to blob
-	if (this !is hitBlob && customData == Hitters::arrow)
+	if (this !is hitBlob && customData == Hitters_modarrow)
 	{
 		// affect players velocity
 
