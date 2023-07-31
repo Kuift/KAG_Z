@@ -67,10 +67,10 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 			return;
 		}
 		
-		this.set_u8("custom_hitter", Hitters_mod::water_stun);
+		this.set_u8("custom_hitter", Hitters::water_stun);
 		if(this.get_bool("justHit") == false)
 		{
-			this.server_Hit(blob, point1, normal, (0.5f), Hitters_mod::water_stun); // You're my another favorite little meat grinder!
+			this.server_Hit(blob, point1, normal, (0.5f), Hitters::water_stun); // You're my another favorite little meat grinder!
 			this.set_bool("justHit", true);
 		}
 	}
@@ -93,7 +93,7 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 {	
 
 
-	if (customData == Hitters_mod::notnormalfire) //need do other custom hitter later, or custom hitters as due this error
+	if (customData == Hitters::notnormalfire) //need do other custom hitter later, or custom hitters as due this error
 	{
 		damage*= 0.0;
 	}

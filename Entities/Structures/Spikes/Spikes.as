@@ -90,7 +90,7 @@ void onTick(CBlob@ this)
 	if (getNet().isServer() &&
 	        (map.isTileSolid(map.getTile(pos)) || map.rayCastSolid(pos - this.getVelocity(), pos)))
 	{
-		this.server_Hit(this, pos, Vec2f(0, -1), 3.0f, Hitters_mod::fall, true);
+		this.server_Hit(this, pos, Vec2f(0, -1), 3.0f, Hitters::fall, true);
 		return;
 	}
 
@@ -230,7 +230,7 @@ void onTick(CBlob@ this)
 							// hurt?
 							if (this.isOverlapping(b))
 							{
-								this.server_Hit(b, pos, b.getVelocity() * -1, 0.5f, Hitters_mod::spikes, true);
+								this.server_Hit(b, pos, b.getVelocity() * -1, 0.5f, Hitters::spikes, true);
 							}
 						}
 					}
@@ -297,19 +297,19 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 	{
 		float vellen = this.getVelocity().Length();
 		if (vellen < 4.0f){
-            this.server_Hit(blob, point, Vec2f(0, 1), 2.0f, Hitters_mod::spikes, true);
+            this.server_Hit(blob, point, Vec2f(0, 1), 2.0f, Hitters::spikes, true);
         }
         else if(vellen < 5.5f){
-            this.server_Hit(blob, point, Vec2f(0, 1), 4.0f, Hitters_mod::spikes, true);
+            this.server_Hit(blob, point, Vec2f(0, 1), 4.0f, Hitters::spikes, true);
         }
         else if(vellen < 7.0f){
-            this.server_Hit(blob, point, Vec2f(0, 1), 6.0f, Hitters_mod::spikes, true);
+            this.server_Hit(blob, point, Vec2f(0, 1), 6.0f, Hitters::spikes, true);
         }
         else if(vellen < 8.5f){
-            this.server_Hit(blob, point, Vec2f(0, 1), 8.0f, Hitters_mod::spikes, true);
+            this.server_Hit(blob, point, Vec2f(0, 1), 8.0f, Hitters::spikes, true);
         }
         else if(vellen < 10.0f){
-            this.server_Hit(blob, point, Vec2f(0, 1), 10.0f, Hitters_mod::spikes, true);
+            this.server_Hit(blob, point, Vec2f(0, 1), 10.0f, Hitters::spikes, true);
         }
 	}
 
@@ -371,7 +371,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 
 	if (damage > 0)
 	{
-		this.server_Hit(blob, point, vel * -1, damage, Hitters_mod::spikes, true);
+		this.server_Hit(blob, point, vel * -1, damage, Hitters::spikes, true);
 	}
 }
 
@@ -413,18 +413,18 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 	f32 dmg = damage;
 	switch (customData)
 	{
-		case Hitters_mod::bomb:
+		case Hitters::bomb:
 			dmg *= 0.5f;
 			break;
 
-		case Hitters_mod::keg:
+		case Hitters::keg:
 			dmg *= 2.0f;
 
-		case Hitters_mod::arrow:
+		case Hitters::arrow:
 			dmg = 0.0f;
 			break;
 
-		case Hitters_mod::cata_stones:
+		case Hitters::cata_stones:
 			dmg *= 3.0f;
 			break;
 	}

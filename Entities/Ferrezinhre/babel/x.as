@@ -101,8 +101,8 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		{
 			return;
 		}
-		this.set_u8("custom_hitter", Hitters_mod::noise);
-		this.server_Hit(blob, point1, normal, 3.0f*XORRandom(5)/2+1.5, Hitters_mod::noise);
+		this.set_u8("custom_hitter", Hitters::noise);
+		this.server_Hit(blob, point1, normal, 3.0f*XORRandom(5)/2+1.5, Hitters::noise);
 		this.getSprite().PlaySound("note_dos" + XORRandom(9) + ".ogg");
 	}
 	this.getSprite().PlaySound("note_dos" + XORRandom(9) + ".ogg");
@@ -116,7 +116,7 @@ void Pierce(CBlob @this)
 	Vec2f end;
 	if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, this.getPosition() ,end))
 	{
-		HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_mod::noise);
+		HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::noise);
 	}
 }
 
@@ -137,7 +137,7 @@ void HitMap(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, u8 custom
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
 	// unbomb, stick to blob
-	if (this !is hitBlob && customData == Hitters_mod::noise)
+	if (this !is hitBlob && customData == Hitters::noise)
 	{
 		// affect players velocity
 		f32 force = (ARROW_PUSH_FORCE * -0.5f) * Maths::Sqrt(hitBlob.getMass()+1);

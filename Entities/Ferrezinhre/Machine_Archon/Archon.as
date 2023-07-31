@@ -217,7 +217,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 			if (vel * direction > 0.33f)
 			{
 				f32 power = Maths::Max(0.25f, 0.25f * vellen);
-				this.server_Hit(blob, point1, vel, power, Hitters_mod::flying, false);
+				this.server_Hit(blob, point1, vel, power, Hitters::flying, false);
 			}
 		}
 
@@ -265,7 +265,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 }
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
-	if (hitBlob !is null && customData == Hitters_mod::flying)
+	if (hitBlob !is null && customData == Hitters::flying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.35f ;
 		force.y -= 0.5f;

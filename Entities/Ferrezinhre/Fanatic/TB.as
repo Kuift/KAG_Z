@@ -133,8 +133,8 @@ void Pierce(CBlob@ this, Vec2f velocity, const f32 angle)
 			if (offsets.find(offset) != -1)
 				continue;
 
-			BallistaHitMap(this, offset, temp_position, velocity, damage, Hitters_mod::fall);
-			this.server_HitMap(temp_position, velocity, damage, Hitters_mod::fall);
+			BallistaHitMap(this, offset, temp_position, velocity, damage, Hitters::fall);
+			this.server_HitMap(temp_position, velocity, damage, Hitters::fall);
 
 		}
 	}
@@ -158,8 +158,8 @@ void Pierce(CBlob@ this, Vec2f velocity, const f32 angle)
 				if (!doesCollideWithBlob(this, blob) || LimitedAttack_has_hit_actor(this, blob))
 					continue;
 
-				this.server_Hit(blob, hit_position, velocity, (1.5f*XORRandom(8)/3)*XORRandom(4), Hitters_mod::fall, true);
-				BallistaHitBlob(this, hit_position, velocity, (1.5f*XORRandom(8)/3)*XORRandom(4), blob, Hitters_mod::fall);
+				this.server_Hit(blob, hit_position, velocity, (1.5f*XORRandom(8)/3)*XORRandom(4), Hitters::fall, true);
+				BallistaHitBlob(this, hit_position, velocity, (1.5f*XORRandom(8)/3)*XORRandom(4), blob, Hitters::fall);
 				LimitedAttack_add_actor(this, blob);
 
 			}
@@ -177,7 +177,7 @@ bool DoExplosion(CBlob@ this, Vec2f velocity)
 			return true;
 
 		Explode(this, 16.0f, 2.0f);
-		LinearExplosion(this, velocity, 64.0f, 8.0f, 2, 4.0f, Hitters_mod::bomb);
+		LinearExplosion(this, velocity, 64.0f, 8.0f, 2, 4.0f, Hitters::bomb);
 
 		this.Tag("dead");
 		this.server_Die();

@@ -202,7 +202,7 @@ bool RecdHitCommand(CBlob@ this, CBitStream@ params)
 
 			if (getNet().isServer())
 			{
-				this.server_Hit(blob, tilepos, attackVel, attack_power, Hitters_mod::builder, teamHurt);
+				this.server_Hit(blob, tilepos, attackVel, attack_power, Hitters::builder, teamHurt);
 
 				Material::fromBlob(this, blob, attack_power);
 			}

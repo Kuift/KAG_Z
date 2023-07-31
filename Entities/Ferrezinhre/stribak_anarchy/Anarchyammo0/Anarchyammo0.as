@@ -35,7 +35,7 @@ void onInit(CBlob@ this)
 	this.set_f32("map_damage_ratio", (1.0f));
 	this.set_bool("explosive_teamkill", false);
 
-	this.set_u8("custom_hitter", Hitters_mod::blast); //custom hitter
+	this.set_u8("custom_hitter", Hitters::blast); //custom hitter
 	this.set_string("custom_explosion_sound", "KegExplosion.ogg");
 
 
@@ -76,7 +76,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		this.setPosition(normal * this.getRadius() + point1);
 		shape.SetStatic(true);
 		this.Tag("spikyignore");
-		this.server_Hit(blob, point1, normal, 4.0f, Hitters_mod::blast); //custom hitter
+		this.server_Hit(blob, point1, normal, 4.0f, Hitters::blast); //custom hitter
 	}
 
 	CSprite@ sprite = this.getSprite();

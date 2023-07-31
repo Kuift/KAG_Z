@@ -14,7 +14,7 @@ void onInit(CBlob@ this)
 {
 	CShape@ shape = this.getShape();
 	ShapeConsts@ consts = shape.getConsts();
-	this.set_u8("custom_hitter", Hitters_mod::arrow);
+	this.set_u8("custom_hitter", Hitters::arrow);
 	//consts.mapCollisions = false;	 // weh ave our own map collision
 	consts.bullet = true;
 	consts.net_threshold_multiplier = 4.0f;
@@ -32,10 +32,10 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 			return;
 		}
 		
-		this.set_u8("custom_hitter", Hitters_mod::arrow);
+		this.set_u8("custom_hitter", Hitters::arrow);
 		if(this.get_bool("justHit") == false)
 		{
-			this.server_Hit(blob, point1, normal, (4.0f + XORRandom(4)), Hitters_mod::arrow); // You're my another favorite little meat grinder!
+			this.server_Hit(blob, point1, normal, (4.0f + XORRandom(4)), Hitters::arrow); // You're my another favorite little meat grinder!
 			this.set_bool("justHit", true);
 		}
 	}
@@ -85,7 +85,7 @@ void Pierce(CBlob @this)
 	Vec2f end;
 	if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, this.getPosition() ,end))
 	{
-		HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_mod::arrow);
+		HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::arrow);
 	}
 }
 
@@ -106,7 +106,7 @@ void HitMap(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, u8 custom
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
 	// unbomb, stick to blob
-	if (this !is hitBlob && customData == Hitters_mod::arrow)
+	if (this !is hitBlob && customData == Hitters::arrow)
 	{
 		// affect players velocity
 		f32 force = (ARROW_PUSH_FORCE * -1.0f) * Maths::Sqrt(hitBlob.getMass()+1);

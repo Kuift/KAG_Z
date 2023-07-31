@@ -59,18 +59,18 @@ void Slam(CBlob @this, f32 angle, Vec2f vel, f32 vellen)
 
 			if (hi.blob is null) // map
 			{
-				if (BoulderHitMap(this, hi.hitpos, hi.tileOffset, vel, dmg, Hitters_mod::cata_boulder))
+				if (BoulderHitMap(this, hi.hitpos, hi.tileOffset, vel, dmg, Hitters::cata_boulder))
 					return;
 			}
 			else if (team != u8(hi.blob.getTeamNum()))
 			{
-				this.server_Hit(hi.blob, pos, vel, dmg, Hitters_mod::cata_boulder, true);
+				this.server_Hit(hi.blob, pos, vel, dmg, Hitters::cata_boulder, true);
 				this.setVelocity(vel * 0.9f); //damp
 
 				// die when hit something large
 				if (hi.blob.getRadius() > 32.0f)
 				{
-					this.server_Hit(this, pos, vel, 10, Hitters_mod::cata_boulder, true);
+					this.server_Hit(this, pos, vel, 10, Hitters::cata_boulder, true);
 				}
 			}
 		}
@@ -140,7 +140,7 @@ bool BoulderHitMap(CBlob@ this, Vec2f worldPoint, int tileOffset, Vec2f velocity
 
 	if (stuck)
 	{
-		this.server_Hit(this, worldPoint, velocity, 10, Hitters_mod::crush, true);
+		this.server_Hit(this, worldPoint, velocity, 10, Hitters::crush, true);
 	}
 
 	return stuck;
@@ -206,7 +206,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		//}
 
 		//hurt
-		this.server_Hit(blob, point1, hitvel, 7.0f, Hitters_mod::cata_boulder, true);
+		this.server_Hit(blob, point1, hitvel, 7.0f, Hitters::cata_boulder, true);
 
 		return;
 
@@ -215,7 +215,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {
-	if (customData == Hitters_mod::sword || customData == Hitters_mod::arrow)
+	if (customData == Hitters::sword || customData == Hitters::arrow)
 	{
 		return damage *= 0.5f;
 	}

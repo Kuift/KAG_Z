@@ -26,13 +26,13 @@ void onDie(CBlob@ this)
 		for (uint i = 0; i < zombies.length; i++)
 		{
 			CBlob@ zombie = zombies[i];
-			zombie.server_Hit(zombie, zombie.getPosition(), Vec2f(0,0), 1000.0f, Hitters_mod::fire);
+			zombie.server_Hit(zombie, zombie.getPosition(), Vec2f(0,0), 1000.0f, Hitters::fire);
 		}
 		getBlobsByTag("portal_zombie", @zombies);
 		for (uint i = 0; i < zombies.length; i++)
 		{
 			CBlob@ zombie = zombies[i];
-			zombie.server_Hit(zombie, zombie.getPosition(), Vec2f(0,0), 1000.0f, Hitters_mod::fire);
+			zombie.server_Hit(zombie, zombie.getPosition(), Vec2f(0,0), 1000.0f, Hitters::fire);
 		}
 		server_CreateBlob("neqrris", -1, this.getPosition() + Vec2f(0, -5.0f));
 		server_CreateBlob("goresinger", -1, this.getPosition() + Vec2f(-35, -5.0f));
