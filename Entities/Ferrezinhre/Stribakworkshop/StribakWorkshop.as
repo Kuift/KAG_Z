@@ -64,7 +64,8 @@ void onInit( CBlob@ this )
 	
 	{
 		ShopItem@ s = addShopItem( this, "Sorrower ", "$sorrower$", "sorrower", " 836943 coins.", true );
-		AddRequirement( s.requirements, "coin", "", "Coins", 44738 );
+		AddRequirement( s.requirements, "blob", "bundle5000", "Bundle of 5000 coins", 12 );
+		AddRequirement( s.requirements, "coin", "", "Coins", 12900 );
 	}
 	
 	{
