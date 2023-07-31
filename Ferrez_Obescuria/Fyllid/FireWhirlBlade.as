@@ -1,5 +1,5 @@
-const int FIRE_FREQUENCY = 250;
-const int FIRE_FREQUENCY2 = 90;
+const int FIRE_FREQUENCY = 90;
+const int FIRE_FREQUENCY2 = 17;
 const f32 BOLT_SPEED = 19.0f;
 const f32 BOLT_SPEED2 = 24.0f;
 const f32 max_range = 254.00f;
