@@ -55,7 +55,7 @@ class Spiker : Component
 		CSprite@ sprite = this.getSprite();
 		if(sprite is null) return;
 
-		sprite.PlaySound("SpikerThrust.ogg", 2.0f);
+		sprite.PlaySound("SpikerThrust.ogg", 0.25f);
 	}
 
 	void Deactivate(CBlob@ this)
