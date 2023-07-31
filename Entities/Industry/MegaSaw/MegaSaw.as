@@ -71,7 +71,7 @@ void onTick( CBlob@ this )
 				
             }
         }
-		this.getSprite().PlaySound( "SawLog.ogg" );
+		this.getSprite().PlaySound( "SawLog.ogg" , 0.5f);
 		this.set_u32("blade delay",0);
 	}
 
@@ -125,7 +125,7 @@ void onCommand( CBlob@ this, u8 cmd, CBitStream @params )
 			}
 		}
 
-		this.getSprite().PlaySound( "SawOther.ogg" );
+		this.getSprite().PlaySound( "SawOther.ogg", 0.5f );
 		cmd = this.getCommandID(toggle_id);	// proceed with toggle_id stuff
 	}
 
@@ -175,10 +175,10 @@ void Blend( CBlob@ this, CBlob@ tobeblended )
 			wood.setVelocity( Vec2f(0, -4.0f) );
 		}
 
-		this.getSprite().PlaySound( "SawLog.ogg" );
+		this.getSprite().PlaySound( "SawLog.ogg" , 0.5f );
 	}
 	else {
-		this.getSprite().PlaySound( "SawOther.ogg" );
+		this.getSprite().PlaySound( "SawOther.ogg" , 0.5f);
 	}
 
 	tobeblended.Tag("sawed");
