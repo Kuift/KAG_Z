@@ -1,4 +1,4 @@
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "Knocked.as";
 #include "GenericButtonCommon.as";
 const f32 max_range = 16.00f;

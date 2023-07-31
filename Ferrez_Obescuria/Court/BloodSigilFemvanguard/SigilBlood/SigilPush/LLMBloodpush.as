@@ -7,7 +7,7 @@
 
 #define SERVER_ONLY
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "AnimalConsts.as";
 
 

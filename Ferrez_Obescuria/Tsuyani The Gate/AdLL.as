@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 const f32 max_range = 9999999999.00f;
 const float field_force = 1.0;
 const float mass = 1.0;

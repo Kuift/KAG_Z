@@ -1,4 +1,4 @@
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters.as"
 
 const float DAMAGE = 0.5f;
 const float HIT_PER_SECOND = 6.0f;

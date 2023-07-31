@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "FireCommon.as";
 const f32 max_range_of_neqrris_rage = 2844.00f;
 const int NEQRRIS_RAGE_FREQUENCY = 30;

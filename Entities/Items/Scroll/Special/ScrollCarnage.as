@@ -1,6 +1,6 @@
 // scroll script that makes enemies insta gib within some radius
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 
 void onInit( CBlob@ this )
 {

@@ -1,6 +1,6 @@
 // Lantern script
 #include "Knocked.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "FireCommon.as";
 const f32 sigilbloodhold_range = 460.00f;
 const f32 sigilbloodhold_range2 = 720.00f;

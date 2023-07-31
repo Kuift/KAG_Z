@@ -1,6 +1,6 @@
 // Builder logic
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "BuilderCommon.as";
 #include "ThrowCommon.as";
 #include "RunnerCommon.as";

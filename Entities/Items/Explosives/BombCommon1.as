@@ -1,6 +1,6 @@
 // Bomb logic
 
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters.as"
 
 
 

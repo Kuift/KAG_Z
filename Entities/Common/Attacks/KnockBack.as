@@ -1,5 +1,5 @@
 // Knockback on hit - put before any damaging things but after any scalers
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters.as"
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {

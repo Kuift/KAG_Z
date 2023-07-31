@@ -1,6 +1,6 @@
 
 #include "NamesCommon.as";
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "ShieldCommon.as";
 #include "FireParticle.as"
 #include "ArcherCommon.as";

@@ -1,6 +1,6 @@
 // Blame Fuzzle.
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "ShieldCommon.as";
 #include "LimitedAttacks.as";
 #include "MakeDustParticle.as";

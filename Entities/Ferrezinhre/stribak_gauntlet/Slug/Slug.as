@@ -1,5 +1,5 @@
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "ShieldCommon.as";
 #include "ArcherCommon.as";
 #include "TeamStructureNear.as";

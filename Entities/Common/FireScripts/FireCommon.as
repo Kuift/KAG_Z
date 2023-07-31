@@ -1,5 +1,5 @@
 
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters.as"
 
 const string burn_duration = "burn duration";
 const string burn_hitter = "burn hitter";

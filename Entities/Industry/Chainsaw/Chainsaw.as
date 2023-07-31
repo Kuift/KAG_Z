@@ -1,6 +1,6 @@
 // Drill.as
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "BuilderHittable.as";
 #include "ParticleSparks.as";
 #include "MaterialCommon2.as";

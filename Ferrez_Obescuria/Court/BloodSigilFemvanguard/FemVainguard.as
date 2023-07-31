@@ -433,7 +433,7 @@ void onDie(CBlob@ this)
 	}
 }
 
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 
 bool doesCollideWithBlob( CBlob@ this, CBlob@ blob )
 {

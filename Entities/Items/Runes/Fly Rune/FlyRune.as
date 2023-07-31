@@ -1,4 +1,4 @@
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters.as"
  
  void onInit( CBlob@ this ){
 	 this.Tag("fly");

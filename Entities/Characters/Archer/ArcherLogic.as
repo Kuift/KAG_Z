@@ -3,7 +3,7 @@
 #include "ArcherCommon.as"
 #include "ThrowCommon.as"
 #include "KnockedCommon.as"
-#include "/Entities/Common/Attacks/Hitters.as"
+#include "Hitters.as"
 #include "RunnerCommon.as"
 #include "ShieldCommon.as";
 #include "Help.as";

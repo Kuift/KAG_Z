@@ -1,5 +1,5 @@
 // Keg logic
-#include "/Entities/Common/Attacks/Hitters.as";
+#include "Hitters.as";
 #include "TeamStructureNear.as";
 
 
