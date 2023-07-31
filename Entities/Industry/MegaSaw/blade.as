@@ -105,6 +105,7 @@ void onTick( CBlob@ this )
 		this.setVelocity(Vec2f(0,0));
 		this.setPosition(this.get_Vec2f("lock"));
 		shape.SetStatic(true);
+		this.server_Die();
 		
     }
 
