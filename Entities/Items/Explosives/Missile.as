@@ -11,7 +11,7 @@ void onInit( CBlob@ this )
 	this.set_f32("map_bomberman_width", 2.0f);
     this.set_f32("explosive_radius", 14.0f);
     this.set_f32("explosive_damage",1.5f);
-    this.set_u8("custom_hitter", Hitters::arrow);
+    this.set_u8("custom_hitter", Hitters_mod::arrow);
     this.set_string("custom_explosion_sound", "Entities/Items/Explosives/KegExplosion.ogg");
     this.set_f32("map_damage_radius", 8.0f);
     this.set_f32("map_damage_ratio", 0.2f);
@@ -74,8 +74,8 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
 	
     switch(customData)
     {
-        case Hitters::sword:
-        case Hitters::arrow:
+        case Hitters_mod::sword:
+        case Hitters_mod::arrow:
             damage *= 0.25f; //quarter damage from these
             break;
         default:

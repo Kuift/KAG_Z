@@ -16,7 +16,7 @@ void onInit(CBlob@ this)
 	this.set_bool("map_damage_raycast", true);
 	this.set_f32("map_damage_ratio", 1.0f);
 	this.set_bool("explosive_teamkill", false); // no teamkilling
-	this.set_u8("custom_hitter", Hitters::notnormalfire);
+	this.set_u8("custom_hitter", Hitters_mod::notnormalfire);
 
 	
 }
@@ -81,11 +81,11 @@ void Pierce(CBlob @this)
 	Vec2f end;
 	if (rayCheck(this.getOldPosition(), this.getPosition(), end))
 	{
-		HitMap(this, end, this.getOldVelocity(), 1.5f, Hitters::arrow);
+		HitMap(this, end, this.getOldVelocity(), 1.5f, Hitters_mod::arrow);
 	}
 	// if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, this.getPosition() ,end))
 	// {
-	// 	HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::arrow);
+	// 	HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_mod::arrow);
 	// }
 }
 

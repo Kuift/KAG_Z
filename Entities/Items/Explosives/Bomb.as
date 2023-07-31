@@ -83,7 +83,7 @@ bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
 		const u8 hitter = this.get_u8("custom_hitter");
 
 		//all water bombs collide with enemies
-		if (hitter == Hitters::water)
+		if (hitter == Hitters_mod::water)
 			return blob.getTeamNum() != this.getTeamNum();
 
 		//collide with shielded enemies

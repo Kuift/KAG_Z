@@ -18,7 +18,7 @@ void onInit(CBlob@ this)
 	}
 
 	if (!this.exists("hurtoncollide hitter"))
-		this.set_u8("hurtoncollide hitter", Hitters::flying);
+		this.set_u8("hurtoncollide hitter", Hitters_mod::flying);
 
 	// crushing
 	//this.getCurrentScript().tickFrequency = 9;
@@ -123,7 +123,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
-	if (hitBlob !is null && customData == Hitters::flying)
+	if (hitBlob !is null && customData == Hitters_mod::flying)
 	{
 		Vec2f force = velocity * this.getMass() * 0.05f;
 		hitBlob.AddForce(force);

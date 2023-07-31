@@ -571,7 +571,7 @@ void ManageBow(CBlob@ this, ArcherInfo@ archer, RunnerMoveVars@ moveVars)
 						}
 						else
 						{
-							this.server_Hit(stabTarget, stabTarget.getPosition(), Vec2f_zero, 0.25f,  Hitters::stab);
+							this.server_Hit(stabTarget, stabTarget.getPosition(), Vec2f_zero, 0.25f,  Hitters_mod::stab);
 
 						}
 
@@ -1194,7 +1194,7 @@ void onAddToInventory(CBlob@ this, CBlob@ blob)
 
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
-	if (customData == Hitters::stab)
+	if (customData == Hitters_mod::stab)
 	{
 		fletchArrow(this);
 	}

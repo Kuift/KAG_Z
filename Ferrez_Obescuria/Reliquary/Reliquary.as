@@ -104,7 +104,7 @@ void onCommand(CBlob@ this, u8 cmd, CBitStream @params)
 	if (cmd == this.getCommandID("shop made item"))
 	{
 		this.getSprite().PlaySound("/ChaChing.ogg");
-		this.server_Hit(this, this.getPosition(), Vec2f(0,0), 10.5f, Hitters::fall);
+		this.server_Hit(this, this.getPosition(), Vec2f(0,0), 10.5f, Hitters_mod::fall);
 
 		if (!getNet().isServer()) return; /////////////////////// server only past here
 

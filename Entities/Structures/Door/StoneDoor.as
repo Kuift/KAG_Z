@@ -9,15 +9,15 @@ f32 onHit( CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hit
     f32 dmg = damage;
     switch(customData)
     {
-    case Hitters::builder:
+    case Hitters_mod::builder:
         dmg *= 2.0f; //builder is great at smashing stuff
         break;
-	case Hitters::saw:
+	case Hitters_mod::saw:
 		dmg *= 0.25;
 		break;
-	case Hitters::bomb:
+	case Hitters_mod::bomb:
 		dmg *= 0.01f;
-		case Hitters::mine:
+		case Hitters_mod::mine:
 	dmg *= 0.01f;
 		break;
 	default:

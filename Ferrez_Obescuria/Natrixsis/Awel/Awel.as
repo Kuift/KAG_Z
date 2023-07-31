@@ -10,7 +10,7 @@ const f32 ARROW_PUSH_FORCE = 22.0f;
 void onInit(CBlob@ this)
 {
 	
-	this.set_u8("custom_hitter", Hitters::notnormalfire);
+	this.set_u8("custom_hitter", Hitters_mod::notnormalfire);
 	CShape@ shape = this.getShape();
 	shape.SetGravityScale(0.0f);
 	this.server_SetTimeToDie(1.2);
@@ -65,7 +65,7 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid)
 	if (blob !is null && (doesCollideWithBlob(this, blob) && (!this.hasTag("collided") && !blob.hasTag("dead") || blob.isPlatform())) || blob is null)
 	{
 		
-	if (isServer()) this.server_Hit(blob, this.getPosition(), Vec2f(0, 0), 3.0f, Hitters::fall, true);
+	if (isServer()) this.server_Hit(blob, this.getPosition(), Vec2f(0, 0), 3.0f, Hitters_mod::fall, true);
 	
 	}
 }
@@ -76,11 +76,11 @@ void Pierce(CBlob @this)
 	Vec2f end;
 	if (rayCheck(this.getOldPosition(), this.getPosition(), end))
 	{
-		HitMap(this, end, this.getOldVelocity(), 1.5f, Hitters::arrow);
+		HitMap(this, end, this.getOldVelocity(), 1.5f, Hitters_mod::arrow);
 	}
 	// if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, this.getPosition() ,end))
 	// {
-	// 	HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::arrow);
+	// 	HitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_mod::arrow);
 	// }
 }
 

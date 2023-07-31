@@ -1048,7 +1048,7 @@ void onAddToInventory(CBlob@ this, CBlob@ blob)
 
 void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitBlob, u8 customData)
 {
-	if (customData == Hitters::stab)
+	if (customData == Hitters_mod::stab)
 	{
 		if (damage > 0.0f)
 		{

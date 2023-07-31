@@ -199,7 +199,7 @@ void onTick(CBlob@ this)
 		if (int(heat) >= heat_max - (heat_add * 1.5))
 		{
 			makeSteamPuff(this, 1.5f, 3, false);
-			this.server_Hit(holder, holder.getPosition(), Vec2f(), 0.25f, Hitters::burn, true);
+			this.server_Hit(holder, holder.getPosition(), Vec2f(), 0.25f, Hitters_mod::burn, true);
 			this.server_DetachFrom(holder);
 			sprite.PlaySound("DrillOverheat.ogg");
 		}
@@ -311,7 +311,7 @@ void onTick(CBlob@ this)
 										attack_dam /= 2;
 									}
 
-									this.server_Hit(b, hi.hitpos, attackVel, attack_dam, Hitters::drill);
+									this.server_Hit(b, hi.hitpos, attackVel, attack_dam, Hitters_mod::drill);
 
 									Material::fromBlob(holder, hi.blob, attack_dam, this);
 								}
@@ -430,13 +430,13 @@ void onTick(CBlob@ this)
 
 f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitterBlob, u8 customData)
 {
-	if (customData == Hitters::fire)
+	if (customData == Hitters_mod::fire)
 	{
 		this.set_u8(heat_prop, heat_max);
 		makeSteamPuff(this);
 	}
 
-	if (customData == Hitters::water)
+	if (customData == Hitters_mod::water)
 	{
 		s16 current_heat = this.get_u8(heat_prop) - heat_max*0.7f;
 		if (current_heat < 0) current_heat= 0;

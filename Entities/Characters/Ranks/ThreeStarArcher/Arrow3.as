@@ -48,7 +48,7 @@ void onInit(CBlob@ this)
 	if (arrowType == ArrowType::bomb)			 // bomb arrow
 	{
 		SetupBomb(this, bomb_fuse, 48.0f, 1.5f, 24.0f, 0.5f, true);
-		this.set_u8("custom_hitter", Hitters::bomb_arrow);
+		this.set_u8("custom_hitter", Hitters_mod::bomb_arrow);
 	}
 
     if(arrowType == ArrowType::water)
@@ -110,7 +110,7 @@ void onTick(CBlob@ this)
 		{
 			if (this.getTickSinceCreated() > 20)
 			{
-				this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters::crush);
+				this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters_mod::crush);
 			}
 		}
 
@@ -223,14 +223,14 @@ void onCollision(CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f point
 		else
 		{
 			// this isnt synced cause we want instant collision for arrow even if it was wrong
-			dmg = ArrowHitBlob(this, point1, initVelocity, dmg, blob, Hitters::arrow, arrowType);
+			dmg = ArrowHitBlob(this, point1, initVelocity, dmg, blob, Hitters_mod::arrow, arrowType);
 
 			if (dmg > 0.0f)
 			{
 				if (arrowType == ArrowType::fire)
-					this.server_Hit(blob, point1, initVelocity, dmg, Hitters::fire);
+					this.server_Hit(blob, point1, initVelocity, dmg, Hitters_mod::fire);
 				else
-					this.server_Hit(blob, point1, initVelocity, dmg, Hitters::arrow);
+					this.server_Hit(blob, point1, initVelocity, dmg, Hitters_mod::arrow);
 			}
 		}
 
@@ -293,7 +293,7 @@ void Pierce(CBlob @this, CBlob@ blob = null)
 
 	if (map.rayCastSolidNoBlobs(this.getShape().getVars().oldpos, position, end))
 	{
-		ArrowHitMap(this, end, this.getOldVelocity(), 0.5f, Hitters::arrow);
+		ArrowHitMap(this, end, this.getOldVelocity(), 0.5f, Hitters_mod::arrow);
 	}
 }
 
@@ -368,7 +368,7 @@ f32 ArrowHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlo
 			hitBlob.AddForce(velocity * force);
 
 			//die
-			this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters::crush);
+			this.server_Hit(this, this.getPosition(), Vec2f(), 1.0f, Hitters_mod::crush);
 		}
 
 		// check if shielded
@@ -434,7 +434,7 @@ f32 ArrowHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlo
 			}*/
 			if (hitBlob.getShape().isStatic())
 			{
-				ArrowHitMap(this, worldPoint, velocity, damage, Hitters::arrow);
+				ArrowHitMap(this, worldPoint, velocity, damage, Hitters_mod::arrow);
 			}
 			else
 			{
@@ -596,7 +596,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 {
 	const u8 arrowType = this.get_u8("arrow type");
 
-	if (customData == Hitters::water || customData == Hitters::water_stun) //splash
+	if (customData == Hitters_mod::water || customData == Hitters_mod::water_stun) //splash
 	{
 		if (arrowType == ArrowType::fire)
 		{
@@ -604,7 +604,7 @@ f32 onHit(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@ hitt
 		}
 	}
 
-	if (customData == Hitters::sword)
+	if (customData == Hitters_mod::sword)
 	{
 		return 0.0f; //no cut arrows
 	}
@@ -616,7 +616,7 @@ void onHitBlob(CBlob@ this, Vec2f worldPoint, Vec2f velocity, f32 damage, CBlob@
 {
 	const u8 arrowType = this.get_u8("arrow type");
 	// unbomb, stick to blob
-	if (this !is hitBlob && customData == Hitters::arrow)
+	if (this !is hitBlob && customData == Hitters_mod::arrow)
 	{
 		// affect players velocity
 

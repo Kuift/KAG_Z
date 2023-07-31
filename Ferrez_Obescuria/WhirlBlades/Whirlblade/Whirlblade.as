@@ -90,7 +90,7 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal)
 	{
 		if(blob !is null && (isEnemy(this, blob)))
 		{
-			this.server_Hit(blob, blob.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall, true); 
+			this.server_Hit(blob, blob.getPosition(), Vec2f(0,0), 1.0f, Hitters_mod::fall, true); 
 		} 
 	}
 }
