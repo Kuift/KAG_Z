@@ -9,7 +9,7 @@ const f32 MEDIUM_SPEED = 9.0f;
 const f32 FAST_SPEED = 16.0f;
 
 const f32 max_range = 164.00f;
-const float field_force = 0.4;
+const float field_force = 0.5;
 const float mass = 0.3;
 
 const float first_radius = 90.0;
@@ -42,7 +42,7 @@ void onInit(CBlob@ this)
 
 	this.SetMapEdgeFlags(CBlob::map_collide_left | CBlob::map_collide_right);
 	this.Tag("tether");
-	//this.getCurrentScript().tickFrequency = 1;
+	this.getCurrentScript().tickFrequency = 2;
 
 }
 
