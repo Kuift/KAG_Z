@@ -42,7 +42,7 @@ void onInit(CBlob@ this)
 
 	this.SetMapEdgeFlags(CBlob::map_collide_left | CBlob::map_collide_right);
 	this.Tag("tether");
-	//this.getCurrentScript().tickFrequency = 1;
+	this.getCurrentScript().tickFrequency = 3;
 
 }
 
@@ -76,7 +76,7 @@ void onTick(CBlob@ this)
 	this.setAngleDegrees(-angle + 180.0f);
 	
 	CBlob@[] blobs;
-		if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tether"))
+	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tether"))
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
@@ -90,31 +90,24 @@ void onTick(CBlob@ this)
 				 //SetKnocked(blob, 75 * factor);
 			
 				if (this.hasTag("tether")) 
-	{
-	
-	
+				{
+					if (dist <= first_radius)
+					{
+						if ( blob.getTeamNum() == this.getTeamNum() ) continue;
 
-        CBlob@[] blobs;
-        getMap().getBlobsInRadius(this.getPosition(), first_radius, blobs);
-        for (int i=0; i < blobs.length; i++) 
-		{
-            CBlob@ blob = blobs[i];
-            if ( blob.getTeamNum() == this.getTeamNum() ) continue;
+						Vec2f delta = this.getPosition() - blob.getPosition();
 
-            Vec2f delta = this.getPosition() - blob.getPosition();
+						Vec2f force = -delta;
+						force.Normalize();
+						force *= field_force * mass * blob.getMass() * (delta.Length() / second_radius);
 
-            Vec2f force = -delta;
-            force.Normalize();
-            force *= field_force * mass * blob.getMass() * (delta.Length() / second_radius);
-
-            blob.AddForce(force);
-			this.doTickScripts = true;
-        }
-        }
-    }
+						blob.AddForce(force);
+						this.doTickScripts = true;
+					}
+				}
 			}
 		}
-
+	}
 }
 
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)

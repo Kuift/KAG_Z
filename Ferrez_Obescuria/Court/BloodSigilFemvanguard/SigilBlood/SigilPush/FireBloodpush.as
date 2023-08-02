@@ -4,6 +4,7 @@ const f32 BOLT_SPEED = 18.0f;
 void onInit(CBlob@ this)
 {
 	this.set_u32("last bolt fire", 0);
+	this.getCurrentScript().tickFrequency = 3;
 }
 
 void onTick(CBlob@ this)

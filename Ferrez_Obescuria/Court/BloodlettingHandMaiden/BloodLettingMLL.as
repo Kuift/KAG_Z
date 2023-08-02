@@ -2,7 +2,7 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range = 240.00f;
+const f32 max_range = 160.00f;
 const int TELEPORT_FREQUENCY = 90; //4 secs
 const int TELEPORT_DISTANCE = 1;//getMap().tilesize;
 
@@ -18,7 +18,7 @@ void onInit(CBlob@ this)
 void onTick(CBlob@ this)
 {
 
-  bool ready = this.get_bool("teleport ready");
+	bool ready = this.get_bool("teleport ready");
 	const u32 gametime = getGameTime();
 	CBlob@[] blobs;
 
@@ -28,38 +28,31 @@ void onTick(CBlob@ this)
 		for (int i = 0; i < blobs.length; i++)
 		{
 			CBlob@ blob = blobs[i];
-			
-			
-			
-			
-				if(ready) {
+			if(ready) {
 				if(this.hasTag("tep")) {
-				Vec2f delta = this.getPosition() - blob.getPosition();
-				if(delta.Length() > TELEPORT_DISTANCE )
-				{
-				this.set_u32("last teleport", gametime);
-				this.set_bool("teleport ready", false );
-				if(blob.hasTag("player") || blob.hasTag("fanatic"))
-				{
-				this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
+					Vec2f delta = this.getPosition() - blob.getPosition();
+					if(delta.Length() > TELEPORT_DISTANCE )
+					{
+						this.set_u32("last teleport", gametime);
+						this.set_bool("teleport ready", false );
+						if(blob.hasTag("player") || blob.hasTag("fanatic"))
+						{
+							this.server_Hit(blob, this.getPosition(), Vec2f(0,0), 1.0f, Hitters::fall);
+						}
+					} 	
 				}
-			} 	
+			} 
+			else {		
+				u32 lastTeleport = this.get_u32("last teleport");
+				int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
+				
 
-		}
-	} 
-	
-		else {		
-		u32 lastTeleport = this.get_u32("last teleport");
-		int diff = gametime - (lastTeleport + TELEPORT_FREQUENCY);
-		
-
-		if (diff > 0)
-		{
-			this.set_bool("teleport ready", true );
-			//this.getSprite().PlaySound("/sand_fall.ogg"); 
-		}
-	}
-			
+				if (diff > 0)
+				{
+					this.set_bool("teleport ready", true );
+					//this.getSprite().PlaySound("/sand_fall.ogg"); 
+				}
+			}
 		}
 	}
 }
