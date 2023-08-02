@@ -10,7 +10,7 @@ void onInit( CBlob@ this )
 	this.set_string("produce sound", "/PopIn");
 
 	 {
-		addSeedItem( this, "grain_plant", "Grain plant seed", 20, 1 );
+		addSeedItem( this, "grain_plant", "Grain plant seed", 120, 1 );
 	 }
 
 
