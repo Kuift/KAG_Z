@@ -9,11 +9,11 @@ const f32 MEDIUM_SPEED = 9.0f;
 const f32 FAST_SPEED = 16.0f;
 
 const f32 max_range = 164.00f;
-const float field_force = 0.5;
+const float field_force = 0.4;
 const float mass = 0.3;
 
-const float first_radius = 140.0;
-const float second_radius = 280.0;
+const float first_radius = 90.0;
+const float second_radius = 160.0;
 // Speed required to pierce Wooden tiles.
 
 void onInit(CBlob@ this)
@@ -76,7 +76,7 @@ void onTick(CBlob@ this)
 	this.setAngleDegrees(-angle + 180.0f);
 	
 	CBlob@[] blobs;
-		if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tether"))
+	if (this.getMap().getBlobsInRadius(this.getPosition(), max_range, @blobs) && this.hasTag("tether"))
 	{
 		for (int i = 0; i < blobs.length; i++)
 		{
@@ -86,35 +86,28 @@ void onTick(CBlob@ this)
 			{
 				f32 dist = (blob.getPosition() - this.getPosition()).getLength();
 				f32 factor = 1.00f - Maths::Pow(dist / max_range, 2);
-			
+				
 				 //SetKnocked(blob, 75 * factor);
 			
 				if (this.hasTag("tether")) 
-	{
-	
-	
+				{
+					if (dist <= first_radius)
+					{
+						if ( blob.getTeamNum() == this.getTeamNum() ) continue;
 
-        CBlob@[] blobs;
-        getMap().getBlobsInRadius(this.getPosition(), first_radius, blobs);
-        for (int i=0; i < blobs.length; i++) 
-		{
-            CBlob@ blob = blobs[i];
-            if ( blob.getTeamNum() == this.getTeamNum() ) continue;
+						Vec2f delta = this.getPosition() - blob.getPosition();
 
-            Vec2f delta = this.getPosition() - blob.getPosition();
+						Vec2f force = delta;
+						force.Normalize();
+						force *= field_force * mass * blob.getMass() * (delta.Length() / second_radius);
 
-            Vec2f force = delta;
-            force.Normalize();
-            force *= field_force * mass * blob.getMass() * (delta.Length() / second_radius);
-
-            blob.AddForce(force);
-			this.doTickScripts = true;
-        }
-        }
-    }
+						blob.AddForce(force);
+						this.doTickScripts = true;
+					}
+				}
 			}
 		}
-
+	}
 }
 
 bool doesCollideWithBlob(CBlob@ this, CBlob@ blob)
