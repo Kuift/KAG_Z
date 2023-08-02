@@ -2,7 +2,7 @@
 #include "Knocked.as";
 #include "Hitters.as";
 const f32 max_range = 256.00f;
-const float field_force = 1.0;
+const float field_force = 0.50;
 const float mass = 1.0;
 
 const float first_radius = 64.0;
@@ -50,7 +50,7 @@ CBlob@[] blobs;
 
             Vec2f force = -delta;
             force.Normalize();
-            force *= (field_force * mass * blob.getMass() * (delta.Length() / second_radius)) * 0.65;
+            force *= (field_force * mass * blob.getMass() * (delta.Length() / second_radius));
 
             blob.AddForce(force);
 			
