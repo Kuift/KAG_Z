@@ -15,7 +15,8 @@ void onDie(CBlob@ this)
 			{
 				CPlayer@ killer = this.getPlayerOfRecentDamage();
 				if(killer !is null){
-					if(killer.getBlob().isAttached()){
+					CBlob@ killerblob = killer.getBlob();
+					if(killerblob !is null && killerblob.isAttached()){
 						AttachmentPoint@ point = this.getAttachments().getAttachmentPointByName("PICKUP");
 						CPlayer@ holder = point.getOccupied().getPlayer();
 						holder.server_setCoins(holder.getCoins()+COIN_GAINED_PER_GRAIN);
