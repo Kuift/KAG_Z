@@ -179,7 +179,10 @@ void onCollision( CBlob@ this, CBlob@ blob, bool solid, Vec2f normal, Vec2f poin
 			this.getSprite().PlaySound( "SawLog.ogg" );
 		}
 		else
-		this.getSprite().PlaySound( "SawOther.ogg" );
+		{
+			this.getSprite().PlaySound( "SawOther.ogg" );
+			this.server_SetTimeToDie(5);
+		}
 	}
 }
 
