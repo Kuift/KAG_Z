@@ -5,11 +5,11 @@ const string[] musicNames =
 	"Disc_TakeOnMe.ogg",
 	"Disc_Shinitai.ogg",
 	"Disc_RickAstley.ogg",
- 	"Disc_Atrophy.ogg",
+	"Disc_Atrophy.ogg",
 	"Disc_BlackGuy.ogg",
 	"Disc_007.ogg",
 	"Disc_IndianaJones.ogg",
- 	"Disc_BabyCrush.ogg",
+	"Disc_BabyCrush.ogg",
 	"Disc_TouchThis.ogg",
 	"Disc_SassyGirl.ogg",
 	"Disc_FELIZJUEVES.ogg",
@@ -33,6 +33,7 @@ const string[] musicNames =
 	"Disc_Minuetto.ogg",
 	"Disc_SpookyScarySkeleton.ogg",
 	"Disc_ukrainian-farmer.ogg",
+	"Disc_cupid.ogg",
 	"Disk_blank.ogg",
 };
 

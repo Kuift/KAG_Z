@@ -32,6 +32,7 @@ const string[] names =
 	"Minuetto",
 	"Spooky Scary Skeleton",
 	"Ukrainian landscapes",
+	"Cupid",
 	"blank"
 
 };
