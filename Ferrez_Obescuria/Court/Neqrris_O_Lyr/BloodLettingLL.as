@@ -2,10 +2,10 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 bloodletting_range = 6900.00f;
+const f32 bloodletting_range = 64.00f;
 const f32 bloodletting_range2 = 128.00f;
-const f32 bloodletting_range3 = 720.00f;
-const f32 bloodletting_range4 = 1444.00f;
+const f32 bloodletting_range3 = 164.00f;
+const f32 bloodletting_range4 = 200.00f;
 const int bloodletting_FREQUENCY = 50; //4 secs
 const int bloodletting_FREQUENCY2 = 35; //4 secs
 const int bloodletting_FREQUENCY3 = 35; //4 secs
