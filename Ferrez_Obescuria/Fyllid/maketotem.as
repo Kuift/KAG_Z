@@ -83,6 +83,10 @@ void onTick(CBlob@ this)
 						if(blob.hasTag("player") && this.get_u32("totem_summon") < MAX_TOTEMS)
 						{
 							CBlob@ totem1 = server_CreateBlob("fyrnigh", -1, blob.getOldPosition() + Vec2f(0, -5.0f));
+							if (totem1 is null)
+							{
+								return;
+							}
 							uint16 fyllidID = this.getNetworkID();
 							totem1.set_u16("fyllidID", fyllidID);
 							this.set_u32("totem_summon", this.get_u32("totem_summon") + 2);
