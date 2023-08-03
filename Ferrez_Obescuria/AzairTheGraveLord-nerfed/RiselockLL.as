@@ -41,6 +41,14 @@ void onTick(CBlob@ this)
 						{
 							CBlob@ storm1 = server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(35, -5.0f));
 							CBlob@ storm2 = server_CreateBlob("stormslave", -1, blob.getOldPosition() + Vec2f(-35, -5.0f));
+							if (storm1 is null)
+							{
+								return;
+							}
+							if (storm2 is null)
+							{
+								return;
+							}
 							uint16 azairID = this.getNetworkID();
 							storm1.set_u16("azairID", azairID);
 							storm2.set_u16("azairID", azairID);
