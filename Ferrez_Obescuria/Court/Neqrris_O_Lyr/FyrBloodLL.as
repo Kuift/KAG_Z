@@ -1,7 +1,7 @@
 #include "FireCommon.as";
 
-const f32 fyrblood_range = 64.00f;
-const f32 fyrblood_range2 = 256.00f;
+const f32 fyrblood_range = 32.00f;
+const f32 fyrblood_range2 = 96.00f;
 
 void onInit(CBlob@ this)
 {

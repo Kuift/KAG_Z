@@ -11,8 +11,8 @@ void onInit(CBlob@ this)
 {
 	this.Tag("exploding");
 	this.set_f32("explosive_radius", 96.0f); // reducing exp radious so in is more usable in close range
-	this.set_f32("explosive_damage", 9.0f);
-	this.set_f32("map_damage_radius", 24.0f);
+	this.set_f32("explosive_damage", 3.0f);
+	this.set_f32("map_damage_radius", 16.0f);
 	this.set_bool("map_damage_raycast", true);
 	this.set_f32("map_damage_ratio", 1.0f);
 	this.set_bool("explosive_teamkill", false); // no teamkilling

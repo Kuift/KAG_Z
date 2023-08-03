@@ -2,7 +2,7 @@
 #include "Knocked.as";
 #include "Hitters.as";
 #include "FireCommon.as";
-const f32 max_range_of_neqrris_rage = 2844.00f;
+const f32 max_range_of_neqrris_rage = 165.00f;
 const int NEQRRIS_RAGE_FREQUENCY = 30;
 const int NEQRRIS_RAGE_FREQUENCY2 = 15; //4 secs
 const int NEQRRIS_RAGE_DISTANCE = 1;//getMap().tilesize;

@@ -11,9 +11,9 @@ void onInit(CBlob@ this)
 		this.set_f32(max_prop, this.getInitialHealth());
 
 	if (!this.exists(rate_prop))
-		this.set_f32(rate_prop, 2.0f); //0.5 hearts per second
+		this.set_f32(rate_prop, 0.1f); //0.5 hearts per second
 
-	this.getCurrentScript().tickFrequency = 30;
+	this.getCurrentScript().tickFrequency = 15;
 }
 
 void onTick(CBlob@ this)

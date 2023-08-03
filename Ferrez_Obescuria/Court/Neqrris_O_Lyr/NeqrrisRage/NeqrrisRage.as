@@ -2,9 +2,9 @@
 #include "LimitedAttacks.as";
 
 const f32 RANGE = 2000.0f;
-const f32 DAMAGE = 2.5f;
+const f32 DAMAGE = 0.5f;
 
-const f32 LIFETIME = 2.0f;
+const f32 LIFETIME = 1.0f;
 
 const int MAX_LASER_POSITIONS = 30;
 const int LASER_UPDATE_TIME = 10;
