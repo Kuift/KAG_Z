@@ -1,9 +1,9 @@
 const int FIRE_FREQUENCY = 90;
-const int FIRE_FREQUENCY2 = 17;
-const f32 BOLT_SPEED = 19.0f;
-const f32 BOLT_SPEED2 = 24.0f;
-const f32 max_range = 254.00f;
-const f32 max_range2 = 720.00f;
+const int FIRE_FREQUENCY2 = 85;
+const f32 BOLT_SPEED = 13.0f;
+const f32 BOLT_SPEED2 = 15.0f;
+const f32 max_range = 100.00f;
+const f32 max_range2 = 200.00f;
 void onInit(CBlob@ this)
 {
 	this.set_u32("last bolt fire", 0);
