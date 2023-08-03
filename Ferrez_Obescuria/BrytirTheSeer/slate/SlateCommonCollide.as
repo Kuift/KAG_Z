@@ -9,7 +9,7 @@ void onInit(CBlob@ this)
 {
 	if (!this.exists("hit dmg modifier"))
 	{
-		this.set_f32("hit dmg modifier", 10.0f);
+		this.set_f32("hit dmg modifier", 0.5f);
 	}
 
 	if (!this.exists("map dmg modifier"))
