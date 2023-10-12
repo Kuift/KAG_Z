@@ -1,3 +1,6 @@
+const string return_prop = "return time";
+const u16 return_time = 600;
+
 bool canPickupFlag(CBlob@ blob)
 {
 
@@ -15,7 +18,6 @@ bool canPickupFlag(CBlob@ blob)
 			pick = true;
 		}
 	}
-	
 	
 	return pick;
 }
