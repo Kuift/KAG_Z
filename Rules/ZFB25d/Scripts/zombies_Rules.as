@@ -12,24 +12,24 @@
 
 
 
-void dynamicmapcycle(){
-	// print("players: "+getPlayersCount());
-	if(getPlayersCount() <= 3){ //3 players or less
-		LoadMapCycle("Rules\\ZFB25d\\mapcycle1.cfg");
-		// print("small size cycle");
-		return;
-	}
-	if(getPlayersCount() > 3 && getPlayersCount() <= 6){ //4 - 6 players
-		LoadMapCycle("Rules\\ZFB25d\\mapcycle2.cfg");
-		// print("medium size cycle");
-		return;
-	}
-	else{ //anything else
-		LoadMapCycle("Rules\\ZFB25d\\mapcycle.cfg");
-		// print("full size cycle");
-		return;
-	}
-}
+// void dynamicmapcycle(){
+// 	// print("players: "+getPlayersCount());
+// 	if(getPlayersCount() <= 3){ //3 players or less
+// 		LoadMapCycle("Rules\\ZFB25d\\mapcycle1.cfg");
+// 		// print("small size cycle");
+// 		return;
+// 	}
+// 	if(getPlayersCount() > 3 && getPlayersCount() <= 6){ //4 - 6 players
+// 		LoadMapCycle("Rules\\ZFB25d\\mapcycle2.cfg");
+// 		// print("medium size cycle");
+// 		return;
+// 	}
+// 	else{ //anything else
+// 		LoadMapCycle("Rules\\ZFB25d\\mapcycle.cfg");
+// 		// print("full size cycle");
+// 		return;
+// 	}
+// }
 //simple config function - edit the variables below to change the basics
 
 
@@ -946,7 +946,7 @@ void onRestart(CRules@ this)
 
 void Reset(CRules@ this)
 {
-	dynamicmapcycle();
+	// dynamicmapcycle();
     printf("Restarting rules script: " + getCurrentScriptName() );
     ZombiesSpawns spawns();
     ZombiesCore core(this, spawns);
